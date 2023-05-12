@@ -1,0 +1,15 @@
+.topnav {
+  width: 375px;
+  height: 53px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.topnav a {
+  color: #f2f2f2;
+  font-size: 17px;
+}
