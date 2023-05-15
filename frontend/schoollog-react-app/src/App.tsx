@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+<<<<<<< Updated upstream
 
 function App() {
   return (
@@ -18,6 +19,17 @@ function App() {
         >
           Learn React
         </a>
+=======
+import TopBar from './component/TopBar/TopBar';
+
+function App() {
+  return (
+    <div className='Full-box'>
+      <header className='Content-box'>
+        <TopBar/>
+        <div className='Border-line'></div>  
+        <a>content</a>
+>>>>>>> Stashed changes
       </header>
     </div>
   );
