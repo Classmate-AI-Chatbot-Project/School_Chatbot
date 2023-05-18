@@ -1,0 +1,28 @@
+.Full-box {
+  position: relative;
+  width: 375px;
+  height: 100%;
+}
+
+.Content-box {
+  position: relative;
+  width: 375px;
+  height: 100%;
+}
+
+.Chat-container {
+  box-sizing: border-box;
+  position: absolute;
+  width: 344px;
+  height: 56px;
+  left: 15px;
+  top: 745px;
+  background: #FFFFFF;
+  border: 2px solid #E3E3E3;
+  border-radius: 30px;
+}
+
+.Border-line {
+  width: 100%;
+  border-bottom: 1px solid #E3E3E3;
+}
