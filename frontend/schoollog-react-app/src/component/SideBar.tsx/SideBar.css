@@ -1,0 +1,35 @@
+.Opened-bar {
+  visibility: visible;
+  background-color: white;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  height: 100%;
+  width: 317px;
+  transition: 0.5s ease;
+  justify-content: flex-end;
+  display: flex;
+}
+.Closed-bar {
+  visibility: hidden;
+  position: fixed;
+  top: 0px;
+  left: -315px;
+
+}
+ul{
+  list-style: none;
+  padding-left: 0px;
+  margin: 0px;
+}
+li {
+  margin: 25px 0px 30px 27px;
+  text-align: left;
+}
+.Menu-item-text{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  margin-left: 15px;
+}
