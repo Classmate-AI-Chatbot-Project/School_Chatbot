@@ -1,23 +1,16 @@
-import React, {useState} from 'react';
-import './App.css';
-import TopBar from './component/TopBar/TopBar';
-import SideBar from './component/SideBar.tsx/SideBar';
+import Main from './Main'
+import Chatbot from'./component/Chat/Chatbot';
+import { Route, Routes, Link } from 'react-router-dom';
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div className='Full-box'>
-      <div style={{justifyContent: 'flex-start'}}>
-      <header className='Content-box'>
-        <TopBar isOpen={isOpen} setIsOpen={setIsOpen}/>
-        <div className='Border-line'></div>  
-        <a>content</a>
-      </header>
-      <SideBar isOpen={isOpen} setIsOpen={setIsOpen}/>
-      </div>
-    </div>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/chat" element={<Chatbot />} />
+      </Routes>
+      <Link to="/"></Link>
+    </div> 
   );
 }
-
 export default App;

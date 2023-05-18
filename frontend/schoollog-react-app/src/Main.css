@@ -1,0 +1,36 @@
+.Full-box {
+   display: flex;
+   flex: 1;
+   justify-content: center;
+   align-items: flex-start;
+   background-color: lightgray;
+   text-align: center;
+ }
+ 
+ .Content-box {
+   background-color: white;
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: flex-start;
+   /* font-size: calc(10px + 2vmin); */
+ }
+ 
+ .Border-line {
+   width: 100%;
+   border-bottom: 1px solid #E3E3E3;
+   /* line-height: 0.1em; */
+ /* margin: "10px 0 20px", */
+ }
+ 
+ .Chatbot-btn {
+   width: 344px;
+   height: 61px;
+   left: 15px;
+   top: 1016px;
+ 
+   background: #6BD861;
+   border-radius: 30px;
+   border: none;
+ }

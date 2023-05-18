@@ -1,0 +1,16 @@
+.chat-topnav{
+   width: 375px;
+   height: 53px;
+   background-color: white;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding-left: 24px;
+   padding-right: 24px;
+
+}
+
+ .person-icon {
+   flex-grow: 1;
+   text-align: center;
+ }
