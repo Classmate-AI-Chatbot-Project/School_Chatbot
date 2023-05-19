@@ -14,3 +14,15 @@
    flex-grow: 1;
    text-align: center;
  }
+
+
+.Chatbot-btn {
+  width: 344px;
+  height: 61px;
+  left: 15px;
+  top: 1016px;
+
+  background: #6BD861;
+  border-radius: 30px;
+  border: none;
+}

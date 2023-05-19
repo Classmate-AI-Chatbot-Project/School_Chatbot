@@ -1,16 +1,23 @@
-import Main from './Main'
-import Chatbot from'./component/Chat/Chatbot';
-import { Route, Routes, Link } from 'react-router-dom';
-
+import React, { useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import './App.css'
+import TopBar from './component/TopBar/TopBar';
+import SideBar from './component/SideBar.tsx/SideBar';
+import BorderLine from './component/BorderLine/BorderLine';
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className='Full-box'>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/chat" element={<Chatbot />} />
-      </Routes>
-      <Link to="/"></Link>
-    </div> 
+    <div className='App-fullbox'>
+      <div className='App-contentbox'>
+        <TopBar setIsOpen={setIsOpen}/>
+        <BorderLine height={1} width={423}/>
+
+        <Outlet/>
+
+      </div>
+      <SideBar isOpen={isOpen} setIsOpen={setIsOpen}/>
+    </div>
   );
 }
 export default App;
