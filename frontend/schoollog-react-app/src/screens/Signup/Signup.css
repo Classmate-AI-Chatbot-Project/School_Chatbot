@@ -1,0 +1,33 @@
+.Signup-fullbox {
+  display: flex;
+  width: 375px;
+  height: 759px;
+  background-color: white;
+  flex-direction: column;
+  padding: 27px 20px 0px 20px;
+  align-items: center;
+}
+.Signup-button {
+  width: 335px;
+  height: 111px;
+  background: #FFFFFF;
+  border: 1.6px solid #E3E3E3;
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  margin-bottom: 19px;
+  padding-left: 41px;
+  display: flex;
+  justify-content: space-between;
+
+  text-align: center;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 111px;
+}
+.Signup-icons {
+  display: flex;
+  align-items:flex-end;
+  padding-right: 24px;
+}
