@@ -17,17 +17,33 @@
   margin-bottom: 19px;
   padding-left: 41px;
   display: flex;
-  justify-content: space-between;
+  justify-content:flex-start;
 
-  text-align: center;
+  text-align: left;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 111px;
+  white-space: nowrap;
 }
-.Signup-icons {
+.Signup-icons-first {
   display: flex;
-  align-items:flex-end;
-  padding-right: 24px;
+  align-items: flex-end;
+  padding-left: 85px;
+}
+.Signup-icons-second {
+  display: flex;
+  align-items: center;
+  padding: 0px 24px 0px 19px;
+}
+.Signup-teacher-first {
+  display: flex;
+  align-items: flex-end;
+  padding-left: 70px;
+}
+.Signup-teacher-second {
+  display: flex;
+  align-items: center;
+  padding: 0px 24px 0px 19px;
 }
