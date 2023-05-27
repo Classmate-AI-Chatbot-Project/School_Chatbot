@@ -14,7 +14,7 @@ function TopBar({ setIsOpen }: { setIsOpen: any }) {
   return (
     <div className="topnav">
       <HamburgerIcon role="button" onClick={toggleSide}/>
-      <Link to='/main'>
+      <Link to='/'>
         <a style={{color: 'black'}}>Logo</a>
       </Link>
       <Link to='login'>

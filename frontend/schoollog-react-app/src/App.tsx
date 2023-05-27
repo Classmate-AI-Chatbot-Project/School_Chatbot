@@ -9,14 +9,16 @@ function App() {
 
   return (
     <div className='App-fullbox'>
-      <div className='App-contentbox'>
-        <TopBar setIsOpen={setIsOpen}/>
-        <BorderLine height={'1px'} width={'423px'}/>
+      <div>
+        <div className='App-contentbox'>
+          <TopBar setIsOpen={setIsOpen}/>
+          <BorderLine height={'1px'} width={'423px'}/>
 
-        <Outlet/>
+          <Outlet/>
 
+        </div>
+        <SideBar isOpen={isOpen} setIsOpen={setIsOpen}/>
       </div>
-      <SideBar isOpen={isOpen} setIsOpen={setIsOpen}/>
     </div>
   );
 }
