@@ -1,0 +1,89 @@
+.Profile-fullbox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #EEEEEE;
+}
+.Profile-firstbox {
+  display: flex;
+  width: 100%;
+  height: 84px;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 28px;
+  text-align: left;
+  background-color: white;
+  box-sizing: border-box;
+  margin-bottom: 13px;
+}
+.Profile-firstbox div {
+  padding-left: 16px;
+}
+.Profile-firstbox p:first-child {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 7px;
+}
+.Profile-firstbox p:last-child {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 5px;
+}
+
+.Profile-secondbox {
+  display: flex;
+  width: 100%;
+  height: 100px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 24px;
+  text-align: left;
+  background-color: white;
+  box-sizing: border-box;
+  margin-bottom: 13px;
+}
+.Profile-secondbox p:first-child {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+}
+.Profile-secondbox p:last-child {
+  background-color: aquamarine;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.Profile-thirdbox {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 24px;
+  text-align: left;
+  background-color: white;
+  box-sizing: border-box;
+  margin-bottom: 13px;
+  flex-direction: column;
+}
+.Profile-thirdbox div {
+  display: flex;
+}
+.Profile-thirdbox p:first-child {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+}
+.Profile-thirdbox p:last-child {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  padding-left: 5px;
+}

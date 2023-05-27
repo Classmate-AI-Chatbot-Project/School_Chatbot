@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import Main from './Main';
@@ -10,6 +10,7 @@ import SignupInputInform from './screens/SignupInputInformation/SignupInputInfor
 import Chat from './component/Chat/Chat';
 import Result from './component/Chat/Result'
 import StudentResult from './component/Chat/StudentResult'
+import Profile from './screens/Profile/Profile';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,7 +23,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signupInform" element={<SignupInputInform /> } />
-        
+        <Route path="/profile" element={<Profile/> } />
       </Route>
       <Route path="/chat" element={<Chat />} />
       <Route path="/detail" element={<Result />} />  

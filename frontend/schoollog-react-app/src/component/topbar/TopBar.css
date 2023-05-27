@@ -1,5 +1,5 @@
 .topnav {
-  width: 375px;
+  width: 423px;
   height: 53px;
   background-color: white;
   display: flex;
@@ -7,6 +7,7 @@
   align-items: center;
   padding-left: 24px;
   padding-right: 24px;
+  box-sizing: border-box;
 }
 
 .topnav a {

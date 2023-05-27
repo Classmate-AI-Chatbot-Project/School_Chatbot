@@ -32,19 +32,19 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
           <BookIcon/>
           <a className='Menu-item-text'>스쿨로그 사용법</a>
         </li>
-        <BorderLine width={315} height={1}/>
+        <BorderLine width={'315px'} height={'1px'}/>
         <li>
           <SpeechIcon/>
           <a className='Menu-item-text'>상담기록</a>
         </li>
-        <BorderLine width={315} height={1}/>
+        <BorderLine width={'315px'} height={'1px'}/>
         <li>
           <StudentsIcon/>
           <a className='Menu-item-text'>상담학생목록</a>
         </li>
-        <BorderLine width={315} height={1}/>
+        <BorderLine width={'315px'} height={'1px'}/>
       </ul>
-      <BorderLine width={2} height={918}/>
+      <BorderLine width={'2px'} height={'918px'}/>
     </div>
   );
 }
