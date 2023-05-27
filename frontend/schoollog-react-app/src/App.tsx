@@ -11,7 +11,7 @@ function App() {
     <div className='App-fullbox'>
       <div className='App-contentbox'>
         <TopBar setIsOpen={setIsOpen}/>
-        <BorderLine height={1} width={423}/>
+        <BorderLine height={'1px'} width={'423px'}/>
 
         <Outlet/>
 
