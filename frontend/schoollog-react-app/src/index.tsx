@@ -11,6 +11,7 @@ import Chat from './component/Chat/Chat';
 import Result from './component/Chat/Result'
 import StudentResult from './component/Chat/StudentResult'
 import Profile from './screens/Profile/Profile';
+import KakaoLogin from './screens/Login/KakaoLogin';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -24,6 +25,7 @@ root.render(
         <Route path="/signup" element={<Signup />} />
         <Route path="/signupInform" element={<SignupInputInform /> } />
         <Route path="/profile" element={<Profile/> } />
+        <Route path="/auth" element={<KakaoLogin/> }/>
       </Route>
       <Route path="/chat" element={<Chat />} />
       <Route path="/detail" element={<Result />} />  
