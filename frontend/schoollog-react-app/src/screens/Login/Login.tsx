@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 // import { actionCreators as userActions } from "../Redux/Moduels/"
 import './Login.css'
+import GoogleAuthLogin from "./GoogleLogin";
 
 function Login() {
   // function loginWithKakao() {
@@ -20,6 +21,7 @@ function Login() {
         href={KAKAO_AUTH_URL}>
         카카오 로그인 테스트
       </a>
+    <GoogleAuthLogin />
     </div>
   )
 }
