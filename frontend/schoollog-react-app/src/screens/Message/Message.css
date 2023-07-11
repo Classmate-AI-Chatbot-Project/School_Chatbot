@@ -1,0 +1,40 @@
+.M-profile {
+   display: inline-block;
+   width: 34px;
+   height: 34px;
+   margin-right: 5px;
+ }
+ 
+ .M-profile img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+ }
+
+ .M-output-A {
+   display: flex;
+   align-self: flex-start;
+   margin-top: 30px;
+ }
+ 
+ .M-answer {
+   display: inline-block;
+   max-width: 214px;
+   word-wrap: break-word;
+   background-color: #EEEEEE;
+   border-radius: 0px 16px 16px 16px;
+   padding: 10px;
+   font-family: 'Pretendard';
+   font-size: 12px;
+   text-align: left;
+   margin-top: 12px;
+ }
+
+ .M-time {
+   font-family: 'Pretendard';
+   font-size: 10px;
+   color:#a0a0a0;
+   align-self: flex-end;
+   padding: 5px;
+   margin-top: 12px;
+ }
