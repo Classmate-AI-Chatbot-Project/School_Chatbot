@@ -42,13 +42,11 @@
 
 .Result-box {
    box-sizing: border-box;
-   width: 88%;
-   height: 83px;
-   background: #FFFFFF;
-   border: 1.6px solid #E3E3E3;
-   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.05);
-   border-radius: 8px;
-   margin-left: 6%;
+   width: 313px;
+   height: 319px;
+   border-radius: 25px;
+   background: #FFF;
+   box-shadow: 1px 3px 4px 5px rgba(0, 0, 0, 0.13);
 }
 .Result-center{
    display: flex;

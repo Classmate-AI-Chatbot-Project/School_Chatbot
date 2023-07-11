@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import "./Result.css";
 import { ReactComponent as BeforeIcon } from '../../assets/result-before.svg'
 import { ReactComponent as AfterIcon } from '../../assets/result-after.svg'
-import TopBar from "../TopBar/TopBar";
+import TopBar from "../../component/TopBar/TopBar";
 import {formatDate, currentDate} from "./Chat"
-
 
 
 function Result() {  
@@ -27,17 +26,11 @@ function Result() {
                <div className='Result-Nickname'> nickname </div>
             </div>
             <div className='Result-Border-line' />
-         
-            <div className='Result-content'>
-               주제  
-            </div>
+
             <div className='Result-box'>
-               친구, 싸움, 다툼, 성적, 스트레스
+               막대그래프
             </div>
 
-            <div className='Result-content'>
-               감정
-            </div>
             <div className='Result-box'>
                매우 슬픔
             </div>

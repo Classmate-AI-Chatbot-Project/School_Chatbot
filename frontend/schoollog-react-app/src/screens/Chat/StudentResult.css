@@ -46,6 +46,18 @@
    border-radius: 8px;
    margin-left: 6%;
 }
+.S-Result-box2 {
+  box-sizing: border-box;
+  width: 375px;
+  height: 160px;
+  background: #FFFFFF;
+  border: 1.6px solid #E3E3E3;
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  margin-left: 6%;
+  padding: 15px;
+  margin-bottom: 30px;
+}
 
 .Result-summary{
    height: 500px;
