@@ -1,7 +1,6 @@
 import React from "react";
 
 const NaverLogin= () => {
-
   const NAVER_CLIENT_ID = 'o20GjxDlH8cHP6nVVDTM';
   const REDIRECT_URI = 'http://localhost:3000/naverLogin';
   const NAVER_STATE = 'false';
