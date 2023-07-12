@@ -12,6 +12,7 @@ import Result from './screens/Chat/Result'
 import StudentResult from './screens/Chat/StudentResult'
 import Profile from './screens/Profile/Profile';
 import KakaoLogin from './screens/Login/KakaoLogin';
+import NaverRedirect from './screens/Login/NaverRedirect';
 import Message from './screens/Message/Message';
 import DrawingTest from './screens/Test/DrawingTest';
 
@@ -28,6 +29,7 @@ root.render(
         <Route path="/signupInform" element={<SignupInputInform /> } />
         <Route path="/profile" element={<Profile/> } />
         <Route path="/auth" element={<KakaoLogin/> }/>
+        <Route path="/naverauth" element={<NaverRedirect/> }/>
         <Route path="/test" element={<DrawingTest />} />
       </Route>
       <Route path="/chat" element={<Chat />} />
