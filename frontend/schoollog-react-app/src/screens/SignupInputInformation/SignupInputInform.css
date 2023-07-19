@@ -14,6 +14,23 @@
   margin-bottom: 20px;
   text-align: left;
 }
+.SignupInputInform-mail {
+  color: #ACACAC;
+  /* font-family: Pretendard; */
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 0px 0px 0px 10px;
+
+}
+.SignupInputInform-underline {
+  width: 360px;
+  height: 2px;
+  color: black;
+  border-bottom: 1px solid black;
+
+}
 .SignupInputInform-itembox p:last-child{
   color: #FF4B33;
   font-style: normal;
@@ -55,4 +72,44 @@
   font-size: 1rem;
   line-height: 35px;
   color: #ACACAC;
+}
+
+.SignupInputInform-confirmbox-inactive {
+  width: 100%;
+  height: 61px;
+  border-radius: 8px;
+  background: #D7D7D7;
+  margin-top: 50px;
+  text-decoration: none;
+
+}
+.SignupInputInform-confirmbox-active {
+  width: 100%;
+  height: 61px;
+  border-radius: 8px;
+  background: #35BA95;
+  margin-top: 50px;
+  text-decoration: none;
+
+}
+.SignupInputInform-confirmbox-inactive p {
+  color: var(--w, #FFF);
+  text-align: center;
+  /* font-family: Pretendard; */
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration: none;
+}
+.SignupInputInform-confirmbox-active p {
+  color: var(--w, #FFF);
+  text-align: center;
+  /* font-family: Pretendard; */
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration: none;
+
 }

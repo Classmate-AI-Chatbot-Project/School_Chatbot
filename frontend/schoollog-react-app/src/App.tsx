@@ -4,10 +4,14 @@ import './App.css'
 import TopBar from './component/TopBar/TopBar';
 import SideBar from './component/SideBar.tsx/SideBar';
 import BorderLine from './component/BorderLine/BorderLine';
+import { Provider } from 'react-redux';
+import store from './store';
+
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
+    <Provider store={store}>
     <div className='App-fullbox'>
       <div>
         <div className='App-contentbox'>
@@ -20,6 +24,7 @@ function App() {
         <SideBar isOpen={isOpen} setIsOpen={setIsOpen}/>
       </div>
     </div>
+    </Provider>
   );
 }
 export default App;
