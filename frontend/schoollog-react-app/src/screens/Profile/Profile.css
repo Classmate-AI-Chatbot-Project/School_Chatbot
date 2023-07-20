@@ -87,3 +87,15 @@
   font-size: 16px;
   padding-left: 5px;
 }
+.Profile-forthbox {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 24px;
+  text-align: left;
+  background-color: white;
+  box-sizing: border-box;
+  margin-bottom: 13px;
+  flex-direction: column;
+}
