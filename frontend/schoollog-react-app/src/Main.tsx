@@ -30,6 +30,9 @@ function Main() {
             그림 테스트
           </button>
         </Link>
+        <Link to="/consultationList">
+          상담 기록
+        </Link>
       </p>
     </div> 
   );
