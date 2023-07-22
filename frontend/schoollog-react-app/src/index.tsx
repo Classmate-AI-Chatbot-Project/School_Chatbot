@@ -7,6 +7,7 @@ import Main from './Main';
 import Login from './screens/Login/Login';
 import Signup from './screens/Signup/Signup';
 import SignupInputInform from './screens/SignupInputInformation/SignupInputInform'
+import ConsultaionList from './screens/Teacher_screens/ConsultationList'
 import Chat from './screens/Chat/Chat';
 import Result from './screens/Chat/Result'
 import StudentResult from './screens/Chat/StudentResult'
@@ -33,6 +34,7 @@ root.render(
         <Route path="/kakaoLogin" element={<KakaoRedirect/> }/>
         <Route path="/naverLogin" element={<NaverRedirect/> }/>
         <Route path="/test" element={<DrawingTest />} />
+        <Route path="/consultationList" element={<ConsultaionList/>} />
       </Route>
       <Route path="/chat" element={<Chat />} />
       <Route path="/detail" element={<Result />} />  

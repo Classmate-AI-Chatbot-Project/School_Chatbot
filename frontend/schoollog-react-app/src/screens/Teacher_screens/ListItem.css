@@ -1,0 +1,71 @@
+.ListItem-fullbox {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 84px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 0px 25px 0px 25px;
+  box-sizing: border-box;
+}
+.ListItem-content {
+  display: flex;
+  flex-direction: row;
+  height: 50%;
+}
+.ListItem-firstbox {
+  display: flex;
+  justify-content: center;
+  /* background-color: aquamarine; */
+}
+.ListItem-secondbox{
+  display: flex;
+  flex-direction: column;
+  /* height: 50%; */
+  justify-content: space-between;
+  margin: 0 10% 0 5%;
+  text-align: left;
+  align-items: stretch;
+  box-sizing: border-box;
+  /* background-color: antiquewhite; */
+}
+.ListItem-text-first p{
+  flex: 1;
+  margin: 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+}
+.ListItem-text-second {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.ListItem-text-second p {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  line-height:0px;
+  padding-left: 8px;
+  white-space: nowrap;
+
+}
+.ListItem-addition {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 50%;
+  /* margin-left: 20%; */
+  /* background-color: aqua; */
+}
+.ListItem-addition-date {
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 400;
+}
+.ListItem-addition div:last-child {
+  display: flex;
+  justify-content: center;
+}
