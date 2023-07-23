@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./StudentResult.css";
-import TopBar from "../../component/TopBar/TopBar";
 import {formatDate, currentDate} from "./Chat"
 
 
@@ -16,8 +15,6 @@ function StudentResult() {
   return (
     <div className='Chat-Full-box'>
       <header className='Chat-Content-box'>
-         <TopBar setIsOpen={setIsOpen}/>
-         <div className='Chat-Border-line'></div>
          <div className='S-Result-result'>
             <div className='S-Result-title'>
                {formatDate(currentDate)} 상담 결과
