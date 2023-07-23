@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Chat.css";
-import ChatTopBar from "../../component/chat-topbar/ChatTopBar";
 import ChatModal from "./ChatModal";
 import { Link } from "react-router-dom";
+import { ReactComponent as ChatDog } from '../../assets/chat-dog.svg'
+import { ReactComponent as ChatBegin } from '../../assets/chat-begin.svg';
 
 // "yyyy년 mm월 dd일"로 표시해주는 함수
 export const formatDate = (date: Date) => {
@@ -26,13 +27,45 @@ function Chat() {
   const [message, setMessage] = useState("");
   const [chatLog, setChatLog] = useState<ChatMessage[]>([]);
   const [showDate, setShowDate] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [endModalOpen, setEndModalOpen] = useState(false);
+  const [usageModalOpen, setUsageModalOpen] = useState(false);
+  const [noticeModalOpen, setNoticeModalOpen] = useState(false);
+
+  const handlePlusButtonClick = () => {
+    setIsClicked((prevState) => !prevState);
+  };
+
+  const chatOutputRef = useRef<HTMLDivElement>(null);
 
   const openModal = () => {
     setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  //종료하기 모달
+  const openEndModal = () => {
+    setEndModalOpen(true);
+  };
+  const closeEndModal = () => {
+    setEndModalOpen(false);
+  };
+  //이용방법 모달
+  const openUsageModal = () => {
+    setUsageModalOpen(true);
+  };
+  const closeUsageModal = () => {
+    setUsageModalOpen(false);
+  };
+  //유의사항 모달
+  const openNoticeModal = () => {
+    setNoticeModalOpen(true);
+  };
+  const closeNoticeModal = () => {
+    setNoticeModalOpen(false);
   };
 
   const generateId = () => {
@@ -112,17 +145,17 @@ function Chat() {
     }
   };
   
-
-  // 로딩 뒤에 챗봇 Answer 나옴. -> 추후에 백엔드에서 입력되는 챗봇 속도에 따라 로딩 속도 조절.
+  // 로딩 뒤에 챗봇 Answer 나옴. 
   const handleChatAnswer = (id: number, answer?: string) => {
     setChatLog((prevChatLog) =>
       prevChatLog.map((chat) =>
-        chat.id === id ? { ...chat, isLoading: false, answer: answer } : chat
+        chat.id === id 
+        ? { ...chat, isLoading: false, answer: answer } 
+        : chat
       )
     );
   };
   
-
   // 로딩 표시
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -130,26 +163,36 @@ function Chat() {
       if (lastChat && lastChat.isLoading) {
         handleChatAnswer(lastChat.id);
       }
-    }, 5000);
+    }, 30000);
     return () => clearTimeout(timeout);
   }, [chatLog]);
 
+  // 스크롤 자동으로 아래로 가도록
+  useEffect(() => {
+    if (chatOutputRef.current) {
+      chatOutputRef.current.scrollTop = chatOutputRef.current.scrollHeight;
+    }
+  }, [chatLog]);
+
   return (
-    <div className="Chat-Full-box">
-      <header className="Chat-Content-box">
-        <ChatTopBar />
-        <div className="Chat-Border-line"></div>
-        <div className="Chat-Output">
+    <div className="Chat-Fullbox">
+      <header className="Chat-Contentbox">
+        <div className="Chat-Output" ref={chatOutputRef}>
           {showDate && (
             <div className="Chat-date">{formatDate(currentDate)}</div>
           )}
+           {chatLog.length === 0 && (
+            <div className="Chat-InitialScreen">
+              <ChatBegin className="Chat-InitialScreenIcon" />
+            </div>
+          )}
           {chatLog.map((chat) => (
             <div key={chat.id}>
-              <div className="Chat-output-Q">
+              <div className="Chat-Q" >
                 <span className="Chat-time">{chat.time}</span>
                 <span className="Chat-message">{chat.message}</span>
               </div>
-              <div className="Chat-output-A">
+              <div className="Chat-A1">
                 {chat.isLoading ? (
                   <span className="Chat-loading">
                     <span />
@@ -158,13 +201,16 @@ function Chat() {
                   </span>
                 ) : chat.message === "종료하기" ? (
                   <div>
-                    <ChatModal open={modalOpen} close={closeModal} header="   ">
-                      <Link to="/student_result">상담 결과 보러가기</Link>
-                    </ChatModal>
+                    <ChatModal open={modalOpen} close={closeModal} />
                   </div>
                 ) : (
-                  <div>
-                    <span className="Chat-answer">{chat.answer}</span>
+                  <div className="Chat-A2">
+                    <div className="ChatDog-icon">
+                      <ChatDog />
+                    </div>
+                    <span className="Chat-answer">{chat.answer}
+                      그런 일이 있었군요. 많이 기분이 상했겠어요. 하지만 내일은 더 좋은 일이 있을거라 고 생각합니다. 조금만 더 힘을 내요!
+                    </span>
                     <span className="Chat-time">{chat.time}</span>
                   </div>
                 )}
@@ -173,16 +219,32 @@ function Chat() {
           ))}
         </div>
         <div className="Chat-Input">
-          <input
-            className="Chat-Input-box"
-            type="text"
-            placeholder="챗봇과 상담하기"
-            value={message}
-            onChange={handleChange}
-            onKeyPress={handleKeyPress}
-          />
+          <button 
+            className={`Chat-Plus ${isClicked ? "clicked" : ""}`}
+            onClick={() => {handlePlusButtonClick();}}
+          ></button>
+          <span className="Chat-InputBox">
+            <input 
+              className="Chat-InputMessage"
+              type="text"
+              placeholder="메시지 보내기"
+              value={message}
+              onChange={handleChange}
+              onKeyPress={handleKeyPress}
+            />
+          </span>
           <button className="Chat-Send-btn" onClick={handleSubmit}></button>
-        </div>
+        </div> 
+        {isClicked && (
+          <div className={`Chat-Toggle ${isClicked ? "active" : ""}`}>
+            <button className="Chat-ToggleButton1" onClick={openEndModal}>종료하기</button>
+            <button className="Chat-ToggleButton2" onClick={openUsageModal}>이용방법</button>
+            <button className="Chat-ToggleButton2" onClick={openNoticeModal}>유의사항</button>
+          </div>
+        )}
+        <ChatModal open={endModalOpen} close={closeEndModal} />
+        <ChatModal open={usageModalOpen} close={closeUsageModal} />
+        <ChatModal open={noticeModalOpen} close={closeNoticeModal} />
       </header>
     </div>
   );
