@@ -1,18 +1,18 @@
 import React from 'react';
-import './ChatTopBar.css'
+import './TopBar.css'
 import { ReactComponent as BackIcon } from '../../assets/back.svg'
 import { ReactComponent as PersonIcon } from '../../assets/top-bar-person.svg'
 import { useNavigate } from 'react-router-dom';
 
 
-function ChatTopBar() {
+function TopBar() {
   const navigate = useNavigate();
   const goBack = ()=> { //이전페이지로 이동
     navigate(-1)
   }
 
   return (
-    <div className="chat-topnav" onClick={goBack}>
+    <div className="-topnav" onClick={goBack}>
       <BackIcon/>
       <div className="person-icon">
         <PersonIcon/> nickname
@@ -21,4 +21,4 @@ function ChatTopBar() {
   );
 }
 
-export default ChatTopBar;
+export default TopBar;

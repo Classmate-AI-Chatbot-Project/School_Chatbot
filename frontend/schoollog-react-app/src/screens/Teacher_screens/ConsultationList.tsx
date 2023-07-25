@@ -83,7 +83,7 @@ function ConsultationList() {
     <div>
       {/* Map through the mockChatData array and render ListItem components */}
       {mockChatData.map((chat, index) => (
-        <React.Fragment key={chat.id}>
+        <Fragment key={chat.id}>
           <ListItem
             nickname={chat.nickname}
             keywords={chat.keywords}
@@ -94,7 +94,7 @@ function ConsultationList() {
           {index !== mockChatData.length - 1 && (
             <BorderLine width="423px" height="1px" />
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
     );
