@@ -8,6 +8,7 @@ import Login from './screens/Login/Login';
 import Signup from './screens/Signup/Signup';
 import SignupInputInform from './screens/SignupInputInformation/SignupInputInform'
 import ConsultaionList from './screens/Teacher_screens/ConsultationList'
+import ConsultationAll from './screens/Teacher_screens/ConsultationAll';
 import Chat from './screens/Chat/Chat';
 import Result from './screens/Chat/Result'
 import StudentResult from './screens/Chat/StudentResult'
@@ -44,6 +45,7 @@ root.render(
         <Route path="/student_result" element={<StudentResult />} />
         <Route path="/message" element={<Message />} />
       </Route>
+      <Route path="/consultations" element={<ConsultationAll/>} />
       
       
     </Routes>
