@@ -1,38 +1,28 @@
 import React from "react";
+import './ConsultResultItem.css';
+import { ReactComponent as RedFace } from '../../assets/face-red-icon.svg'
+import { ReactComponent as YellowFace } from '../../assets/face-yellow-icon.svg'
+import { ReactComponent as GreenFace } from '../../assets/face-green-icon.svg'
 
-interface ResultItem {
+
+interface ResultItemProps {
   keywords: string;
   date: string;
+  type: string;
 }
 
-function ConsultResultItem() {
-  const dummyData: ResultItem[] = [
-    {
-      'keywords' : '친구, 매점',
-      'date' : '2023-05-04'
-    },
-    {
-      'keywords' : '농구, 연습',
-      'date' : '2023-03-04'
-    },
-    {
-      'keywords' : '방학, 공부',
-      'date' : '2023-01-04'
-    },
-  ]
-  
+function ConsultResultItem({keywords, date, type}: ResultItemProps) {
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-    }}>
-      {/* Loop through the dummyData array */}
-      {dummyData.map((item, index) => (
-        <div key={index}>
-          <p>{item.keywords}</p>
-          <p>{item.date}</p>
-        </div>
-      ))}
+    <div className="ResultItem-fullbox">
+      <div className="ResultItem-typebox">
+      {type === 'red' && <RedFace />}
+          {type === 'yellow' && <YellowFace />}
+          {type === 'green' && <GreenFace />}
+      </div>
+      <div className="ResultItem-textbox">
+        <p>{keywords}</p>
+        <p>{date}</p>
+      </div>
     </div>
   );
 }

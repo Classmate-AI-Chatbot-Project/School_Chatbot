@@ -1,0 +1,29 @@
+.ResultItem-fullbox {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0px 0px 0px 25px;
+  background-color: white;
+  box-sizing: border-box;
+  align-items: center;
+}
+.ResultItem-typebox {
+  align-items: center;
+  display: flex;
+}
+.ResultItem-textbox {
+  /* background-color: chocolate; */
+  height: 100%;
+  margin-left: 17px;
+  text-align: left;
+}
+.ResultItem-textbox p:first-child {
+  font-size: 14px;
+  font-weight: 700;
+  /* background-color: aquamarine; */
+}
+.ResultItem-textbox p:last-child {
+  font-size: 12px;
+  font-weight: 400;
+  /* background-color: aquamarine; */
+}
