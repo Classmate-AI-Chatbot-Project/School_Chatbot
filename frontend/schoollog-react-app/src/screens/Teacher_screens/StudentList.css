@@ -1,0 +1,29 @@
+.StudentList-fullbox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100vh - 53px);;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: white;
+  overflow: hidden; 
+}
+.StudentList-name {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  padding: 0px 23px 0px 25px;
+  white-space : nowrap;
+  box-sizing: border-box;
+}
+.StudentList-name p:first-child {
+  font-size: 20px;
+  font-weight: 700;
+}
+.StudentList-name p:nth-child(2) {
+  font-size: 16px;
+  font-weight: 500;
+}

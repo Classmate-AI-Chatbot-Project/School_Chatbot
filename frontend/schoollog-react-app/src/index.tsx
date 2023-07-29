@@ -19,6 +19,7 @@ import DrawingResult from './screens/Test/DrawingResult';
 import KakaoRedirect from './screens/Login/KakaoRedirect';
 import GoogleRedirect from './screens/Login/GoogleRedirect';
 import NaverRedirect from './screens/Login/NaverRedirect';
+import StudentList from './screens/Teacher_screens/StudentList';
 
 
 const root = ReactDOM.createRoot(
@@ -44,6 +45,7 @@ root.render(
         <Route path="/detail" element={<Result />} />  
         <Route path="/student_result" element={<StudentResult />} />
         <Route path="/message" element={<Message />} />
+        <Route path="/studentList" element={<StudentList/>} />
       </Route>
       <Route path="/consultations" element={<ConsultationAll/>} />
       
