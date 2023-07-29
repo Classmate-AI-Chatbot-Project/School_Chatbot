@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { Link, Outlet } from 'react-router-dom';
-
 import './TopBar.css'
 import { ReactComponent as HamburgerIcon } from '../../assets/top-bar-hamburger.svg'
 import { ReactComponent as PersonIcon } from '../../assets/top-bar-person.svg'
+import { ReactComponent as Logo } from '../../assets/main-logo.svg'
 
 
 function TopBar({ setIsOpen }: { setIsOpen: any }) {
@@ -14,8 +14,8 @@ function TopBar({ setIsOpen }: { setIsOpen: any }) {
   return (
     <div className="topnav">
       <HamburgerIcon role="button" onClick={toggleSide}/>
-      <Link to='/'>
-        <a style={{color: 'black'}}>Logo</a>
+      <Link to='/' style={{alignItems: 'center',display: 'flex'}}>
+        <Logo/>
       </Link>
       <Link to='login'>
         <PersonIcon/>

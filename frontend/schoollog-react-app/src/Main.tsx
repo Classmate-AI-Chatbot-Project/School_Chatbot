@@ -39,10 +39,13 @@ function Main() {
             그림 테스트
           </button>
         </Link>
-        <Link to="/consultationList">
+      </p>
+      <Link to="/consultationList">
           상담 기록
         </Link>
-      </p>
+        <Link to="/studentList">
+          상담 학생 리스트
+        </Link>
     </div>
   );
 }
