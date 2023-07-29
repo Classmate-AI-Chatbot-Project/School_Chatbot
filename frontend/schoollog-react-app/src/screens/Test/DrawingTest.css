@@ -1,0 +1,47 @@
+.Drawing-main {
+   display: flex;
+   flex-direction: columns;
+   position: relative;
+ }
+
+.Drawing-begin {
+   position: absolute;
+   top: 19px;
+   left: 0;
+}
+
+.Drawing-topic {
+   position: absolute;
+   top: 99px;
+   left: 43.5%;
+   color: var(--bb, #1D4C5C);
+   text-align: center;
+   font-family: Pretendard;
+   font-size: 25px;
+   font-weight: 700;
+}
+
+.Drawing-clearBtn {
+   position: absolute;
+   top: 154px;
+   right: 6px;
+   width: 75px;
+   height: 51px;
+   border-radius: 8px;
+   border: none;
+   background: var(--b, #1985C0);
+   color: var(--w, #FFF);
+   text-align: center;
+   font-family: Pretendard;
+   font-size: 15px;
+   font-weight: 500;
+}
+
+.Drawing-board {
+   margin-top: 214px;
+}
+.Drawing-canvas {
+   border-radius: 8px;
+   border: 1px solid var(--gray-2-ac, #ACACAC);
+   background: #FFF;
+}

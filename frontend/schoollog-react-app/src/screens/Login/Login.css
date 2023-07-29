@@ -1,0 +1,4 @@
+.Login-FullBox {
+  display: flex;
+  flex-direction: column;
+}

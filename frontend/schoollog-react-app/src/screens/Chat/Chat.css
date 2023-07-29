@@ -1,0 +1,291 @@
+.Chat-Fullbox {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: lightgray;
+  text-align: center;
+}
+
+.Chat-Contentbox {
+  width: 423px;
+  background-color: white;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.Chat-Border-line {
+  width: 100%;
+  border-bottom: 1px solid #E3E3E3;
+}
+
+/*채팅 창*/
+.Chat-Output {
+  width: 423px;
+  min-height: calc(100vh - 136px);
+  max-height: calc(100vh - 136px);
+  overflow-y: auto; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px; 
+  box-sizing: border-box;
+  position: relative;
+}
+ /*스크롤 스타일*/
+.Chat-Output::-webkit-scrollbar {
+  width: 5px;
+}
+.Chat-Output::-webkit-scrollbar-thumb {
+  background-color: #969696;
+  border-radius: 10px;
+}
+.Chat-Output::-webkit-scrollbar-track {
+  background-color: #dcdcdc;
+  border-radius: 10px;
+  box-shadow: inset 0px 1px 1px 0px white;
+}
+
+.Chat-InitialScreen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Chat-date {
+  font-family: 'Pretendard';
+  font-weight: 400;
+  font-size: 12px;
+  color: #696969;
+  text-align: center; /* Center align the date text */
+}
+
+.Chat-Q {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+  margin-top: 27px;
+  align-items: flex-end;
+  flex-direction: row;
+  animation: scaleUp 0.7s both;
+}
+
+.Chat-time {
+  align-self: flex-end;
+  padding: 0px 9px 0px 9px;
+  font-family: 'Pretendard';
+  font-size: 10px;
+  color:#696969;
+}
+
+.Chat-message {
+  display: inline-block;
+  max-width: 222px;
+  background-color: #FFF;
+  border-radius: 16px 0px 16px 16px;
+  border: 1px solid #D7D7D7;
+  padding: 15px;
+  align-self: flex-end;
+  color: var(--bl, #000);
+  font-family: Pretendard;
+  font-size: 13px;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+.Chat-A1 {
+  display: flex;
+  align-self: flex-end;
+  margin-top: 27px;
+  position: relative;
+  margin-left: 0;
+}
+
+.Chat-A2 {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  margin-top: 27px;
+  margin-left: 0;
+  margin-bottom: 10px;
+  animation: scaleUp 0.7s both;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.ChatDog-icon {
+  position: absolute; 
+  top: -47px;
+  left: 18px;
+}
+
+.Chat-answer {
+  display: inline-block; 
+  max-width: 222px;
+  background-color: #35BA95;
+  border-radius: 0px 16px 16px 16px;
+  padding: 15px;
+  font-family: 'Pretendard';
+  color: var(--w, #FFF);
+  font-size: 13px;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+/*채팅 입력 창*/
+.Chat-Input {
+  height: 66px;
+  width: 423px;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #e3e3e3;
+  transition: height 0.3s ease, bottom 0.3s ease;
+  position: relative;
+  padding: 5px;
+}
+
+.Chat-Toggle {
+  position: relative;
+  top: 100%; 
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 17px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.Chat-ToggleButton1 {
+  width: 98px;
+  height: 36px;
+  border: transparent;
+  border-radius: 25px;
+  background: var(--r, #E37354);
+  color: #FFF;
+  font-size: 14px;
+  cursor: pointer;
+}
+.Chat-ToggleButton1:hover {
+  background: var(--r, #d9623e);
+}
+.Chat-ToggleButton2 {
+  width: 98px;
+  height: 36px;
+  border: transparent;
+  border-radius: 25px;
+  background: var(--b, #1985C0);
+  color: #FFF;
+  cursor: pointer;
+}
+.Chat-ToggleButton2:hover {
+  background: var(--b, #0079ba);
+}
+
+.Chat-Plus {
+  margin-left: 25px;
+  margin-right: 16px;
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background: url('../../assets/chat-plus.svg') no-repeat center center;
+  background-size: 100% 100%;
+  width: 20px; 
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.Chat-Plus.clicked {
+  transform: rotate(45deg);
+}
+
+.Chat-InputBox {
+  display: flex;
+  align-items: center;
+  width: 260px;
+  height: 42px;
+  background: #FFFFFF;
+  border-radius: 25px;
+  border: 1px solid #D7D7D7;
+  text-align: center;
+  padding: 1px 15px 1px 15px;
+}
+
+.Chat-InputMessage {
+  flex-grow: 1;
+  height: 70%;
+  border: none;
+  outline: none;
+  font-family: 'Pretendard';
+  font-size: 14px;
+}
+
+.Chat-Send-btn {
+  margin-left: 8px;
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background: url('../../assets/chat-send.svg') no-repeat center center;
+  background-size: 100% 100%;
+  width: 42px; 
+  height: 42px;
+  cursor: pointer;
+}
+
+.Chat-Send-btn:hover {
+  background: url('../../assets/chat-send-hover.svg') no-repeat center center;
+}
+
+/*로딩 animation*/
+.Chat-loading span {
+  display: inline-block; /* span 내부요소들을 한줄로 세우기 */
+  width: 5px;
+  height: 5px;
+  background-color: gray;
+  border-radius: 50%;    /* span을 동그랗게 */
+  animation: loading 1s 0s linear infinite;
+  /* 이벤트명  반복시간  딜레이시간  이벤트처리부드럽게  이벤트무한반복*/
+}
+
+.Chat-loading span:nth-child(1) {  /*loading의 자식 중 첫번째 span*/
+  /*nth-child : 형제 사이에서의 순서*/
+  animation-delay: 0s;
+  background-color: #35BA95;
+  margin-left: 15px;
+}
+
+.Chat-loading span:nth-child(2) {
+  animation-delay: 0.2s;
+  background-color: #35BA95;
+  margin-left: 5px;
+}
+
+.Chat-loading span:nth-child(3) {
+  animation-delay: 0.4s;
+  background-color: #35BA95;
+  margin-left: 5px;
+  margin-right: 15px;
+}
+
+
+
+@keyframes loading {        /*loading이라는 keyframe 애니메이션*/
+  0%,                      /* 0, 50, 100은 구간*/
+  100% {
+    opacity: 0;            /* 안보였다가 */
+    transform: scale(0.5); /*transform의 scale로 요소를 확대 또는 축소할 수 있음*/   
+  }
+  50% {
+    opacity: 1;             /* 보였다가 */
+    transform: scale(1.2); /* 1.2배 */
+  }
+}
