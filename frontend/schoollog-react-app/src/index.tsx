@@ -12,8 +12,10 @@ import ConsultationAll from './screens/Teacher_screens/ConsultationAll';
 import Chat from './screens/Chat/Chat';
 import Result from './screens/Chat/Result'
 import StudentResult from './screens/Chat/StudentResult'
+import TeacherResult from './screens/Chat/TeacherResult'
 import Profile from './screens/Profile/Profile';
 import Message from './screens/Message/Message';
+import DrawingBegin from './screens/Test/DrawingBegin';
 import DrawingTest from './screens/Test/DrawingTest';
 import DrawingResult from './screens/Test/DrawingResult';
 import KakaoRedirect from './screens/Login/KakaoRedirect';
@@ -37,13 +39,15 @@ root.render(
         <Route path="/googleLogin" element={<GoogleRedirect/>} />
         <Route path="/kakaoLogin" element={<KakaoRedirect/> }/>
         <Route path="/naverLogin" element={<NaverRedirect/> }/>
+        <Route path="/test0" element={<DrawingBegin />} />
         <Route path="/test" element={<DrawingTest />} />
         <Route path="/consultationList" element={<ConsultaionList/>} />
-        <Route path="/testResult" element={<DrawingResult imageUrl="path/to/image.png" />} />
+        <Route path="/testResult" element={<DrawingResult/>} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/chat/:student_id/:i" element={<Chat />} />
         <Route path="/detail" element={<Result />} />  
         <Route path="/student_result" element={<StudentResult />} />
+        <Route path="/teacher_result" element={<TeacherResult />} />
         <Route path="/message" element={<Message />} />
         <Route path="/studentList" element={<StudentList/>} />
       </Route>
