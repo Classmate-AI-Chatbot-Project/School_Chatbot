@@ -12,6 +12,9 @@ function StudentResult() {
 
   return (
    <div>
+      <div className="TR-title">
+
+      </div>
       <Result />
       <div className="SR-end">
         {showTooltip && (
@@ -27,7 +30,6 @@ function StudentResult() {
         </Link>
       </div>
    </div>
-
   );
 };
 
