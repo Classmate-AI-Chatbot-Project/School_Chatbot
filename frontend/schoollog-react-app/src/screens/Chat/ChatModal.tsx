@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Modal.css";
 import { ReactComponent as Loading1 } from '../../assets/modal-chat1.svg'
 import { ReactComponent as Loading2 } from '../../assets/modal-chat2.svg'
@@ -21,13 +21,18 @@ const ChatModal = (props: ModalProps) => {
         setProgress((prevProgress) => prevProgress + 5);
       } else {
         clearInterval(interval);
-        setCompleted(true);
+        handleComplete();
       }
     }, 500);
     return () => {
       clearInterval(interval);
     };
   }, [progress]);
+
+  const handleComplete = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setCompleted(true);
+  };
 
 
   return (
@@ -37,7 +42,7 @@ const ChatModal = (props: ModalProps) => {
         {completed ? (
             <div className="Modal-main">
               <Complete className="Modal-completeImg" />
-              <Link to="/detail" style={{ textDecoration: 'none' }}>
+              <Link to="/student_result" style={{ textDecoration: 'none' }}>
                 <button className="Modal-gotoResult">상담결과 보러가기</button>
               </Link>
             </div>

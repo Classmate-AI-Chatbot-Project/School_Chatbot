@@ -27,14 +27,14 @@ function Main() {
         </Link>
       </p>
       <p>
-        <Link to="/detail">
+        <Link to="/student_result">
           <button>
-            프로필 + 결과 페이지
+            결과 페이지
           </button>
         </Link>
       </p>
       <p>
-        <Link to="/test">
+        <Link to="/test0">
           <button>
             그림 테스트
           </button>

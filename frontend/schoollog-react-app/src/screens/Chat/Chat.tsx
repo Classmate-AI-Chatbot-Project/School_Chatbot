@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Chat.css";
 import ChatModal from "./ChatModal";
+import UsageModal from "./UsageModal";
+import NoticeModal from "./NoticeModal";
 import { Link } from "react-router-dom";
 import { ReactComponent as ChatDog } from '../../assets/chat-dog.svg'
 import { ReactComponent as ChatBegin } from '../../assets/chat-begin.svg';
@@ -28,7 +30,6 @@ function Chat() {
   const [chatLog, setChatLog] = useState<ChatMessage[]>([]);
   const [showDate, setShowDate] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const [endModalOpen, setEndModalOpen] = useState(false);
   const [usageModalOpen, setUsageModalOpen] = useState(false);
   const [noticeModalOpen, setNoticeModalOpen] = useState(false);
@@ -38,13 +39,6 @@ function Chat() {
   };
 
   const chatOutputRef = useRef<HTMLDivElement>(null);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   //종료하기 모달
   const openEndModal = () => {
@@ -114,7 +108,7 @@ function Chat() {
     // 턴 수에 따라 정해진 답변 또는 랜덤 답변 출력
     if (message === "종료하기") {
       handleChatAnswer(newChat.id, "챗봇 종료"); // "종료하기"를 입력 -> 상담 결과 보러가기
-      openModal();
+      openEndModal();
     } else {
       fetchAnswer(newChat.id, message); // KoGPT2 모델에 MESSAGE를 전송하여 ANSWER을 받아오는 함수 호출
     }    
@@ -201,7 +195,7 @@ function Chat() {
                   </span>
                 ) : chat.message === "종료하기" ? (
                   <div>
-                    <ChatModal open={modalOpen} close={closeModal} />
+                    <ChatModal open={endModalOpen} close={closeEndModal} />
                   </div>
                 ) : (
                   <div className="Chat-A2">
@@ -243,8 +237,8 @@ function Chat() {
           </div>
         )}
         <ChatModal open={endModalOpen} close={closeEndModal} />
-        <ChatModal open={usageModalOpen} close={closeUsageModal} />
-        <ChatModal open={noticeModalOpen} close={closeNoticeModal} />
+        <UsageModal open={usageModalOpen} close={closeUsageModal} />
+        <NoticeModal open={noticeModalOpen} close={closeNoticeModal} />
       </header>
     </div>
   );
