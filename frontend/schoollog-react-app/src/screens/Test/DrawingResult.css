@@ -1,0 +1,107 @@
+.DR-main {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   padding: 20px;
+}
+
+.DR-title {
+   color: var(--bb, #1D4C5C);
+   text-align: center;
+   font-family: Pretendard;
+   font-size: 18px;
+   font-weight: 700;
+
+}
+
+.DR-board {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   padding: 10px 0;
+   width: 340px;
+   min-height: 340px;
+   flex-shrink: 0;
+   border-radius: 8px;
+   border: 1px solid var(--gray-2-ac, #ACACAC);
+   margin-top: 16px;
+   margin-bottom: 15px;
+}
+
+.DR-result {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 340px;
+   min-height: 214px;
+   border-radius: 8px;
+   background: var(--gray-5-ee, #EEE);
+   padding: 15px 0;
+}
+
+.DR-resultContent {
+   width: 290px;
+   min-height: 180px;
+   color: var(--bl, #000);
+   font-family: Pretendard;
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: normal;
+}
+
+.DR-endBtn {
+   width: 340px;
+   height: 61px;
+   flex-shrink: 0;
+   border-radius: 8px;
+   border: none;
+   background: var(--g, #35BA95);
+   color: var(--w, #FFF);
+   text-align: center;
+   font-family: Pretendard;
+   font-size: 18px;
+   font-weight: 700;
+   margin-top: 17px;
+   cursor: pointer;
+}
+ 
+ .DR-tooltip {
+   position: relative;
+   top: 15px;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 300px;
+   border-radius: 1em;
+   border: none;
+   background: var(--bb, #1D4C5C);
+   padding: 5px;
+   color: var(--w, #FFF);
+   font-family: Pretendard;
+   font-size: 13px;
+   font-weight: 500;
+ }
+ .DR-tooltip:after{
+   content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-top-color: #1D4C5C;
+	border-bottom: 0;
+	margin-left: -15px;
+	margin-bottom: -13px;
+ }
+
+ .DR-closeBtn{
+   border:none;
+   background: none;
+   color: #FFF;
+   cursor: pointer;
+   margin-left: 5px;
+ }

@@ -2,15 +2,15 @@
    display: flex;
    flex-direction: columns;
    position: relative;
- }
+}
 
-.Drawing-begin {
+.Drawing-topic {
    position: absolute;
    top: 19px;
    left: 0;
 }
 
-.Drawing-topic {
+.Drawing-t {
    position: absolute;
    top: 99px;
    left: 43.5%;
@@ -35,13 +35,69 @@
    font-family: Pretendard;
    font-size: 15px;
    font-weight: 500;
+   cursor: pointer;
 }
 
 .Drawing-board {
-   margin-top: 214px;
+   position: relative;
+   top: 214px;
 }
+
 .Drawing-canvas {
    border-radius: 8px;
    border: 1px solid var(--gray-2-ac, #ACACAC);
    background: #FFF;
+}
+
+.Drawing-control {
+   position: relative;
+   margin-top: 21px;
+}
+
+.Drawing-color {
+   color: var(--bl, #000);
+   text-align: center;
+   font-family: Pretendard;
+   font-size: 17px;
+   font-weight: 500;
+   margin-right: 15px;
+}
+
+.Drawing-colorIn {
+   width: 30px;
+   height: 29px;
+   border-radius: 8px;
+   border: 2px solid var(--gray-4-e-3, #E3E3E3);
+   margin-right: 36px;
+   cursor: pointer;
+}
+
+.Drawing-line {
+   color: var(--bl, #000);
+   text-align: center;
+   font-family: Pretendard;
+   font-size: 17px;
+   font-weight: 500;
+   margin-right: 15px;
+}
+
+.Drawing-lineIn {
+   accent-color: #1985C0;
+   cursor: pointer;
+}
+
+.Drawing-submit {
+   position: absolute;
+   top: 675px;
+   width: 340px;
+   height: 61px;
+   border: none;
+   border-radius: 8px;
+   background: var(--g, #35BA95);
+   color: var(--w, #FFF);
+   text-align: center;
+   font-family: Pretendard;
+   font-size: 18px;
+   font-weight: 700;
+   cursor: pointer;
 }
