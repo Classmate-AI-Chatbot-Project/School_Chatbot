@@ -26,6 +26,7 @@ function Profile() {
   const dummyNumber:Number = 17;
   const nickname = useSelector((state: RootState) => state.nickname);
   const email = useSelector((state: RootState) => state.email);
+  const isTeacher = useSelector((state:RootState) => state.isTeacher);
 
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
@@ -143,6 +144,7 @@ function Profile() {
           <p>{email}</p>
         </div>
       </div>
+      {!isTeacher &&
       <div className="Profile-secondbox">
         <div>
           <p>나의 우울도</p>
@@ -154,7 +156,9 @@ function Profile() {
             height={200}
           />
         </div>
-      </div>
+      </div>   
+      }
+      {!isTeacher && 
       <div className="Profile-thirdbox">
         <div className="Profile-thirdbox-title">
           <div>
@@ -167,7 +171,8 @@ function Profile() {
         <div>
           <ConsultationResultItemList/>
         </div>
-      </div>
+      </div>      
+      }
       <div className="Profile-forthbox">
         <div className="Profile-forthbox-menu">
           <PowerIcon/>

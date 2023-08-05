@@ -20,3 +20,10 @@ export const setEmail = (email: String) => {
     payload: email,
   };
 };
+
+export const setTeacher = (isTeacher: boolean) => {
+  return {
+    type: 'SET_TEACHER',
+    payload: isTeacher,
+  }
+}
