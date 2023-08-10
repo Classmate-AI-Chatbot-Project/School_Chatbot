@@ -19,6 +19,16 @@
   overflow: hidden;
 }
 
+.MessageModal-contentBox {
+  width: 340px;
+  height: 333px;
+  margin: 0 auto;
+  border-radius: 16px;
+  background: var(--w, #FFF);
+  animation: modal-show 0.3s;
+  overflow: hidden;
+}
+
 .Modal-main {
   display: flex;
   flex-direction: column;
@@ -30,10 +40,13 @@
 .Modal-close {
   display: flex;
   justify-content: flex-end;
-  padding: 5px;
+  align-self: flex-end;
+  padding: 10px;
 }
-
 .Modal-closeBtn {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -86,6 +99,14 @@
   animation: progressbar 10s linear;
 }
 
+.DrawingModal-progress {
+  width: 0%;
+  height: 100%;
+  border-radius: 30px;
+  background: var(--p, #1985C0);
+  animation: progressbar 10s linear;
+}
+
 @keyframes progressbar {
   0% {
     width: 0%;
@@ -112,4 +133,133 @@
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
+}
+
+.UM-contentBox {
+  width: 340px;
+  height: 393px;
+  margin: 0 auto;
+  border-radius: 16px;
+  background: var(--w, #FFF);
+  animation: modal-show 0.3s;
+  overflow: hidden;
+}
+
+.dots_custom {
+  display: inline-block;
+  vertical-align: middle;
+  margin: auto 0;
+  padding: 0;
+}
+
+.dots_custom li {
+  list-style: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 6px;
+  padding: 0;
+}
+
+.dots_custom li button {
+  border: none;
+  background: #d1d1d1;
+  color: transparent;
+  cursor: pointer;
+  display: block;
+  height: 7px;
+  width: 7px;
+  border-radius: 100%;
+  padding: 0;
+}
+
+.dots_custom li.slick-active button {
+  background-color: #35BA95;
+}
+
+.UM-title{
+  color: var(--bb, #1D4C5C);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.UM-usage1 {
+  text-align: left;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 530;
+  margin-left: 10px;
+  line-height: 23px;
+  padding: 5px;
+
+}
+
+.UM-slide{
+  position: relative;
+  height: 360px;
+  padding: 0px 20px;
+}
+
+.UM-Input {
+  height: 60px;
+  width: 340px;
+  bottom: 0px;
+  left: 48%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #e3e3e3;
+  transition: height 0.3s ease, bottom 0.3s ease;
+  position: relative;
+}
+
+.UM-Img1 {
+  position: absolute;
+  left: 25px;
+  top: 230px;
+}
+
+.UM-Img2 {
+  margin-right: 50px;
+  margin-top: 15px;
+  opacity: 0; 
+  animation: scaleUp 0.7s 2s forwards;
+}
+
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.typing-demo {
+  width: 190px;
+  animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid;
+  font-family: monospace;
+  font-size: 12px;
+  margin-top: 68px;
+  margin-left: 45px;
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+}
+    
+@keyframes blink {
+  50% {
+    border-color: transparent
+  }
 }

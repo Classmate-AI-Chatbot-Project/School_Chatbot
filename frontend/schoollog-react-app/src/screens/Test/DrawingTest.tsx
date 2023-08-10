@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import "./DrawingTest.css"
-import {ReactComponent as DrawingBegin} from "../../assets/drawingtest.svg"
+import DrawingModal from "./DrawingModal";
+import {ReactComponent as DrawingTopic} from "../../assets/drawingtest.svg"
 
 interface Point {
   x: number;
@@ -107,29 +108,28 @@ const DrawingTest: React.FC = () => {
 
   return (
     <div className="Drawing-main">
-      <DrawingBegin className="Drawing-begin" />
+      <DrawingTopic className="Drawing-topic" />
       <button className="Drawing-clearBtn" onClick={clearCanvas}>지우기</button>
       <div className="Drawing-board">
         <canvas
           className="Drawing-canvas"
           width={340}
-          height={400}
+          height={370}
           ref={canvasRef}
           onMouseDown={startDrawing}
           onMouseMove={continueDrawing}
           onMouseUp={endDrawing}
           onMouseOut={endDrawing}
         ></canvas>
-        <div>
-          <label htmlFor="color">색깔:</label>
-          <input type="color" id="color" value={color} onChange={handleColorChange} />
-          <label htmlFor="width">선 굵기:</label>
-          <input type="range" id="width" min={1} max={10} value={width} onChange={handleWidthChange} />
-          
-        </div>
-        <div>
+        <div className="Drawing-control">
+          <label className="Drawing-color" htmlFor="color">색깔</label>
+          <input className="Drawing-colorIn" type="color" id="color" value={color} onChange={handleColorChange} />
+          <label className="Drawing-line"  htmlFor="width">굵기</label>
+          <input className="Drawing-lineIn" type="range" id="width" min={1} max={10} value={width} onChange={handleWidthChange} />
         </div>
       </div>
+      <button className="Drawing-submit" onClick={openModal}>제출하기</button>
+      <DrawingModal open={modalOpen} close={closeModal} />
     </div>
   );
 };

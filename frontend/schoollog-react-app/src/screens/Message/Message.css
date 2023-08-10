@@ -45,6 +45,7 @@
    display: inline-block;
    width: 34px;
    height: 34px;
+   cursor: pointer;
  }
  
  .Mes-profile img {
@@ -114,4 +115,26 @@
   font-family: 'Pretendard';
   font-size: 14px;
 }
+
+.Mes-modalProfile {
+  width: 130px;
+   height: 130px;
+ }
+
+ .Mes-modalName {
+  color: var(--bb, #1D4C5C);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 22px;
+ }
+ .Mes-modalSchool {
+  color: var(--gray-169, #696969);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 10px;
+ }
 
