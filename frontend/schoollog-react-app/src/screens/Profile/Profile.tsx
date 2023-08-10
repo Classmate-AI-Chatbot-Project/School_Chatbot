@@ -1,7 +1,8 @@
-import React, { Fragment } from "react";
+import axios from "axios";
+import React, { Fragment, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useCookies } from "react-cookie";
-import { setLoggedIn } from "../../actions";
+import { setEmail, setLoggedIn, setNickname } from "../../actions";
 import { RootState } from '../../reducers';
 import { useNavigate } from 'react-router-dom';
 import ApexChart from 'react-apexcharts'
@@ -24,12 +25,31 @@ interface ResultItem {
 
 function Profile() {
   const dummyNumber:Number = 17;
-  const nickname = useSelector((state: RootState) => state.nickname);
-  const email = useSelector((state: RootState) => state.email);
+  const [SocialEmail, setSocialEmail] = useState("");
+  const [SocialName, setSocialName] = useState("");
+  const [Photo, setPhoto] = useState("");
+  
 
-  const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
   const navigate = useNavigate();
+
+  // user정보 가져오기
+  axios.get(
+    `http://127.0.0.1:8000/account/decode/`,
+    {
+      headers: {
+          "Content-type": "application/json",
+      },
+      withCredentials: true,
+  }
+)
+  .then((res: any) => {
+      console.log(res)
+      setSocialEmail(res.data['email'])
+      setSocialName(res.data['username'])
+      setPhoto(res.data['profile_photo'])
+    })
+
 
   const dummyData: ResultItem[] = [
     {
@@ -104,15 +124,23 @@ function Profile() {
     navigate('/consultations');
   };
 
+
+  // 로그아웃
   const handleLogout = () => {
-    // Redux 상태 업데이트
-    dispatch(setLoggedIn(false));
-
-    // 쿠키 삭제
-    removeCookie('isLoggedIn');
-
-    // 로그인 페이지로 이동
-    navigate('/login');
+    axios.get(
+      `http://127.0.0.1:8000/account/logout/`,
+      {
+        headers: {
+            "Content-type": "application/json",
+        },
+        withCredentials: true,
+    }
+  )
+    .then((res: any) => {
+        console.log(res.data)
+        removeCookie('isLoggedIn', {path: '/'});
+        navigate('/login');
+      })    
   };
 
   function ConsultationResultItemList() {
@@ -137,10 +165,11 @@ function Profile() {
   return (
     <div className="Profile-fullbox">
       <div className="Profile-firstbox">
-        <img src={dummyProfile}/>
+        {/* <img src={"http://127.0.0.1:8000"+Photo} alt="profile"/> */}
+        <img src={"http://127.0.0.1:8000"+Photo} alt="profile"/>
         <div>
-          <p>{nickname}</p>
-          <p>{email}</p>
+          <p>{SocialName}</p>
+          <p>{SocialEmail}</p>
         </div>
       </div>
       <div className="Profile-secondbox">

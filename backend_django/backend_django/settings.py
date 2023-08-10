@@ -16,6 +16,13 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Custom User 사용
+AUTH_USER_MODEL = 'account.User'
+ACCOUNT_SESSION_REMEMBER = True
+
+# SESSION 유효기간 1시간
+SESSION_COOKIE_AGE = 3600
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -41,9 +48,14 @@ INSTALLED_APPS = [
     'backend_django',   # 프로젝트
     'chatbot',          # 챗봇 앱
     'consult',          # 상담(쪽지) 앱
+    'account',          # 로그인/회원가입
+    'rest_framework',   # restframework
+    'corsheaders',      # cors
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # CORS 추가
+    'django.middleware.common.CommonMiddleware',  # CORS 추가
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,8 +63,62 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# CSRF 설정 **
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:8080',
+    'http://localhost:8000',
+    'http://localhost:3000',
+    'http://localhost:8080',
+]
+
+# cors 추가
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:8080',
+    'http://localhost:8000',
+    'http://localhost:3000',
+    'http://localhost:8080',)
+
+CORS_ALLOW_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:8080',
+    'http://localhost:8000',
+    'http://localhost:3000',
+    'http://localhost:8080',
+]
+
+CORS_ALLOW_HEADERS = (
+    'access-control-allow-credentials',
+    'access-control-allow-origin',
+    'access-control-request-method',
+    'access-control-request-headers',
+    'accept',
+    'accept-encoding',
+    'accept-language',
+    'authorization',
+    'connection',
+    'content-type',
+    'dnt',
+    'credentials',
+    'host',
+    'origin',
+    'user-agent',
+    'X-CSRFToken',
+    'csrftoken',
+    'x-requested-with',
+)
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'backend_django.urls'
 
 TEMPLATES = [
@@ -73,6 +139,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend_django.wsgi.application'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -80,6 +150,7 @@ WSGI_APPLICATION = 'backend_django.wsgi.application'
 # Running locally so connect to Cloud SQL via the proxy.
 # To start the proxy via command line: $ cloud-sql-proxy.exe schoollog-project:asia-northeast3:mysql-database
 # Cloud SQL 인증 프록시를 사용 중임을 나타내는 환경 변수 설정: set USE_CLOUD_SQL_AUTH_PROXY=true
+'''
 if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
     DATABASES = {
         'default': {
@@ -91,6 +162,7 @@ if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
             'PORT': '3306',   # MySQL 기본 포트
         }
     }
+'''
 
 # Running on production App Engine, so connect to Google Cloud SQL
 # using the unix socket at /cloudsql/<your-cloud-sql-connection string>
@@ -108,7 +180,7 @@ if os.getenv('GAE_APPLICATOIN', None):
     }
 '''
 
-'''
+
 # 기본
 DATABASES = {
     'default': {
@@ -116,7 +188,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-'''
+
 
 
 # Password validation

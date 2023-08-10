@@ -6,7 +6,8 @@ import App from './App';
 import Main from './Main';
 import Login from './screens/Login/Login';
 import Signup from './screens/Signup/Signup';
-import SignupInputInform from './screens/SignupInputInformation/SignupInputInform'
+import SignupInputInformStudent from './screens/SignupInputInformation/SignupInputInform_student'
+import SignupInputInformTeacher from './screens/SignupInputInformation/SignupInputInform_teacher'
 import ConsultaionList from './screens/Teacher_screens/ConsultationList'
 import ConsultationAll from './screens/Teacher_screens/ConsultationAll';
 import Chat from './screens/Chat/Chat';
@@ -32,7 +33,8 @@ root.render(
         <Route path="/" element={<Main/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/signupInform" element={<SignupInputInform /> } />
+        <Route path="/signupInform1" element={<SignupInputInformStudent /> } />
+        <Route path="/signupInform2" element={<SignupInputInformTeacher /> } />
         <Route path="/profile" element={<Profile/> } />
         <Route path="/googleLogin" element={<GoogleRedirect/>} />
         <Route path="/kakaoLogin" element={<KakaoRedirect/> }/>
@@ -46,6 +48,7 @@ root.render(
         <Route path="/student_result" element={<StudentResult />} />
         <Route path="/message" element={<Message />} />
         <Route path="/studentList" element={<StudentList/>} />
+        <Route path="/account/kakao/callback/" element={<KakaoRedirect/>}></Route>
       </Route>
       <Route path="/consultations" element={<ConsultationAll/>} />
       

@@ -1,23 +1,54 @@
 import React, {useState} from 'react';
 import './SignupInputInform.css';
+import axios from "axios";
+import { useEffect } from "react";
 import { ReactComponent as SearchIcon } from '../../assets/signup-input-search.svg'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCookies } from "react-cookie";
+import { Cookies, useCookies } from "react-cookie";
 import { setLoggedIn, setNickname } from '../../actions';
 import { RootState } from '../../reducers';
 
-function SignupInputInform() {
-  const [email, setEmail] = useState('hello@world.com');
+function SignupInputInformStudent() {
+  const [SocialEmail, setSocialEmail] = useState("");
+  const [SocialName, setSocialName] = useState("");
+  const [log, setCookie] = useCookies(['isLoggedIn']);
+  const dispatch = useDispatch();
+  const cookies = new Cookies();
+  const csrftoken = cookies.get("csrftoken");
+
+  
+
+  // backend에서 계정, 닉네임 받아오기
+  axios.get(
+    `http://127.0.0.1:8000/account/decode/`,
+    {
+      headers: {
+          "Content-type": "application/json",
+      },
+      withCredentials: true,
+  }
+)
+  .then((res: any) => {
+      console.log(res.data)
+      setSocialEmail(res.data['email']);
+      setSocialName(res.data['username']);
+
+      // console.log(res);
+      // console.log('닉네임', SocialName);
+      // console.log('이메일', SocialEmail);
+    })
+
+
   const nickname = useSelector((state: RootState) => state.nickname);
+  const email = useSelector((state: RootState) => SocialEmail);
 
   const [isDuplicated, setIsDuplicated] = useState(false);
-  const isFormValid = email !== '' && nickname !== '';
-
-  const dispatch = useDispatch();
-  const [cookies, setCookie] = useCookies(['isLoggedIn']); // isLoggedIn 쿠키를 사용
+  const isFormValid = SocialEmail !== '' && nickname !== '';
 
 
+
+  
   const handleNicknameChange = (event: any) => {
     const { value } = event.target;
     dispatch(setNickname(value));
@@ -28,10 +59,28 @@ function SignupInputInform() {
     if (isFormValid) {
       // Redux 상태 업데이트
       dispatch(setLoggedIn(true));
-
-      // 쿠키에 저장
-      setCookie('isLoggedIn', true, { path: '/' });
-    }
+      const data = {
+          school:"kakao-school",
+          nickname:nickname,
+          job:"1",  
+      };
+      // 입력한 정보로 회원가입하기
+      axios.put(
+        `http://127.0.0.1:8000/account/signup/`,
+        data, // 전송할 데이터
+        {
+            headers: {
+                "Content-type": "application/json",
+                "X-CSRFToken": csrftoken, // CSRF 토큰을 적절하게 가져와서 헤더에 추가
+            },
+            withCredentials: true,
+        }
+    )
+      .then((res: any) => {
+          console.log(res)
+          setCookie('isLoggedIn', true, { path: '/' });
+        })
+      }
   };
 
   return (
@@ -69,4 +118,4 @@ function SignupInputInform() {
   )
 }
 
-export default SignupInputInform;
+export default SignupInputInformStudent;
