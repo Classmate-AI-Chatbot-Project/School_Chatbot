@@ -37,21 +37,6 @@
   height: 100%;
 }
 
-.Modal-close {
-  display: flex;
-  justify-content: flex-end;
-  align-self: flex-end;
-  padding: 10px;
-}
-.Modal-closeBtn {
-  display: flex;
-  justify-content: flex-end;
-  align-self: flex-end;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
 .modal.openModal {
   display: flex;
   align-items: center;
@@ -135,9 +120,9 @@
   cursor: pointer;
 }
 
-.UM-contentBox {
+.Modal-contentBox2 {
   width: 340px;
-  height: 393px;
+  height: 477px;
   margin: 0 auto;
   border-radius: 16px;
   background: var(--w, #FFF);
@@ -145,6 +130,24 @@
   overflow: hidden;
 }
 
+.Modal-close {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+  padding: 13px;
+  border-bottom:  2px solid var(--gray-4-e-3, #E3E3E3);
+}
+
+.Modal-closeBtn {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* slick-carousel dots 커스텀 */
 .dots_custom {
   display: inline-block;
   vertical-align: middle;
@@ -173,93 +176,71 @@
 }
 
 .dots_custom li.slick-active button {
-  background-color: #35BA95;
+  background-color: #E37354;
 }
 
+/* UsageModal css */
 .UM-title{
-  color: var(--bb, #1D4C5C);
+  color: var(--bl, #000);
   text-align: center;
   font-family: Pretendard;
-  font-size: 19px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 700;
+  margin-right: 85px;
+}
+
+.UM-usage {
+  color: #000;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.UM-Img {
+  position: relative;
+  top: 50px;
+
+}
+
+.UM-arrow {
+  cursor: pointer;
+}
+
+.UM-arrows {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
   margin-bottom: 20px;
 }
 
-.UM-usage1 {
-  text-align: left;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-weight: 530;
-  margin-left: 10px;
-  line-height: 23px;
-  padding: 5px;
-
+.UM-step {
+  margin-left: 90px;
+  margin-right: 90px;
 }
 
-.UM-slide{
+.UM-step4 {
+  margin-left: 69px;
+  margin-right: 69px;
+}
+
+/* NoticeModal css */
+.NM-Img {
   position: relative;
-  height: 360px;
-  padding: 0px 20px;
+  margin-top: 55px;
 }
 
-.UM-Input {
-  height: 60px;
-  width: 340px;
-  bottom: 0px;
-  left: 48%;
-  transform: translateX(-50%);
+.NM-arrows {
+  position: relative;
   display: flex;
+  justify-content: center;
   align-items: center;
-  border-top: 1px solid #e3e3e3;
-  transition: height 0.3s ease, bottom 0.3s ease;
-  position: relative;
 }
 
-.UM-Img1 {
-  position: absolute;
-  left: 25px;
-  top: 230px;
-}
-
-.UM-Img2 {
-  margin-right: 50px;
-  margin-top: 15px;
-  opacity: 0; 
-  animation: scaleUp 0.7s 2s forwards;
-}
-
-
-@keyframes scaleUp {
-  0% {
-    transform: scale(0.7);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.typing-demo {
-  width: 190px;
-  animation: typing 2s steps(22), blink .5s step-end infinite alternate;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid;
-  font-family: monospace;
-  font-size: 12px;
-  margin-top: 68px;
-  margin-left: 45px;
-}
-
-@keyframes typing {
-  from {
-    width: 0
-  }
-}
-    
-@keyframes blink {
-  50% {
-    border-color: transparent
-  }
+.NM-arrow {
+  cursor: pointer;
+  margin-right: 280px;
 }
