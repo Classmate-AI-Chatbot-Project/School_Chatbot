@@ -27,7 +27,7 @@ function NaverRedirect() {
       console.log('naver login success!');
     };
       // NaverLogin();
-      navigate("/signupInform", { replace: true })
+      navigate("/signupType", { replace: true })
   }, []);
 
   return (

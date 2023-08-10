@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from './reducers'
 import './Main.css';
 
 function Main() {
+  const navigate = useNavigate();
+  const isTeacher = useSelector((state:RootState) => state.isTeacher);
+
   const [chatCounter, setChatCounter] = useState(1);
   const student_id = "soohyun";
 
@@ -11,6 +16,12 @@ function Main() {
     const newChatCounter = chatCounter + 1;
     setChatCounter(newChatCounter);
   };
+
+  useEffect(() => {
+    if (isTeacher) {
+      navigate("/consultationList");
+    }
+  }, [isTeacher, navigate]);
 
   return (
     <div>
@@ -27,14 +38,14 @@ function Main() {
         </Link>
       </p>
       <p>
-        <Link to="/detail">
+        <Link to="/student_result">
           <button>
-            프로필 + 결과 페이지
+            결과 페이지
           </button>
         </Link>
       </p>
       <p>
-        <Link to="/test">
+        <Link to="/test0">
           <button>
             그림 테스트
           </button>

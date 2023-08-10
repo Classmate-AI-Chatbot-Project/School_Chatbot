@@ -6,8 +6,8 @@ import App from './App';
 import Main from './Main';
 import Login from './screens/Login/Login';
 import Signup from './screens/Signup/Signup';
-import SignupInputInformStudent from './screens/SignupInputInformation/SignupInputInform_student'
-import SignupInputInformTeacher from './screens/SignupInputInformation/SignupInputInform_teacher'
+import SignupInputInformStudent from './screens/SignupInputInformation/SignupInputInform'
+import SignupInputInformTeacher from './screens/SignupInputInformation/SignupInputInformTeacher'
 import ConsultaionList from './screens/Teacher_screens/ConsultationList'
 import ConsultationAll from './screens/Teacher_screens/ConsultationAll';
 import Chat from './screens/Chat/Chat';

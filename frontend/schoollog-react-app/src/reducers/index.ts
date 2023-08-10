@@ -5,12 +5,14 @@ export interface RootState {
   isLoggedIn: boolean;
   nickname: string;
   email: string;
+  isTeacher: boolean;
 }
 
 const initialState: RootState = {
   isLoggedIn: false,
   nickname: '',
   email: 'hello@world.com',
+  isTeacher: false
 };
 
 const rootReducer = (state:RootState = initialState, action: any): RootState => {
@@ -29,7 +31,12 @@ const rootReducer = (state:RootState = initialState, action: any): RootState => 
         return {
           ...state,
           email: action.payload,
-        };   
+        }; 
+        case 'SET_TEACHER':
+          return {
+            ...state,
+            isTeacher: action.payload,
+          };   
     default:
       return state;
   }
