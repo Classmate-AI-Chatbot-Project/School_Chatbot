@@ -8,7 +8,6 @@ import NaverLogin from "./NaverLogin";
 
 function Login() {
   const navigate = useNavigate();
-  const [isLogined, setIsLogined] = useState(false);
   const cookies = new Cookies();
   const isLoggedIn = cookies.get("isLoggedIn");
 
