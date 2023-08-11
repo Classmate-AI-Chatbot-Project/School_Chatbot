@@ -9,6 +9,20 @@
   padding-right: 24px;
   box-sizing: border-box;
 }
+.topnav-fixed{
+  width: 423px;
+  height: 53px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  z-index: 3;
+}
 
 .topnav a {
   color: #f2f2f2;
