@@ -6,13 +6,13 @@ import { ReactComponent as PersonIcon } from '../../assets/top-bar-person.svg'
 import { ReactComponent as Logo } from '../../assets/main-logo.svg'
 
 
-function TopBar({ setIsOpen }: { setIsOpen: any }) {
+function TopBar({ setIsOpen, isFixed }: { setIsOpen: any, isFixed?: boolean }) {
   const toggleSide = () => {
     setIsOpen(true);
   };
 
   return (
-    <div className="topnav">
+    <div className={isFixed ? 'topnav-fixed' : 'topnav'}>
       <HamburgerIcon role="button" onClick={toggleSide}/>
       <Link to='/' style={{alignItems: 'center',display: 'flex'}}>
         <Logo/>
