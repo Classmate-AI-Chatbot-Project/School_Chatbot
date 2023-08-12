@@ -7,36 +7,50 @@ function NaverRedirect() {
   const code = new URL(window.location.href).searchParams.get("code");
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
-  const CLIENT_ID = 'o20GjxDlH8cHP6nVVDTM';
-  const CLIENT_SECRET = 'FScKK93Rwd';
-  const NAVER_URI = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${code}`
-        
+  const CLIENT_ID = 'EVUfYRmUmUf4p4tEB4MC';
+  const CLIENT_SECRET = 'KOXXwYuSfG';        
 
   // 컴포넌트가 마운트되면 로그인 로직 실행
+  console.log(code)
+  // 컴포넌트가 마운트되면 로그인 로직 실행 
   useEffect(() => {
-    async function NaverLogin() {
-      const res = await axios.get(
-        // process.env.REACT_APP_API +
-        //   `/api/member/login/naver?code=${code}&state=${process.env.NAVER_STATE}`
-        `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${code}`
-      ); // 명세서 보고 변경
-      const ACCESS_TOKEN = res.headers["authorization"];
-      const REFRESH_TOKEN = res.headers["refresh-token"];
-      setCookie("accessToken", ACCESS_TOKEN);
-      setCookie("refreshToken", REFRESH_TOKEN);
-      console.log('naver login success!');
-    };
-      // NaverLogin();
-      navigate("/signupType", { replace: true })
-  }, []);
 
-  return (
-  <>
-  <a href={NAVER_URI}>
-    <button>naver login</button>
-  </a>
-  </>
+
+    const data = {
+      code: code,
+    };
+
+    axios.post(
+        `http://127.0.0.1:8000/account/naver/callback/`,
+        data,
+      {
+          headers: {
+              "Content-type": "application/json",
+          },
+      }
+    )
+    .then((res) => {
+      const token = res.data
+      console.log("email token : ", token)
+      
+      axios.post(
+        `http://127.0.0.1:8000/account/login/`,
+        {'token' : token},
+        { withCredentials: true }
+      )
+      .then((res) => {
+        if(res.status === 202){
+          navigate("/", { replace: true })
+          setCookie('isLoggedIn', true, { path: '/' });
+        }else if(res.status === 201){
+          navigate("/signup", { replace: true })
+        }
+      })
+    })
+    
+  }, []
   )
+  return <></>;
 
   
 }

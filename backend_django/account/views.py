@@ -92,27 +92,81 @@ class google_login(APIView):
                 }
             )
             data = response.json()
-
-            # Get the access token from the response
             access_token = data['access_token']
 
-            # Print the access token
-            
-
-            # 성공 ! 이 token으로 kakao api와 대화 가능
-            # 밑에는 기본적인 user data
+            # 성공 ! 이 token으로 google api에서 사용자 정보 불러옴
             user_info_response = requests.get(
                 f'https://www.googleapis.com/oauth2/v1/userinfo?access_token={access_token}'
             )
             user_data = user_info_response.json()
-
-            print('user:', user_data)
 
             # email, nickname, photo 가져옴
             email = user_data['email']
             nickname = user_data['name']
             photo = user_data['picture']
             token = jwt.encode({"email": email}, SECRET_KEY) #카톡 token을 자체 jwt token으로 변경해줌
+
+            user = authenticate(request, email=email, password=token)
+            if user is None:
+                new_user = User.objects.create_user(email=email, username=nickname, password=token)
+                user = authenticate(request, email=email, password=token)
+                print(user)
+                if photo:
+                    response = requests.get(photo)
+                    if response.status_code == 200:
+                        file_name = photo.split('/')[-1]
+                        new_user.profile_photo.save(file_name, ContentFile(response.content), save=True)
+                new_user.save()
+                print("회원없어서 생성/ 학교, 직업 생성해야함.")
+
+            return Response(token)
+        except Exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+#naver 로그인 하면 email, nickname, photo정보로 임시가입
+class naver_login(APIView):    
+    def post(self, request):
+        try:
+            code = request.data.get("code") # 프론트에서 보내준 code로 token을 구해와야한다 !! 
+            print("code:", code)
+
+            client_id = 'N2pHYJkFjc2tY4jtGNRE'
+            client_secret = 'KVtGsWwUmH'
+            redirect_uri = "http://127.0.0.1:3000/account/naver/callback"
+            naver_uri = 'https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${code}'
+
+            # 액세스 토큰 교환
+            response = requests.post(
+                'https://nid.naver.com/oauth2.0/token',
+                data={
+                    'code': code,
+                    'client_id': client_id,
+                    'client_secret': client_secret,
+                    'redirect_uri': redirect_uri,
+                    'grant_type': 'authorization_code',
+                }
+            )
+            data = response.json()
+
+            access_token = data['access_token']
+
+            # 성공 ! 이 token으로 naver api와 대화 가능
+            # 밑에는 기본적인 user data
+            user_info_response = requests.get(
+                "https://openapi.naver.com/v1/nid/me",
+                headers={
+                    "Authorization": f"Bearer {access_token}"
+                },
+            )
+            user_data = user_info_response.json()
+
+            print('user:', user_data)
+
+            # email, nickname, photo 가져옴
+            email = user_data['response']['email']
+            nickname = user_data['response']['name']
+            photo = user_data['response']['profile_image']
+            token = jwt.encode({"email": email}, SECRET_KEY) #카톡 naver 자체 jwt token으로 변경해줌
 
             print("email : ", email, "nickname : ", nickname, "photo :", photo)
 
