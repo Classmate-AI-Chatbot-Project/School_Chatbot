@@ -38,7 +38,7 @@ root.render(
         <Route path="/signupInform1" element={<SignupInputInformStudent /> } />
         <Route path="/signupInform2" element={<SignupInputInformTeacher /> } />
         <Route path="/profile" element={<Profile/> } />
-        <Route path="/googleLogin" element={<GoogleRedirect/>} />
+        <Route path="/account/google/callback/" element={<GoogleRedirect/>} />
         <Route path="/kakaoLogin" element={<KakaoRedirect/> }/>
         <Route path="/naverLogin" element={<NaverRedirect/> }/>
         <Route path="/test0" element={<DrawingBegin />} />
