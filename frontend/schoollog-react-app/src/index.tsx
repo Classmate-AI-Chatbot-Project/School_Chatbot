@@ -38,9 +38,6 @@ root.render(
         <Route path="/signupInform1" element={<SignupInputInformStudent /> } />
         <Route path="/signupInform2" element={<SignupInputInformTeacher /> } />
         <Route path="/profile" element={<Profile/> } />
-        <Route path="/googleLogin" element={<GoogleRedirect/>} />
-        <Route path="/kakaoLogin" element={<KakaoRedirect/> }/>
-        <Route path="/naverLogin" element={<NaverRedirect/> }/>
         <Route path="/test0" element={<DrawingBegin />} />
         <Route path="/test" element={<DrawingTest />} />
         <Route path="/consultationList" element={<ConsultaionList/>} />
@@ -52,6 +49,9 @@ root.render(
         <Route path="/teacher_result" element={<TeacherResult />} />
         <Route path="/message" element={<Message />} />
         <Route path="/studentList" element={<StudentList/>} />
+
+        <Route path="/account/naver/callback" element={<NaverRedirect/> }/>
+        <Route path="/account/google/callback/" element={<GoogleRedirect/>} />
         <Route path="/account/kakao/callback/" element={<KakaoRedirect/>}></Route>
       </Route>
       <Route path="/consultations" element={<ConsultationAll/>} />

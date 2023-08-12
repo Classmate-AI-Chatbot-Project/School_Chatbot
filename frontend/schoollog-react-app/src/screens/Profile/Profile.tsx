@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
 import { useCookies } from "react-cookie";
 import { setLoggedIn } from "../../actions";
@@ -31,6 +32,20 @@ function Profile() {
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
   const navigate = useNavigate();
+
+  axios.get(
+      `http://127.0.0.1:8000/account/decode/`,
+      {
+        headers: {
+            "Content-type": "application/json",
+        },
+        withCredentials: true,
+    }
+  ).then((res: any) => {
+      console.log(res.data)
+      
+      // 계정, 닉네임, photo 직렬화 데이터로 프로필에 출력하기
+    })
 
   const dummyData: ResultItem[] = [
     {
@@ -106,11 +121,21 @@ function Profile() {
   };
 
   const handleLogout = () => {
+
+    axios.get(
+      `http://127.0.0.1:8000/account/logout/`,
+      {
+        headers: {
+            "Content-type": "application/json",
+        },
+        withCredentials: true,
+    }
+  )
     // Redux 상태 업데이트
     dispatch(setLoggedIn(false));
 
     // 쿠키 삭제
-    removeCookie('isLoggedIn');
+    removeCookie('isLoggedIn', { path: '/' });
 
     // 로그인 페이지로 이동
     navigate('/login');
