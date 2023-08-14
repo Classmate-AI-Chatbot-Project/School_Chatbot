@@ -9,13 +9,13 @@
   transition: 0.5s ease;
   justify-content: flex-end;
   display: flex;
+  z-index: 3;
 }
 .Closed-bar {
   visibility: hidden;
   position: fixed;
   top: 0px;
   left: -315px;
-
 }
 ul{
   list-style: none;
