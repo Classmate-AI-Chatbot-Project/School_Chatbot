@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './SignupInputInform.css';
 import axios from "axios";
-import { useEffect } from "react";
+import SchoolSearchModal from './SchoolSearchModal';
 import { ReactComponent as SearchIcon } from '../../assets/signup-input-search.svg'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Cookies, useCookies } from "react-cookie";
 import { setLoggedIn, setNickname } from '../../actions';
 import { RootState } from '../../reducers';
+import { School } from './SchoolSearchModal';
 
 function SignupInputInformStudent() {
   const [SocialEmail, setSocialEmail] = useState("");
@@ -45,7 +46,26 @@ function SignupInputInformStudent() {
 
   const [isDuplicated, setIsDuplicated] = useState(false);
   const isFormValid = SocialEmail !== '' && nickname !== '';
+  // const isFormValid = email !== '' && nickname !== '';
 
+  // const dispatch = useDispatch();
+  // const [cookies, setCookie] = useCookies(['isLoggedIn']);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSelectSchool = (school: School) => {
+    setSelectedSchool(school);
+  };
 
 
   
@@ -84,7 +104,7 @@ function SignupInputInformStudent() {
   };
 
   return (
-    <div className='SignupInputInform-fullbox'>
+    <div className='SignupInputInform-fullbox' id='current-width'>
       <div className='SignupInputInform-itembox'>
         <p className='SignupInputInform-textbox'>계정</p>
         <p className='SignupInputInform-mail'>{email}</p>
@@ -100,11 +120,19 @@ function SignupInputInformStudent() {
       </div>
       <div className='SignupInputInform-itembox'>
         <p className='SignupInputInform-textbox'>학교 및 학급</p>
-        <div className='SignupInputInform-school-search'>
-          <p>학교를 찾아주세요</p>
+        <div className='SignupInputInform-school-search' onClick={handleOpenModal}>
+          {/* <p>학교를 찾아주세요</p> */}
+          <p>{selectedSchool ? selectedSchool.SCHUL_NM : '학교를 찾아주세요'}</p>
           <SearchIcon />
         </div>
       </div>
+      {isModalOpen && (
+        <SchoolSearchModal
+          modalWidth={'423px'}
+          onSelectSchool={handleSelectSchool}
+          onClose={handleCloseModal}
+        />
+      )}
       <div 
         className={isFormValid ? 'SignupInputInform-confirmbox-active' : 'SignupInputInform-confirmbox-inactive'}>
         <Link to='/' style={{textDecoration:'none'}}>
@@ -112,7 +140,6 @@ function SignupInputInformStudent() {
             가입하기
           </p>      
         </Link>
-
       </div>
     </div>  
   )

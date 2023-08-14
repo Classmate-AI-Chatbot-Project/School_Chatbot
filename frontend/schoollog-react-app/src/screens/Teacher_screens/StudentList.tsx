@@ -1,8 +1,14 @@
-import React, {Fragment} from "react";
+import React, { Fragment, useState } from "react";
 import './StudentList.css'
 import BorderLine from "../../component/BorderLine/BorderLine";
 import StudentItem from "./StudentItem";
 import { ReactComponent as DownIcon } from '../../assets/down-icon.svg'
+
+interface Student {
+  id: number;
+  nickname: string;
+  degree: string;
+}
 
 function StudentList() {
   const mockChatData = [
@@ -39,39 +45,60 @@ function StudentList() {
       degree: "18%"
     },
   ];
+
   function StudentsList() {
     return (
-    <div>
-      {/* Map through the mockChatData array and render ListItem components */}
-      {mockChatData.map((item, index) => (
-        <Fragment key={item.id}>
-          <StudentItem
-            nickname={item.nickname}
-            degree={item.degree}
-          />
-          {/* Render BorderLine except for the last ListItem */}
-          {index !== mockChatData.length - 1 && (
-            <BorderLine width="423px" height="1px" />
-          )}
-        </Fragment>
-      ))}
-    </div>
+      <div>
+        {sortedChatData.map((item, index) => (
+          <Fragment key={item.id}>
+            <StudentItem
+              nickname={item.nickname}
+              degree={item.degree}
+            />
+            {index !== sortedChatData.length - 1 && (
+              <BorderLine width="423px" height="1px" />
+            )}
+          </Fragment>
+        ))}
+      </div>
     );
   }
+
+  const [sortingOption, setSortingOption] = useState<string>('최신순'); // 기본 정렬 옵션 설정
+
+  const sortFunctions: Record<string, (a: Student, b: Student) => number> = {
+    '최신순': (a, b) => b.id - a.id,
+    '오래된순': (a, b) => a.id - b.id,
+    '오름차순': (a, b) => parseFloat(a.degree) - parseFloat(b.degree),
+    '내림차순': (a, b) => parseFloat(b.degree) - parseFloat(a.degree),
+  };
+
+  const sortedChatData = mockChatData.slice().sort(sortFunctions[sortingOption]);
+
   return(
-
-
     <div className="StudentList-fullbox">
-    <div className="StudentList-name">
-      <p>상담 학생 리스트</p>
-      <p>최신순<DownIcon/></p>
-    </div>
-    <BorderLine width="423px" height="1px"/>
-    <div className="StudentList-scrollable">
-      <StudentsList />
-      <BorderLine width="423px" height="1px" />
+      <div className="StudentList-name">
+        <p>상담 학생 리스트</p>
+        <div>
+          <select
+            className="StudentList-select"
+            value={sortingOption}
+            onChange={(e) => setSortingOption(e.target.value)}
+          >
+            <option value="최신순">최신순</option>
+            <option value="오래된순">오래된순</option>
+            <option value="오름차순">우울도 낮은순</option>
+            <option value="내림차순">우울도 높은순</option>
+          </select>
+          <DownIcon />
+        </div>
       </div>
-  </div>
+      <BorderLine width="423px" height="1px"/>
+      <div className="StudentList-scrollable">
+        <StudentsList />
+        <BorderLine width="423px" height="1px" />
+      </div>
+    </div>
   )
 }
 

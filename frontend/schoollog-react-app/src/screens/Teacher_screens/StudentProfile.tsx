@@ -1,20 +1,18 @@
-import React, { Fragment, useState } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import React, { Fragment, useEffect } from "react";
+import BorderLine from "../../component/BorderLine/BorderLine";
+import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
+import dummyProfile from '../../assets/dummy-student-profile.png'
+import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { setLoggedIn } from "../../actions";
-import { RootState } from '../../reducers';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { RootState } from '../../reducers';
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
-import "./Profile.css";
-import BorderLine from "../../component/BorderLine/BorderLine";
-import dummyProfile from '../../assets/dummy-profile-img.png'
-import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
+import "./StudentProfile.css";
 import { ReactComponent as NextIcon } from '../../assets/arrow-next.svg'
-import { ReactComponent as PowerIcon } from '../../assets/power-icon.svg'
-import { ReactComponent as SignoutIcon } from '../../assets/signout-icon.svg'
-import { ReactComponent as PaperIcon } from '../../assets/paper-icon.svg'
-import axios from "axios";
+import { ReactComponent as BackIcon } from '../../assets/back.svg'
 
 interface ResultItem {
   id: string;
@@ -23,19 +21,28 @@ interface ResultItem {
   type: string
 }
 
-function Profile() {
+function StudentProfile() {
   const dummyNumber:Number = 17;
-  // const nickname = useSelector((state: RootState) => state.nickname);
-  // const email = useSelector((state: RootState) => state.email);
-  const isTeacher = useSelector((state:RootState) => state.isTeacher);
-  const [SocialEmail, setSocialEmail] = useState("");
-  const [SocialName, setSocialName] = useState("");
-  const [Photo, setPhoto] = useState("");
-
-
+  const nickname = useSelector((state: RootState) => state.nickname);
+  const email = useSelector((state: RootState) => state.email);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
-  const navigate = useNavigate();
+
+  const handleViewConsultations = () => {
+    navigate('/consultations');
+  };
+
+  const handleLogout = () => {
+    // Redux 상태 업데이트
+    dispatch(setLoggedIn(false));
+
+    // 쿠키 삭제
+    removeCookie('isLoggedIn');
+
+    // 로그인 페이지로 이동
+    navigate('/login');
+  };
 
   const dummyData: ResultItem[] = [
     {
@@ -84,8 +91,7 @@ function Profile() {
         },
       },
    };
-
-  const lineGraphData = {
+   const lineGraphData = {
     series: [
       {
         name: "Series 1",
@@ -106,37 +112,6 @@ function Profile() {
     }
   };
 
-  const handleViewConsultations = () => {
-    navigate('/consultations');
-  };
-
-  const handleLogout = () => {
-    // Redux 상태 업데이트
-    dispatch(setLoggedIn(false));
-
-    // 쿠키 삭제
-    removeCookie('isLoggedIn');
-
-    // 로그인 페이지로 이동
-    navigate('/login');
-  };
-
-  // axios.get(
-  //   `http://127.0.0.1:8000/account/decode/`,
-  //   {
-  //     headers: {
-  //       "Content-type": "application/json",
-  //     },
-  //     withCredentials: true,
-  //   }
-  // )
-  // .then((res: any) => {
-  //   console.log(res)
-  //   setSocialEmail(res.data['email'])
-  //   setSocialName(res.data['username'])
-  //   setPhoto(res.data['profile_photo'])
-  // })
-
   function ConsultationResultItemList() {
     return (
       <div>
@@ -156,16 +131,30 @@ function Profile() {
     )
   }
 
-  return (
-    <div className="Profile-fullbox">
-      <div className="Profile-firstbox">
+  const goBack = ()=> { 
+    navigate(-1)
+  }
+  
+  useEffect(() => {
+      console.log(nickname);
+  }, [])
+
+  return(
+    <div className="StudentProfile-fullbox">
+        <div className="ConsultationAll-topbar">
+          <BackIcon onClick={goBack}/>
+          <p>학생 프로필</p>
+          <p></p>
+        </div>
+        <BorderLine width={'423px'} height={'2px'}/>      
+      <div className="StudentProfile-firstbox">
         <img src={dummyProfile}/>
-        <div>
-          <p>{SocialEmail}</p>
-          <p>{SocialName}</p>
+        <p>닉네임</p>
+        {/* <p>{nickname}</p> */}
+        <div className="StudentProfile-button">
+          상담하기
         </div>
       </div>
-      {!isTeacher &&
       <div className="Profile-secondbox">
         <div>
           <p>나의 우울도</p>
@@ -178,12 +167,10 @@ function Profile() {
           />
         </div>
       </div>   
-      }
-      {!isTeacher && 
       <div className="Profile-thirdbox">
         <div className="Profile-thirdbox-title">
           <div>
-            <p>나의 상담 기록</p>
+            <p>상담 기록</p>
             <p>{dummyNumber.toString()}</p>            
           </div>
           <NextIcon onClick={handleViewConsultations} />
@@ -192,26 +179,9 @@ function Profile() {
         <div>
           <ConsultationResultItemList/>
         </div>
-      </div>      
-      }
-      <div className="Profile-forthbox">
-        <div className="Profile-forthbox-menu">
-          <PowerIcon/>
-          <p onClick={handleLogout}>로그아웃</p>
-        </div>
-        <BorderLine width={'423px'} height={'1px'}/>
-        <div className="Profile-forthbox-menu">
-          <SignoutIcon/>
-          <p>탈퇴하기</p>
-        </div>
-        <BorderLine width={'423px'} height={'1px'}/>
-        <div className="Profile-forthbox-menu">
-          <PaperIcon/>
-          <p>개인정보취급방침</p>
-        </div>
       </div>
     </div>
   )
 }
 
-export default Profile;
+export default StudentProfile;

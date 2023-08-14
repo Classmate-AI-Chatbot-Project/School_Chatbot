@@ -1,0 +1,39 @@
+.SchoolSearchModal-fullbox {
+  display: flex;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+  padding: 0px 40px;
+  box-sizing: border-box;
+}
+.SchoolSearchModal-header {
+  font-size: 16px;
+  font-weight: 500;
+}
+.SchoolSearchModal-content {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.SchoolSearchModal-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 60%;
+  font-size: 16px;
+  font-weight: 500;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  margin-top: 20px;
+  box-sizing: border-box;
+}

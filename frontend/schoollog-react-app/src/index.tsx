@@ -23,6 +23,8 @@ import KakaoRedirect from './screens/Login/KakaoRedirect';
 import GoogleRedirect from './screens/Login/GoogleRedirect';
 import NaverRedirect from './screens/Login/NaverRedirect';
 import StudentList from './screens/Teacher_screens/StudentList';
+import StudentProfile from './screens/Teacher_screens/StudentProfile';
+import SignupType from './screens/SignupType/SignupType';
 
 
 const root = ReactDOM.createRoot(
@@ -37,6 +39,8 @@ root.render(
         <Route path="/signup" element={<Signup />} />
         <Route path="/signupInform1" element={<SignupInputInformStudent /> } />
         <Route path="/signupInform2" element={<SignupInputInformTeacher /> } />
+        <Route path="/signupType" element={<SignupType />} />
+        <Route path="/signupInform" element={<SignupInputInformStudent /> } />
         <Route path="/profile" element={<Profile/> } />
         <Route path="/googleLogin" element={<GoogleRedirect/>} />
         <Route path="/kakaoLogin" element={<KakaoRedirect/> }/>
@@ -52,7 +56,9 @@ root.render(
         <Route path="/teacher_result" element={<TeacherResult />} />
         <Route path="/message" element={<Message />} />
         <Route path="/studentList" element={<StudentList/>} />
+
         <Route path="/account/kakao/callback/" element={<KakaoRedirect/>}></Route>
+        <Route path="/studentProfile" element={<StudentProfile/>} />
       </Route>
       <Route path="/consultations" element={<ConsultationAll/>} />
       

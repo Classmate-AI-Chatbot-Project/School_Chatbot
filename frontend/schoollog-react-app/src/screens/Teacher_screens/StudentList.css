@@ -23,7 +23,14 @@
   font-size: 20px;
   font-weight: 700;
 }
-.StudentList-name p:nth-child(2) {
+.StudentList-select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  border: 0px;
   font-size: 16px;
   font-weight: 500;
+  margin-right: 4px;
+  text-align: right;
 }

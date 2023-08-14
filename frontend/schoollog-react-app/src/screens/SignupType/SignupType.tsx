@@ -19,7 +19,7 @@ function SignupType(props: any) {
         회원가입
       </div>
       <div className="Signuptype-selectbox">
-        <Link style={{textDecorationLine: 'none'}} to='/signupInformTeacher'>
+        <Link style={{textDecorationLine: 'none'}} to='/signupInform'>
           <div className="Signuptype-teacherbox" onClick={handleTeacherBoxClick}>
             <p>
               <b>교직원</b>으로
@@ -31,7 +31,7 @@ function SignupType(props: any) {
             <TeacherCharacter/>
           </div>
         </Link>
-        <Link style={{textDecorationLine: 'none'}} to='/signupInformStudent'>
+        <Link style={{textDecorationLine: 'none'}} to='/signupInform'>
           <div className="Signuptype-studentbox">
             <p>
               <b>학생</b>으로
