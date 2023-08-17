@@ -8,6 +8,9 @@ import { ReactComponent as Img1 } from '../../assets/noticeModal-img1.svg';
 import { ReactComponent as Img2 } from '../../assets/noticeModal-img2.svg';
 import { ReactComponent as Img3 } from '../../assets/noticeModal-img3.svg';
 import { ReactComponent as Img4 } from '../../assets/noticeModal-img4.svg';
+import { ReactComponent as Arrow1 } from '../../assets/usageModal-arrow1.svg';
+import { ReactComponent as Arrow2 } from '../../assets/usageModal-arrow2.svg';
+
 
 interface ModalProps {
   open: boolean;
@@ -75,10 +78,10 @@ const NoticeModal: React.FC<ModalProps> = (props) => {
                 <Img1 className='NM-Img'/>
                 <div className="NM-arrows" style={{marginTop: "100px"}}>
                   <div className="NM-arrow" onClick={previous}>
-                    <img src={require("../../assets/usageModal-arrow1.svg").default} alt='React'  />
+                    <Arrow1  />
                   </div>
                   <div className="UM-arrow" onClick={next}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' />
+                    <Arrow2 />
                   </div>
                 </div>
               </div>
@@ -86,10 +89,10 @@ const NoticeModal: React.FC<ModalProps> = (props) => {
                 <Img2 className='NM-Img'/>
                 <div className="NM-arrows" style={{marginTop: "60px"}}>
                   <div className="NM-arrow" onClick={previous}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' style={{ transform: 'rotate(180deg)' }}  />
+                    <Arrow2 style={{ transform: 'rotate(180deg)' }}  />
                   </div>
                   <div className="UM-arrow" onClick={next}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' />
+                    <Arrow2 />
                   </div>
                 </div>
               </div>
@@ -97,10 +100,10 @@ const NoticeModal: React.FC<ModalProps> = (props) => {
                 <Img3 className='NM-Img'/>
                 <div className="NM-arrows" style={{marginTop: "29px"}}>
                   <div className="NM-arrow" onClick={previous}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' style={{ transform: 'rotate(180deg)' }}  />
+                    <Arrow2 style={{ transform: 'rotate(180deg)' }}  />
                   </div>
                   <div className="UM-arrow" onClick={next}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' />
+                    <Arrow2 />
                   </div>
                 </div>
               </div>
@@ -108,10 +111,10 @@ const NoticeModal: React.FC<ModalProps> = (props) => {
                 <Img4 className='NM-Img' />
                 <div className="NM-arrows" style={{marginTop: "89px"}}>
                   <div className="NM-arrow" onClick={previous}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' style={{ transform: 'rotate(180deg)' }}  />
+                    <Arrow2 style={{ transform: 'rotate(180deg)' }}  />
                   </div>
                   <div className="UM-arrow" onClick={next}>
-                    <img src={require("../../assets/usageModal-arrow1.svg").default} alt='React' style={{ transform: 'rotate(180deg)'}} />
+                    <Arrow1 style={{ transform: 'rotate(180deg)'}} />
                   </div>
                 </div>
               </div>
