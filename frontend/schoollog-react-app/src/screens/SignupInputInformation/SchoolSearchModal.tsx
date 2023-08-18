@@ -27,18 +27,20 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
   const [selectedSchoolIndex, setSelectedSchoolIndex] = useState<number | null>(null);
   const [selectedSchoolType, setSelectedSchoolType] = useState("02");
   const [searchQuery, setSearchQuery] = useState("");
+  
 
   const filteredSchools = schoolList.filter((school) =>
     school.SCHUL_NM.includes(searchQuery)
   );
 
   const SCHOOL_API = `/openApi.do?apiKey=ed9799175a114f848c8d772c443379ee&apiType=62&pbanYr=2020&schulKndCode=${selectedSchoolType}`
-
+  const key = '2a58cfe5fc904bb39bac6c8194b22cb3'
   const getSchoolList = async () => {
     try {
-      axios.get('/api'+ SCHOOL_API)
+      axios.get(`https://open.neis.go.kr/hub/schoolInfo?KEY=${key}&Type=json&pIndex=1&pSize=100&SCHUL_NM=${searchQuery}&SCHUL_KND_SC_NM=${selectedSchoolType}`)
         .then((response) => {
-          const filteredSchoolList = response.data.list.map((item: any) => ({
+          console.log(response.data.schoolInfo[1].row)
+          const filteredSchoolList = response.data.schoolInfo[1].row.map((item: any) => ({
             SCHUL_NM: item.SCHUL_NM,
             ADRCD_NM: item.ADRCD_NM,
           }));
@@ -81,8 +83,8 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
               <input
                 type="radio"
                 value="02"
-                checked={selectedSchoolType === "02"}
-                onChange={() => setSelectedSchoolType("02")}
+                checked={selectedSchoolType === "초등학교"}
+                onChange={() => setSelectedSchoolType("초등학교")}
               />      
                 초등학교
               </label>
@@ -90,8 +92,8 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
               <input
                 type="radio"
                 value="03"
-                checked={selectedSchoolType === "03"}
-                onChange={() => setSelectedSchoolType("03")}
+                checked={selectedSchoolType === "중학교"}
+                onChange={() => setSelectedSchoolType("중학교")}
               />
               중학교
             </label>
@@ -99,8 +101,8 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
               <input
                 type="radio"
                 value="04"
-                checked={selectedSchoolType === "04"}
-                onChange={() => setSelectedSchoolType("04")}
+                checked={selectedSchoolType === "고등학교"}
+                onChange={() => setSelectedSchoolType("고등학교")}
               />
               고등학교
             </label>

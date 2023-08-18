@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
+import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
 import { useCookies } from "react-cookie";
 import { setLoggedIn } from "../../actions";
@@ -14,7 +15,6 @@ import { ReactComponent as NextIcon } from '../../assets/arrow-next.svg'
 import { ReactComponent as PowerIcon } from '../../assets/power-icon.svg'
 import { ReactComponent as SignoutIcon } from '../../assets/signout-icon.svg'
 import { ReactComponent as PaperIcon } from '../../assets/paper-icon.svg'
-import axios from "axios";
 
 interface ResultItem {
   id: string;
@@ -25,17 +25,27 @@ interface ResultItem {
 
 function Profile() {
   const dummyNumber:Number = 17;
-  // const nickname = useSelector((state: RootState) => state.nickname);
-  // const email = useSelector((state: RootState) => state.email);
+  const nickname = useSelector((state: RootState) => state.nickname);
+  const email = useSelector((state: RootState) => state.email);
   const isTeacher = useSelector((state:RootState) => state.isTeacher);
-  const [SocialEmail, setSocialEmail] = useState("");
-  const [SocialName, setSocialName] = useState("");
-  const [Photo, setPhoto] = useState("");
-
 
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
   const navigate = useNavigate();
+
+  axios.get(
+      `http://127.0.0.1:8000/account/decode/`,
+      {
+        headers: {
+            "Content-type": "application/json",
+        },
+        withCredentials: true,
+    }
+  ).then((res: any) => {
+      console.log(res.data)
+      
+      // 계정, 닉네임, photo 직렬화 데이터로 프로필에 출력하기
+    })
 
   const dummyData: ResultItem[] = [
     {
@@ -111,31 +121,25 @@ function Profile() {
   };
 
   const handleLogout = () => {
+
+    axios.get(
+      `http://127.0.0.1:8000/account/logout/`,
+      {
+        headers: {
+            "Content-type": "application/json",
+        },
+        withCredentials: true,
+    }
+  )
     // Redux 상태 업데이트
     dispatch(setLoggedIn(false));
 
     // 쿠키 삭제
-    removeCookie('isLoggedIn');
+    removeCookie('isLoggedIn', { path: '/' });
 
     // 로그인 페이지로 이동
     navigate('/login');
   };
-
-  // axios.get(
-  //   `http://127.0.0.1:8000/account/decode/`,
-  //   {
-  //     headers: {
-  //       "Content-type": "application/json",
-  //     },
-  //     withCredentials: true,
-  //   }
-  // )
-  // .then((res: any) => {
-  //   console.log(res)
-  //   setSocialEmail(res.data['email'])
-  //   setSocialName(res.data['username'])
-  //   setPhoto(res.data['profile_photo'])
-  // })
 
   function ConsultationResultItemList() {
     return (
@@ -161,8 +165,8 @@ function Profile() {
       <div className="Profile-firstbox">
         <img src={dummyProfile}/>
         <div>
-          <p>{SocialEmail}</p>
-          <p>{SocialName}</p>
+          <p>{nickname}</p>
+          <p>{email}</p>
         </div>
       </div>
       {!isTeacher &&
