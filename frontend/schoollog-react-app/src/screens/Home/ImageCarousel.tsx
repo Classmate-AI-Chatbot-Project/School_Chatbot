@@ -1,51 +1,75 @@
-import React from 'react';
+import React, { useRef, useCallback, useState } from 'react';
+import "./Home.css"
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Rectangle1 from './Rectangle1.png';
-import Rectangle2 from './Rectangle1.png';
-import Rectangle from './Rectangle1.png';
+
+import { ReactComponent as PrevImg } from '../../assets/main-carousel-prev.svg';
+import { ReactComponent as NextImg } from '../../assets/main-carousel-next.svg';
+import step1 from '../../assets/main-carousel-step1.png';
+import step2 from '../../assets/main-carousel-step2.png';
+import step3 from '../../assets/main-carousel-step3.png';
+import step4 from '../../assets/main-carousel-step4.png';
 
 const ImageCarousel: React.FC = () => {
-  const imageUrls = [
-    // give some dummy images from internet
-    'https://picsum.photos/800/300/?random',
-    'https://picsum.photos/800/301/?random',
-    'https://picsum.photos/800/302/?random',
-    // './Rectangle1.png',
-    // './Rectangle2.png',
-    // './Rectangle3.png',
-  ];
-  // 라이브러리에서 제공하는 이전 화살표 컴포넌트
-  const PrevArrow: React.FC = (props) => <div {...props} className="slick-prev" />;
-
-  // 라이브러리에서 제공하는 다음 화살표 컴포넌트
-  const NextArrow: React.FC = (props) => <div {...props} className="slick-next" />;
-
   const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
+    centerMode: true,
+    centerPadding: '50',
     slidesToShow: 1,
+    arrows: false,
+    infinite: true,
+    speed: 1000,
     slidesToScroll: 1,
-    // prevArrow: <PrevArrow />, // 라이브러리에서 제공하는 이전 화살표 컴포넌트 사용
-    // nextArrow: <NextArrow />, // 라이브러리에서 제공하는 다음 화살표 컴포넌트 사용
+  };
+
+  const slickRef = useRef<any>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const previous = useCallback(() => {
+    if (slickRef.current) {
+      slickRef.current.slickPrev();
+      setCurrentSlide((prevSlide) => (prevSlide - 1 + 4) % 4); 
+    }
+  }, []);
+
+  const next = useCallback(() => {
+    if (slickRef.current) {
+      slickRef.current.slickNext();
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % 4);
+    }
+  }, []);
+
+  const handleAfterChange = (index: number) => {
+    setCurrentSlide(index);
   };
 
   return (
-    <div style={{
-      // display: 'flex',
-      // width: '100%',
-      // height: '100%',
-      zIndex: 1,
-    }}>
-      <Slider {...settings}>
-        {imageUrls.map((url) => (
-          <div key={url}>
-            <img src={url} alt="slide" />
-          </div>
-        ))}
+    <div className="ImageCarousel-container">
+      <Slider {...settings} ref={slickRef} afterChange={handleAfterChange}>
+        <div>
+        <img src={step1} alt="step1" />
+        </div>
+        <div>
+          <img src={step2} alt="step2" />
+        </div>
+        <div>
+          <img src={step3} alt="step3" />
+        </div>
+        <div>
+          <img src={step4} alt="step4" />
+        </div>
       </Slider>
+      <div className="ImageCarousel-sliderBtn">
+        <div onClick={previous} className="ImageCarousel-arrow">
+          <PrevImg />
+        </div>
+        <div className="ImageCarousel-page">
+          {currentSlide + 1}/4
+        </div>
+        <div onClick={next} className="ImageCarousel-arrow">
+          <NextImg />
+        </div>
+      </div>
     </div>
   );
 };

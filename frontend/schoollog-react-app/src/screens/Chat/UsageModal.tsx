@@ -8,6 +8,13 @@ import { ReactComponent as Img1 } from '../../assets/usageModal-img1.svg';
 import { ReactComponent as Img2 } from '../../assets/usageModal-img2.svg';
 import { ReactComponent as Img3 } from '../../assets/usageModal-img3.svg';
 import { ReactComponent as Img4 } from '../../assets/usageModal-img4.svg';
+import { ReactComponent as Arrow1 } from '../../assets/usageModal-arrow1.svg';
+import { ReactComponent as Arrow2 } from '../../assets/usageModal-arrow2.svg';
+import { ReactComponent as Step1 } from '../../assets/usageModal-step1.svg';
+import { ReactComponent as Step2 } from '../../assets/usageModal-step2.svg';
+import { ReactComponent as Step3 } from '../../assets/usageModal-step3.svg';
+import { ReactComponent as Step4 } from '../../assets/usageModal-step4.svg';
+
 
 interface ModalProps {
   open: boolean;
@@ -75,11 +82,11 @@ const UsageModal: React.FC<ModalProps> = (props) => {
                 <Img1 className='UM-Img'/>
                 <div className="UM-arrows">
                   <div className="UM-arrow" onClick={previous}>
-                    <img src={require("../../assets/usageModal-arrow1.svg").default} alt='React'  />
+                    <Arrow1  />
                   </div>
-                  <img src={require("../../assets/usageModal-step1.svg").default} alt='React' className='UM-step'/>
+                  <Step1 className='UM-step'/>
                   <div className="UM-arrow" onClick={next}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' />
+                    <Arrow2 />
                   </div>
                 </div>
                 <div className='UM-usage'>
@@ -92,11 +99,11 @@ const UsageModal: React.FC<ModalProps> = (props) => {
                 <Img2 className='UM-Img'/>
                 <div className="UM-arrows">
                   <div className="UM-arrow" onClick={previous}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' style={{ transform: 'rotate(180deg)' }} />
+                    <Arrow2 style={{ transform: 'rotate(180deg)' }} />
                   </div>
-                  <img src={require("../../assets/usageModal-step2.svg").default} alt='React' className='UM-step'/>
+                  <Step2 className='UM-step'/>
                   <div className="UM-arrow" onClick={next}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' />
+                    <Arrow2 />
                   </div>
                 </div>
                 <div className='UM-usage'>
@@ -109,11 +116,11 @@ const UsageModal: React.FC<ModalProps> = (props) => {
                 <Img3 className='UM-Img'/>
                 <div className="UM-arrows">
                   <div className="UM-arrow" onClick={previous}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' style={{ transform: 'rotate(180deg)' }} />
+                    <Arrow2 style={{ transform: 'rotate(180deg)' }} />
                   </div>
-                  <img src={require("../../assets/usageModal-step3.svg").default} alt='React' className='UM-step'/>
+                  <Step3 className='UM-step'/>
                   <div className="UM-arrow" onClick={next}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' />
+                    <Arrow2 />
                   </div>
                 </div>
                 <div className='UM-usage'>
@@ -126,11 +133,11 @@ const UsageModal: React.FC<ModalProps> = (props) => {
                 <Img4 className='UM-Img' style={{marginLeft: "30px"}}/>
                 <div className="UM-arrows">
                   <div className="UM-arrow" onClick={previous}>
-                    <img src={require("../../assets/usageModal-arrow2.svg").default} alt='React' style={{ transform: 'rotate(180deg)' }} />
+                    <Arrow2 style={{ transform: 'rotate(180deg)' }} />
                   </div>
-                  <img src={require("../../assets/usageModal-step4.svg").default} alt='React' className='UM-step4'/>
+                  <Step4 className='UM-step4'/>
                   <div className="UM-arrow" onClick={next}>
-                    <img src={require("../../assets/usageModal-arrow1.svg").default} alt='React' style={{ transform: 'rotate(180deg)' }} />
+                    <Arrow1 style={{ transform: 'rotate(180deg)' }} />
                   </div>
                 </div>
                 <div className='UM-usage'>
