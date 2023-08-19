@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import './App.css'
-import TopBar from './component/topbar/TopBar';
+import TopBar from './component/TopBar/TopBar';
 import SideBar from './component/SideBar.tsx/SideBar';
 import BorderLine from './component/BorderLine/BorderLine';
 import { Provider } from 'react-redux';

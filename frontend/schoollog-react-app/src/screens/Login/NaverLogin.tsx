@@ -1,4 +1,5 @@
 import React from "react";
+import { ReactComponent as NaverIcon } from '../../assets/login-naver-icon.svg'
 
 const NaverLogin= () => {
   const CLIENT_ID = 'N2pHYJkFjc2tY4jtGNRE';
@@ -9,11 +10,12 @@ const NaverLogin= () => {
 
 
   return (
-    <>
-    <a href={NAVER_URI}>
-      <button>naver login</button>
-    </a>
-    </>
+    <div className="Naver-button">
+      <NaverIcon />
+      <a href={NAVER_URI}>
+        NAVER로 로그인
+      </a>
+    </div>    
   )
 }
 
