@@ -166,10 +166,8 @@ function Home() {
         </p>
         <div className="Home-chatbot-manual-slider">
           <div>
-            Image Carousel
-            {/* <ImageCarousel /> */}
+            <ImageCarousel />
           </div>
-          <div>Slider button</div>
         </div>
         <div className="Home-chatbot-manual-button">
           상담하러 가기
