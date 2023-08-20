@@ -1,34 +1,42 @@
 import React, { useState } from "react";
-import "./StudentResult.css"
+import { useNavigate } from 'react-router-dom';
+import "./TeacherResult.css"
 import Result from "./Result";
 import { Link } from 'react-router-dom';
+import {ReactComponent as Back} from "../../assets/back.svg"
+import dummyProfile from '../../assets/dummy-profile-img.png'
+import BorderLine from '../../component/BorderLine/BorderLine';
 
 function StudentResult() {  
-   const [showTooltip, setShowTooltip] = useState(true);
+  let emotion = "우울";
 
-   const closeTooltip = () => {
-     setShowTooltip(false);
-   };
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1)
+  };
 
   return (
-   <div>
+   <div className="TeacherResult">
+      <div className="TR-dateBar">
+        <Back onClick={handleGoBack} style={{cursor: "pointer"}}/>
+        <div className="TR-date">
+          2023.06.13
+        </div>
+      </div>
+      <BorderLine width={'423px'} height={'1px'}/>
       <div className="TR-title">
-
+        <img  className="TR-title-profile" src={dummyProfile} />
+        <div className="TR-title-nickname">
+          딸기당근수박
+        </div>
+        <div className={`TR-title-circle ${emotion === "행복" ? "happy" : emotion === "우울" ? "sad" : emotion === "평범" ? "normal" : ""}`}>
+        </div>
+        <div className="TR-title-keywords">
+          친구, 쉬는 시간, 매점
+        </div>
       </div>
       <Result />
-      <div className="SR-end">
-        {showTooltip && (
-          <div className="SR-tooltip">
-            <span className="SR-tooltipContent">
-              상담 결과를 전송해 선생님과 상담을 할 수 있어요.
-            </span>
-            <button className="SR-closeBtn" onClick={closeTooltip}>✖</button>
-          </div>
-        )}
-        <Link to="/message">
-        <button className="SR-endBtn">상담 신청하기</button>
-        </Link>
-      </div>
    </div>
   );
 };

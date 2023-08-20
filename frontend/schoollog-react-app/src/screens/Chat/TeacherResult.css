@@ -1,0 +1,70 @@
+.TeacherResult{
+   padding: 0 0 48px 0;
+}
+.TR-dateBar{
+   display: flex;
+   padding: 15px 30px;
+}
+
+.TR-date {
+   margin-left: 130px;
+   color: var(--bl, #000);
+   text-align: center;
+   font-family: Pretendard;
+   font-size: 18px;
+   font-weight: 700;
+}
+
+.TR-title {
+   position: relative;
+   height: 84px;
+}
+
+.TR-title-profile {
+   position: absolute;
+   top: 18px;
+   left: 25px;
+   width: 46px;
+   height: 46px;
+}
+
+.TR-title-nickname {
+   position: absolute;
+   top: 21px;
+   left: 89px;
+   color: var(--bl, #000);
+   font-family: Pretendard;
+   font-size: 16px;
+   font-weight: 800;
+}
+
+.TR-title-circle {
+   position: absolute;
+   top: 54px;
+   left: 90px;
+   border: none;
+   border-radius: 100px;
+   width: 10px;
+   height: 10px;
+}
+.TR-title-circle.happy {
+   background-color: #35BA95; 
+}
+.TR-title-circle.sad {
+   background-color: #E37354;
+}
+
+.TR-title-circle.normal {
+   background-color: #FFCD7D;
+}
+
+
+.TR-title-keywords {
+   position: absolute;
+   top: 48px;
+   left: 107px;
+   color: var(--bl, #000);
+   font-family: Pretendard;
+   font-size: 14px;
+   font-weight: 800;
+}
