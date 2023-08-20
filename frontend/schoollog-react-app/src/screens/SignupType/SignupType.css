@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: calc(100vh - 53px);
+  min-height: calc(100dvh - 53px);
   justify-content: flex-start;
   align-items: flex-start;
   background-color: white;
@@ -30,21 +30,11 @@
   flex-direction: column;
   height: 294px;
   width: 158px;
-  padding-top: 30px;
   border-radius: 8px;
   background: var(--b, #1985C0);
   box-sizing: border-box;
   justify-content: space-between;
   align-items: center;
-}
-.Signuptype-teacherbox p{
-  color: var(--yw, #F6F8E3);
-  font-size: 22px;
-  font-weight: 600;
-  line-height: normal;
-  height: 0;
-  margin-bottom: 60px;
-  background-color: antiquewhite;
 }
 .Signuptype-teacherbtn {
   width: 62px;
@@ -61,7 +51,6 @@
   flex-direction: column;
   height: 294px;
   width: 158px;
-  padding-top: 30px;
   border-radius: 8px;
   background: var(--g, #35BA95);
   box-sizing: border-box;
@@ -78,10 +67,111 @@
   font-size: 17px;
   font-weight: 700;
 }
+.Signuptype-teacherbox div:first-child, 
+.Signuptype-studentbox div:first-child {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0px 50px 0px;
+}
+.Signuptype-teacherbox p, 
 .Signuptype-studentbox p{
   color: var(--yw, #F6F8E3);
   font-size: 22px;
+  line-height: 1.8rem;
   font-weight: 600;
-  height: 0;
-  margin-bottom: 60px;
+  margin: 0px;
+}
+
+
+@media (max-width: 768px) {
+  .Signuptype-fullbox {
+    display: flex;
+    flex-direction: column;
+    width: 100dvw;
+    height: calc(100dvh - 53px);
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: white;
+  }
+  .Signuptype-title {
+    display: flex;
+    flex-direction: row;
+    width: 100dvw;
+    height: 10dvh;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: white;
+  }
+  .Signuptype-selectbox {
+    display: flex;
+    flex-direction: row;
+    width: 100dvw;
+    justify-content: space-between;
+    padding: 0 6dvw;
+    box-sizing: border-box;
+  }
+  .Signuptype-teacherbox {
+    display: flex;
+    flex-direction: column;
+    height: 294px;
+    width: 158px;
+    border-radius: 8px;
+    background: var(--b, #1985C0);
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .Signuptype-teacherbtn {
+    width: 62px;
+    height: 28px;
+    border-radius: 60px;
+    background: var(--yw, #F6F8E3);
+    line-height: 28px;
+    color: var(--r, #E37354);
+    font-size: 1.1rem;
+    /* font-weight: 900rem; */
+  }
+  .Signuptype-studentbox {
+    display: flex;
+    flex-direction: column;
+    height: 294px;
+    width: 158px;
+    border-radius: 8px;
+    background: var(--g, #35BA95);
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .Signuptype-studentbtn {
+    width: 62px;
+    height: 28px;
+    border-radius: 60px;
+    background: var(--yw, #F6F8E3);
+    line-height: 28px;
+    color: var(--r, #1985C0);
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .Signuptype-teacherbox div:first-child, 
+  .Signuptype-studentbox div:first-child {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 0px 50px 0px;
+  }
+  .Signuptype-teacherbox p, 
+  .Signuptype-studentbox p{
+    color: var(--yw, #F6F8E3);
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.8rem;
+    margin: 0px;
+  }
 }

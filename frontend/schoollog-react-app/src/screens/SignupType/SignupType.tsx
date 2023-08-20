@@ -21,24 +21,28 @@ function SignupType(props: any) {
       <div className="Signuptype-selectbox">
         <Link style={{textDecorationLine: 'none'}} to='/signupInform'>
           <div className="Signuptype-teacherbox" onClick={handleTeacherBoxClick}>
-            <p>
-              <b>교직원</b>으로
-              <p>가입하기</p>
-            </p>
-            <div className="Signuptype-teacherbtn">
-              GO
+            <div>
+              <p>
+                <b>교직원</b>으로<br/>
+                가입하기
+              </p>
+              <div className="Signuptype-teacherbtn">
+                GO
+              </div>
             </div>
             <TeacherCharacter/>
           </div>
         </Link>
         <Link style={{textDecorationLine: 'none'}} to='/signupInform'>
           <div className="Signuptype-studentbox">
-            <p>
-              <b>학생</b>으로
-              <p>가입하기</p>
-            </p>
-            <div className="Signuptype-studentbtn">
-              GO
+            <div>
+              <p>
+                학생으로<br/>
+                가입하기
+              </p>
+              <div className="Signuptype-studentbtn">
+                GO
+              </div>
             </div>
             <StudentCharacter/>
           </div>
