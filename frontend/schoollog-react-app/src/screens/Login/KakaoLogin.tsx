@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-// import {useDispatch} from 'react-redux'
+import React from "react";
+import './Login.css'
+import { ReactComponent as KakaoIcon } from '../../assets/login-kakao-icon.svg'
 
 const KakaoLogin = () => {
     // let grant_type = "authorization_code";
@@ -10,11 +9,12 @@ const KakaoLogin = () => {
     const KAKAO_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`
 
   return (
-    <>
-    <a href={KAKAO_URI}>
-      <button>kakao login</button>
-    </a>
-    </>
+    <div className="Kakao-button">
+      <KakaoIcon />
+      <a href={KAKAO_URI}>
+        카톡으로 3초만에 로그인
+      </a>
+    </div>
   )
 }
 

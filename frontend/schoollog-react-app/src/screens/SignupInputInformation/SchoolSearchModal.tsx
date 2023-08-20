@@ -42,7 +42,7 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
           console.log(response.data.schoolInfo[1].row)
           const filteredSchoolList = response.data.schoolInfo[1].row.map((item: any) => ({
             SCHUL_NM: item.SCHUL_NM,
-            ADRCD_NM: item.ADRCD_NM,
+            ADRCD_NM: item.LCTN_SC_NM,
           }));
           setSchoolList(filteredSchoolList);
         })
