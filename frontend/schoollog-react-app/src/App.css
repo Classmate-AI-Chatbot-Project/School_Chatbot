@@ -1,9 +1,10 @@
 .App-fullbox {
   display: flex;
   flex: 1;
+  height: 100vh;;
   justify-content: center;
   align-items: flex-start;
-  background-color: lightgray;
+  background-color: #E3E3E3;
   text-align: center;
 }
 .App-contentbox {
