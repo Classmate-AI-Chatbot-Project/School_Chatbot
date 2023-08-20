@@ -18,7 +18,6 @@ function SignupInputInformStudent() {
   const cookies = new Cookies();
   const csrftoken = cookies.get("csrftoken");
 
-  
 
   // backend에서 계정, 닉네임 받아오기
   axios.get(
@@ -46,10 +45,6 @@ function SignupInputInformStudent() {
 
   const [isDuplicated, setIsDuplicated] = useState(false);
   const isFormValid = SocialEmail !== '' && nickname !== '';
-  // const isFormValid = email !== '' && nickname !== '';
-
-  // const dispatch = useDispatch();
-  // const [cookies, setCookie] = useCookies(['isLoggedIn']);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
@@ -104,23 +99,25 @@ function SignupInputInformStudent() {
   };
 
   return (
-    <div className='SignupInputInform-fullbox' id='current-width'>
-      <div className='SignupInputInform-itembox'>
-        <p className='SignupInputInform-textbox'>계정</p>
-        <p className='SignupInputInform-mail'>{email}</p>
-        <div className='SignupInputInform-underline'/>
+    <div className='SignupInform-fullbox' id='current-width'>
+      <div className='SignupInform-emailbox'>
+        <p className='SignupInform-textbox'>계정</p>
+        <p className='SignupInform-mail'>{email}</p>
+        <div className='SignupInform-underline'/>
       </div>
-      <div className='SignupInputInform-itembox'>
-        <p className='SignupInputInform-textbox'>닉네임</p>
-        <input className='SignupInputInform-inputbox'
+      <div className='SignupInform-nicknamebox'>
+        <p className='SignupInform-textbox'>닉네임</p>
+        <input className='SignupInform-inputbox'
           value={nickname}
           onChange={handleNicknameChange}        
         ></input>
-        {isDuplicated && <p>이미 사용중인 닉네임입니다.</p>}
+        <div className='SignupInform-underline'/>
+        {!isDuplicated && <p className='SignupInform-nickname-warning'></p>}
+        {isDuplicated && <p className='SignupInform-nickname-warning'>이미 사용중인 닉네임입니다.</p>}
       </div>
-      <div className='SignupInputInform-itembox'>
-        <p className='SignupInputInform-textbox'>학교 및 학급</p>
-        <div className='SignupInputInform-school-search' onClick={handleOpenModal}>
+      <div className='SignupInform-schoolbox'>
+        <p className='SignupInform-textbox'>학교 및 학급</p>
+        <div className='SignupInform-school-search' onClick={handleOpenModal}>
           {/* <p>학교를 찾아주세요</p> */}
           <p>{selectedSchool ? selectedSchool.SCHUL_NM : '학교를 찾아주세요'}</p>
           <SearchIcon />
@@ -128,13 +125,13 @@ function SignupInputInformStudent() {
       </div>
       {isModalOpen && (
         <SchoolSearchModal
-          modalWidth={'423px'}
+          modalWidth={'100%'}
           onSelectSchool={handleSelectSchool}
           onClose={handleCloseModal}
         />
       )}
       <div 
-        className={isFormValid ? 'SignupInputInform-confirmbox-active' : 'SignupInputInform-confirmbox-inactive'}>
+        className={isFormValid ? 'SignupInform-confirmbox-active' : 'SignupInform-confirmbox-inactive'}>
         <Link to='/' style={{textDecoration:'none'}}>
           <p onClick={handleSignup}>
             가입하기

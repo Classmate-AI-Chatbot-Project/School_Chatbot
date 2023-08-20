@@ -23,7 +23,6 @@
   top: 0;
   z-index: 3;
 }
-
 .topnav a {
   color: #f2f2f2;
   font-size: 17px;
@@ -40,5 +39,23 @@
     padding-right: 24px;
     box-sizing: border-box;
     z-index: 3;
+  }
+  .topnav-fixed{
+    width: 100dvw;
+    height: 53px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 24px;
+    padding-right: 24px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    z-index: 3;
+  }
+  .topnav a {
+    color: #f2f2f2;
+    font-size: 17px;
   }
 }

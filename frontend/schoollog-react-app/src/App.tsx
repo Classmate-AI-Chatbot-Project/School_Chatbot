@@ -26,7 +26,7 @@ function App() {
               setIsOpen={setIsOpen} 
               />}
             {!isSpecificRoute && <TopBar setIsOpen={setIsOpen} /> }
-            <BorderLine height={'1px'} width={'423px'}/>
+            <BorderLine height={'1px'} width={'100dvw'}/>
 
           <Outlet/>
 
