@@ -49,10 +49,10 @@ root.render(
         <Route path="/chat" element={<Chat />} />
         <Route path="/chat/:student_id/:i" element={<Chat />} />
         <Route path="/detail" element={<Result />} />  
-        <Route path="/student_result" element={<StudentResult />} />
+        <Route path="/chat/result/:student_id/:chatroom_id" element={<StudentResult />} />
         <Route path="/teacher_result" element={<TeacherResult />} />
         <Route path="/message" element={<Message />} />
-        <Route path="/studentList" element={<StudentList/>} />
+        <Route path="/teacher/studentlist" element={<StudentList/>} />
 
 
         <Route path="/account/naver/callback" element={<NaverRedirect/> }/>

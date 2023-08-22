@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from "react";
 import './StudentList.css'
+import axios from "axios";
 import BorderLine from "../../component/BorderLine/BorderLine";
 import StudentItem from "./StudentItem";
 import { ReactComponent as DownIcon } from '../../assets/down-icon.svg'
+import { useParams } from 'react-router-dom';
 
 interface Student {
   id: number;
@@ -45,6 +47,20 @@ function StudentList() {
       degree: "18%"
     },
   ];
+
+  axios.get(
+    `http://127.0.0.1:8000/teacher/studentlist`,
+    {
+      headers: {
+          "Content-type": "application/json",
+      },
+      withCredentials: true,
+  }
+  ).then((res: any) => {
+    console.log(res.data)
+    
+    // 계정, 닉네임, photo 직렬화 데이터로 프로필에 출력하기
+  })
 
   function StudentsList() {
     return (
