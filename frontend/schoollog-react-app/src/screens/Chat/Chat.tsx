@@ -1,20 +1,21 @@
+//react-app Chat.tsx 
 import React, { useState, useEffect, useRef } from "react";
+import axios from 'axios';
+import { Cookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 import "./Chat.css";
 import ChatModal from "./ChatModal";
 import UsageModal from "./UsageModal";
 import NoticeModal from "./NoticeModal";
-import { Link } from "react-router-dom";
-import { ReactComponent as ChatDog } from '../../assets/chat-dog.svg'
+import { ReactComponent as ChatDog } from '../../assets/chat-dog.svg';
 import { ReactComponent as ChatBegin } from '../../assets/chat-begin.svg';
 
-// "yyyy년 mm월 dd일"로 표시해주는 함수
-export const formatDate = (date: Date) => {
+export const formatDate = (date: Date) => { // "yyyy년 mm월 dd일"로 표시해주는 함수
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
   return `${year}년 ${month}월 ${day}일`;
 };
-
 export const currentDate = new Date();
 
 interface ChatMessage {
@@ -33,64 +34,30 @@ function Chat() {
   const [endModalOpen, setEndModalOpen] = useState(false);
   const [usageModalOpen, setUsageModalOpen] = useState(false);
   const [noticeModalOpen, setNoticeModalOpen] = useState(false);
+  const cookies = new Cookies();
+  const csrftoken = cookies.get("csrftoken");
+  const { user_id, chatroom_id } = useParams();
 
-  const handlePlusButtonClick = () => {
-    setIsClicked((prevState) => !prevState);
-  };
-
-  const chatOutputRef = useRef<HTMLDivElement>(null);
-
-  //종료하기 모달
-  const openEndModal = () => {
-    setEndModalOpen(true);
-  };
-  const closeEndModal = () => {
-    setEndModalOpen(false);
-  };
-  //이용방법 모달
-  const openUsageModal = () => {
-    setUsageModalOpen(true);
-  };
-  const closeUsageModal = () => {
-    setUsageModalOpen(false);
-  };
-  //유의사항 모달
-  const openNoticeModal = () => {
-    setNoticeModalOpen(true);
-  };
-  const closeNoticeModal = () => {
-    setNoticeModalOpen(false);
-  };
-
-  const generateId = () => {
-    return Date.now(); // ChatAnswer에 부여되는 id. 로딩 표현하기 위해 사용
-  };
-
-  //setMessage()에 input창의 현재 값 입력.
+  const generateId = () => {return Date.now();};
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => { // Enter -> 메세지 전송
     if (e.key === "Enter") {
       handleSubmit();
     }
   };
-
-  const handleSubmit = () => {
-    // 빈 메시지는 보내지 않음
-    if (message.trim() === "") {
+  
+  // 메세지 전송
+  const handleSubmit = async () => {
+    if (message.trim() === "") { //빈 메세지는 보내지 않음
       return;
     }
-  
-    // 메시지 보낸 시간 표시
-    const currentTime = new Date().toLocaleTimeString("en-US", {
+    const currentTime = new Date().toLocaleTimeString("en-US", { //메세지 전송 시간 표시
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
     });
-  
-    // input창에 입력한 텍스트 === message
     const newChat: ChatMessage = {
       id: generateId(),
       message,
@@ -99,59 +66,46 @@ function Chat() {
     };
     setChatLog([...chatLog, newChat]);
     setMessage("");
-  
-    // 첫 메시지 입력받았을 때 날짜 표시
+
     if (!showDate && chatLog.length === 0) {
       setShowDate(true);
     }
   
-    // 턴 수에 따라 정해진 답변 또는 랜덤 답변 출력
     if (message === "종료하기") {
-      handleChatAnswer(newChat.id, "챗봇 종료"); // "종료하기"를 입력 -> 상담 결과 보러가기
+      handleChatAnswer(newChat.id, "챗봇 종료");
       openEndModal();
     } else {
-      fetchAnswer(newChat.id, message); // KoGPT2 모델에 MESSAGE를 전송하여 ANSWER을 받아오는 함수 호출
-    }    
-  };
-  
-  // KoGPT2 모델에 MESSAGE를 전송하여 ANSWER을 받아오는 함수
-  const fetchAnswer = async (id: number, message: string) => {
-    try {
-      const response = await fetch("https://f732-35-194-149-135.ngrok-free.app/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message }),
-      });
-  
-      if (!response.ok) {
-        throw new Error("Error occurred while fetching answer");
+      try { //메세지 post, 응답 받아오기
+        const response = await axios.post(
+          `http://127.0.0.1:8000/chat/${user_id}/${chatroom_id}/`, 
+          { message },
+          {
+            headers: {
+              "Content-type": "application/json",
+              "X-CSRFToken": csrftoken, 
+            },
+            withCredentials: true,
+          }
+        );
+        const answer = response.data.response;
+        handleChatAnswer(newChat.id, answer);
+      } catch (error) {
+        handleChatAnswer(newChat.id, "post 실패");
       }
-  
-      const data = await response.json();
-      const answer = data.answer;
-  
-      handleChatAnswer(id, answer); // 받아온 ANSWER로 handleChatAnswer 함수 호출
-    } catch (error) {
-      console.error(error);
-      handleChatAnswer(id); // 에러가 발생한 경우, 로딩 상태를 제거하여 처리할 수 없음을 알림
     }
   };
-  
-  // 로딩 뒤에 챗봇 Answer 나옴. 
-  const handleChatAnswer = (id: number, answer?: string) => {
+  // 챗봇 답변 표시
+  const handleChatAnswer = (id: number, answer?: string) => { 
     setChatLog((prevChatLog) =>
       prevChatLog.map((chat) =>
         chat.id === id 
-        ? { ...chat, isLoading: false, answer: answer } 
-        : chat
+          ? { ...chat, isLoading: false, answer: answer } 
+          : chat
       )
     );
   };
-  
-  // 로딩 표시
-  useEffect(() => {
+
+  useEffect(() => { //로딩 표시
     const timeout = setTimeout(() => {
       const lastChat = chatLog[chatLog.length - 1];
       if (lastChat && lastChat.isLoading) {
@@ -161,12 +115,22 @@ function Chat() {
     return () => clearTimeout(timeout);
   }, [chatLog]);
 
-  // 스크롤 자동으로 아래로 가도록
-  useEffect(() => {
+  const chatOutputRef = useRef<HTMLDivElement>(null);
+  useEffect(() => { //메세지 스크롤 자동으로 아래로 이동
     if (chatOutputRef.current) {
       chatOutputRef.current.scrollTop = chatOutputRef.current.scrollHeight;
     }
   }, [chatLog]);
+
+  const handlePlusButtonClick = () => { // 메세지 창 + 버튼
+    setIsClicked((prevState) => !prevState);
+  };
+  const openEndModal = () => {setEndModalOpen(true);}; 
+  const closeEndModal = () => {setEndModalOpen(false);};
+  const openUsageModal = () => {setUsageModalOpen(true);}; 
+  const closeUsageModal = () => {setUsageModalOpen(false);};
+  const openNoticeModal = () => {setNoticeModalOpen(true);}; 
+  const closeNoticeModal = () => {setNoticeModalOpen(false);};
 
   return (
     <div className="Chat-Fullbox">
@@ -189,9 +153,7 @@ function Chat() {
               <div className="Chat-A1">
                 {chat.isLoading ? (
                   <span className="Chat-loading">
-                    <span />
-                    <span />
-                    <span />
+                    <span /><span /><span />
                   </span>
                 ) : chat.message === "종료하기" ? (
                   <div>
@@ -202,9 +164,7 @@ function Chat() {
                     <div className="ChatDog-icon">
                       <ChatDog />
                     </div>
-                    <span className="Chat-answer">{chat.answer}
-                      그런 일이 있었군요. 많이 기분이 상했겠어요. 하지만 내일은 더 좋은 일이 있을거라 고 생각합니다. 조금만 더 힘을 내요!
-                    </span>
+                    <span className="Chat-answer">{chat.answer}</span>
                     <span className="Chat-time">{chat.time}</span>
                   </div>
                 )}

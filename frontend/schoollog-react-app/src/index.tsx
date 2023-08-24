@@ -47,7 +47,7 @@ root.render(
         <Route path="/consultationList" element={<ConsultaionList/>} />
         <Route path="/testResult" element={<DrawingResult/>} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/chat/:student_id/:i" element={<Chat />} />
+        <Route path="/chat/:user_id/:chatroom_id" element={<Chat />} />
         <Route path="/detail" element={<Result />} />  
         <Route path="/chat/result/:student_id/:chatroom_id" element={<StudentResult />} />
         <Route path="/teacher_result" element={<TeacherResult />} />
