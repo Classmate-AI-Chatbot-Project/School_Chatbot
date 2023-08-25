@@ -33,19 +33,19 @@ function Profile() {
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
   const navigate = useNavigate();
 
-  axios.get(
-      `http://127.0.0.1:8000/account/decode/`,
-      {
-        headers: {
-            "Content-type": "application/json",
-        },
-        withCredentials: true,
-    }
-  ).then((res: any) => {
-      console.log(res.data)
+  // axios.get(
+  //     `http://127.0.0.1:8000/account/decode/`,
+  //     {
+  //       headers: {
+  //           "Content-type": "application/json",
+  //       },
+  //       withCredentials: true,
+  //   }
+  // ).then((res: any) => {
+  //     console.log(res.data)
       
-      // 계정, 닉네임, photo 직렬화 데이터로 프로필에 출력하기
-    })
+  //     // 계정, 닉네임, photo 직렬화 데이터로 프로필에 출력하기
+  //   })
 
   const dummyData: ResultItem[] = [
     {
@@ -143,7 +143,11 @@ function Profile() {
 
   function ConsultationResultItemList() {
     return (
-      <div>
+      <div
+      style={{
+        width: '100%',
+      }}      
+      >
         {dummyData.map((item, index) => (
           <Fragment key={item.id}>
             <ConsultResultItem
@@ -152,8 +156,8 @@ function Profile() {
             type={item.type}
             />
             {index !== dummyData.length - 1 && (
-              <BorderLine width="423px" height="1px" />
-            )}
+          <BorderLine width={'100%'} height={'1px'}/>
+        )}
           </Fragment>
         ))}
       </div>
@@ -165,24 +169,22 @@ function Profile() {
       <div className="Profile-firstbox">
         <img src={dummyProfile}/>
         <div>
-          <p>{nickname}</p>
+          <p>닉네임</p>
           <p>{email}</p>
         </div>
       </div>
       {!isTeacher &&
       <div className="Profile-secondbox">
-        <div>
           <p>나의 우울도</p>
           <ApexChart 
             options={options1} 
             series={lineGraphData.series} 
             type="line" 
-            width={370} 
-            height={200}
+            className="Profile-secondbox-graph"
           />
-        </div>
       </div>   
       }
+       
       {!isTeacher && 
       <div className="Profile-thirdbox">
         <div className="Profile-thirdbox-title">
@@ -192,10 +194,8 @@ function Profile() {
           </div>
           <NextIcon onClick={handleViewConsultations} />
         </div>
-        <BorderLine width={'423px'} height={'1px'}/>
-        <div>
-          <ConsultationResultItemList/>
-        </div>
+        <BorderLine width={'100%'} height={'1px'}/>
+        <ConsultationResultItemList/>
       </div>      
       }
       <div className="Profile-forthbox">
@@ -203,17 +203,17 @@ function Profile() {
           <PowerIcon/>
           <p onClick={handleLogout}>로그아웃</p>
         </div>
-        <BorderLine width={'423px'} height={'1px'}/>
+        <BorderLine width={'100%'} height={'1px'}/>
         <div className="Profile-forthbox-menu">
           <SignoutIcon/>
           <p>탈퇴하기</p>
         </div>
-        <BorderLine width={'423px'} height={'1px'}/>
+        <BorderLine width={'100%'} height={'1px'}/>
         <div className="Profile-forthbox-menu">
           <PaperIcon/>
           <p>개인정보취급방침</p>
         </div>
-      </div>
+      </div> 
     </div>
   )
 }
