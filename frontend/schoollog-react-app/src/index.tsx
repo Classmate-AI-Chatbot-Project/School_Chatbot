@@ -36,7 +36,6 @@ root.render(
       <Route path="/" element={<App />}>
         <Route path="/" element={<Main/>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/signupInform1" element={<SignupInputInformStudent /> } />
         <Route path="/signupInform2" element={<SignupInputInformTeacher /> } />
         <Route path="/signupType" element={<SignupType />} />

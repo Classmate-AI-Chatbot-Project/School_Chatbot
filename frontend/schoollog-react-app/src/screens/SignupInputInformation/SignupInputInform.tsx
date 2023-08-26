@@ -10,44 +10,56 @@ import { setLoggedIn, setNickname } from '../../actions';
 import { RootState } from '../../reducers';
 import { School } from './SchoolSearchModal';
 
+interface UserData {
+  username: string;
+  email: string;
+  school?: string;
+  profilePhoto?: string
+  job?: number;
+}
+
 function SignupInputInformStudent() {
-  const [SocialEmail, setSocialEmail] = useState("");
-  const [SocialName, setSocialName] = useState("");
+  const [userData, setUserData] = useState<UserData>({
+    username: '',
+    email: '',
+    school: '',
+    job: 1,
+  });
+
   const [log, setCookie] = useCookies(['isLoggedIn']);
   const dispatch = useDispatch();
   const cookies = new Cookies();
   const csrftoken = cookies.get("csrftoken");
 
-
-  // backend에서 계정, 닉네임 받아오기
-  axios.get(
-    `http://127.0.0.1:8000/account/decode/`,
-    {
-      headers: {
-          "Content-type": "application/json",
-      },
-      withCredentials: true,
-  }
-)
-  .then((res: any) => {
-      console.log(res.data)
-      setSocialEmail(res.data['email']);
-      setSocialName(res.data['username']);
-
-      // console.log(res);
-      // console.log('닉네임', SocialName);
-      // console.log('이메일', SocialEmail);
-    })
-
-
-  const nickname = useSelector((state: RootState) => state.nickname);
-  const email = useSelector((state: RootState) => SocialEmail);
-
-  const [isDuplicated, setIsDuplicated] = useState(false);
-  const isFormValid = SocialEmail !== '' && nickname !== '';
+  const [nickname, setNickname] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+
+  const [isDuplicated, setIsDuplicated] = useState(false);
+  const isSchoolSelected = selectedSchool !== null;
+  const isFormValid = !isDuplicated && isSchoolSelected;
+
+  useEffect(() => {
+    // 초기 로드 시 email과 username을 가져오기
+    axios.get(
+      `http://127.0.0.1:8000/account/decode/`,
+      {
+        headers: {
+          "Content-type": "application/json",
+        },
+        withCredentials: true,
+      }
+    ).then((res: any) => {
+      console.log(res.data);
+      const data = res.data;
+
+      setUserData({
+        username: data.username,
+        email: data.email,
+      });
+    });
+  }, []);
 
 
   const handleOpenModal = () => {
@@ -61,12 +73,11 @@ function SignupInputInformStudent() {
   const handleSelectSchool = (school: School) => {
     setSelectedSchool(school);
   };
-
-
   
-  const handleNicknameChange = (event: any) => {
+  const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    dispatch(setNickname(value));
+    setNickname(value);
+    // 추후 백엔드 협의 후 수정
     setIsDuplicated(value === '조다은'); 
   };
 
@@ -74,35 +85,36 @@ function SignupInputInformStudent() {
     if (isFormValid) {
       // Redux 상태 업데이트
       dispatch(setLoggedIn(true));
+
       const data = {
-          school:"kakao-school",
-          nickname:nickname,
-          job:"1",  
+        school: userData.school,
+        nickname: userData.username,
+        job: userData.job,  
       };
-      // 입력한 정보로 회원가입하기
+
       axios.put(
         `http://127.0.0.1:8000/account/signup/`,
-        data, // 전송할 데이터
-        {
-            headers: {
-                "Content-type": "application/json",
-                "X-CSRFToken": csrftoken, // CSRF 토큰을 적절하게 가져와서 헤더에 추가
-            },
-            withCredentials: true,
-        }
+        data,
+      {
+        headers: {
+          "Content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        withCredentials: true,
+      }
     )
       .then((res: any) => {
-          console.log(res)
-          setCookie('isLoggedIn', true, { path: '/' });
-        })
-      }
+        console.log(res)
+        setCookie('isLoggedIn', true, { path: '/' });
+      })
+    }
   };
 
   return (
     <div className='SignupInform-fullbox' id='current-width'>
       <div className='SignupInform-emailbox'>
         <p className='SignupInform-textbox'>계정</p>
-        <p className='SignupInform-mail'>{email}</p>
+        <p className='SignupInform-mail'>{userData.email}</p>
         <div className='SignupInform-underline'/>
       </div>
       <div className='SignupInform-nicknamebox'>
@@ -118,9 +130,14 @@ function SignupInputInformStudent() {
       <div className='SignupInform-schoolbox'>
         <p className='SignupInform-textbox'>학교 및 학급</p>
         <div className='SignupInform-school-search' onClick={handleOpenModal}>
-          {/* <p>학교를 찾아주세요</p> */}
-          <p>{selectedSchool ? selectedSchool.SCHUL_NM : '학교를 찾아주세요'}</p>
-          <SearchIcon />
+        {selectedSchool ? (
+          <p style={{ fontWeight: 400, color: 'black' }}>
+            {selectedSchool.SCHUL_NM}
+          </p>
+        ) : (
+          <p>학교를 찾아주세요</p>
+        )}
+            <SearchIcon />
         </div>
       </div>
       {isModalOpen && (
