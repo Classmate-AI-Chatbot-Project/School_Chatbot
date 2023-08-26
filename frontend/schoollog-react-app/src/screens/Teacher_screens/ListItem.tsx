@@ -26,9 +26,11 @@ function ListItem({nickname, keywords, date, type}: ListItemProps) {
           <p>{nickname}</p>
         </div>
         <div className="ListItem-text-second">
-          {type === 'red' && <RedFlag />}
-          {type === 'yellow' && <YellowFlag />}
-          {type === 'green' && <GreenFlag />}
+          <div>
+            {type === 'red' && <RedFlag />}
+            {type === 'yellow' && <YellowFlag />}
+            {type === 'green' && <GreenFlag />}
+          </div>
           <p>{keywords}</p>
         </div> 
       </div>

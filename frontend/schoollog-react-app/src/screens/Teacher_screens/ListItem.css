@@ -22,13 +22,12 @@
 .ListItem-secondbox{
   display: flex;
   flex-direction: column;
-  /* height: 50%; */
+  width: 80%;
   justify-content: space-between;
-  margin: 0 10% 0 5%;
+  margin: 0 10px 0 15px;
   text-align: left;
-  align-items: stretch;
+  align-items: flex-start;
   box-sizing: border-box;
-  /* background-color: antiquewhite; */
 }
 .ListItem-text-first p{
   flex: 1;
@@ -43,13 +42,14 @@
   align-items: center;
 }
 .ListItem-text-second p {
-  flex: 1;
   margin: 0;
   font-size: 14px;
-  line-height:0px;
+  line-height: normal; 
   padding-left: 8px;
+  max-width: 190px;
+  overflow: hidden;
   white-space: nowrap;
-
+  text-overflow: ellipsis;
 }
 .ListItem-addition {
   display: flex;
