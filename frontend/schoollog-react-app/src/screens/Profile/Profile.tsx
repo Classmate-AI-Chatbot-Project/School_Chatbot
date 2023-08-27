@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
 import { useCookies } from "react-cookie";
@@ -9,7 +9,6 @@ import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import "./Profile.css";
 import BorderLine from "../../component/BorderLine/BorderLine";
-import dummyProfile from '../../assets/dummy-profile-img.png'
 import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
 import { ReactComponent as NextIcon } from '../../assets/arrow-next.svg'
 import { ReactComponent as PowerIcon } from '../../assets/power-icon.svg'
@@ -25,27 +24,41 @@ interface ResultItem {
 
 function Profile() {
   const dummyNumber:Number = 17;
-  const nickname = useSelector((state: RootState) => state.nickname);
-  const email = useSelector((state: RootState) => state.email);
-  const isTeacher = useSelector((state:RootState) => state.isTeacher);
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
+    school: '',
+    profilePhoto: '',
+    job: '',
+  });
 
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
   const navigate = useNavigate();
 
-  // axios.get(
-  //     `http://127.0.0.1:8000/account/decode/`,
-  //     {
-  //       headers: {
-  //           "Content-type": "application/json",
-  //       },
-  //       withCredentials: true,
-  //   }
-  // ).then((res: any) => {
-  //     console.log(res.data)
-      
-  //     // 계정, 닉네임, photo 직렬화 데이터로 프로필에 출력하기
-  //   })
+  useEffect(() => {
+    axios.get(
+      `http://127.0.0.1:8000/account/decode/`,
+      {
+        headers: {
+            "Content-type": "application/json",
+        },
+        withCredentials: true,
+    }
+  ).then((res: any) => {
+    console.log(res.data)
+    const data = res.data;
+
+    setUserData({
+      username: data.username,
+      email: data.email,
+      school: data.school,
+      profilePhoto: `http://127.0.0.1:8000${res.data.profile_photo}`,
+      job: data.job === 0 ? 'Teacher' : 'Student',
+    });
+    console.log(userData)
+  })
+  }, []);
 
   const dummyData: ResultItem[] = [
     {
@@ -85,15 +98,15 @@ function Profile() {
       },
     },
       xaxis: {
-         categories: [''],
-         labels: {
+        categories: [''],
+        labels: {
           //  show: false
-         },
-         axisBorder: {
+        },
+        axisBorder: {
           // show: false,
         },
       },
-   };
+  };
 
   const lineGraphData = {
     series: [
@@ -121,7 +134,6 @@ function Profile() {
   };
 
   const handleLogout = () => {
-
     axios.get(
       `http://127.0.0.1:8000/account/logout/`,
       {
@@ -167,13 +179,13 @@ function Profile() {
   return (
     <div className="Profile-fullbox">
       <div className="Profile-firstbox">
-        <img src={dummyProfile}/>
+        <img src={userData.profilePhoto}/>
         <div>
-          <p>닉네임</p>
-          <p>{email}</p>
+          <p>{userData.username}</p>
+          <p>{userData.email}</p>
         </div>
       </div>
-      {!isTeacher &&
+      {userData.job === 'Student' &&
       <div className="Profile-secondbox">
           <p>나의 우울도</p>
           <ApexChart 
@@ -184,8 +196,7 @@ function Profile() {
           />
       </div>   
       }
-       
-      {!isTeacher && 
+      {userData.job === 'Student' && 
       <div className="Profile-thirdbox">
         <div className="Profile-thirdbox-title">
           <div>

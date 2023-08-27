@@ -39,7 +39,7 @@ function KakaoRedirect() {
           navigate("/", { replace: true })
           setCookie('isLoggedIn', true, { path: '/' });
         }else if(res.status === 201){
-          navigate("/signup", { replace: true })
+          navigate("/signupType", { replace: true })
         }
       })
     })
