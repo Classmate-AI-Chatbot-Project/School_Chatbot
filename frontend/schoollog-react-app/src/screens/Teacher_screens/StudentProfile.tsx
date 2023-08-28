@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
 import dummyProfile from '../../assets/dummy-student-profile.png'
 import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { setLoggedIn } from "../../actions";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../reducers';
 import ApexChart from 'react-apexcharts'
@@ -13,6 +13,7 @@ import { ApexOptions } from 'apexcharts'
 import "./StudentProfile.css";
 import { ReactComponent as NextIcon } from '../../assets/arrow-next.svg'
 import { ReactComponent as BackIcon } from '../../assets/back.svg'
+import axios from "axios";
 
 interface ResultItem {
   id: string;
@@ -28,9 +29,24 @@ function StudentProfile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
+  const [responseData, setResponseData] = useState(null);
+  const { user_id } = useParams();
+
+  axios.get(
+    `http://127.0.0.1:8000/teacher/detail/${user_id}`,
+    {
+      headers: {
+          "Content-type": "application/json",
+      },
+      withCredentials: true,
+  }
+  ).then((res: any) => {
+    // 학생 별명, 이미지, 상담 기록
+    console.log(res.data)  
+  })
 
   const handleViewConsultations = () => {
-    navigate('/consultations');
+    navigate(`/teacher/detail/consultlist/${user_id}`);
   };
 
   const handleLogout = () => {

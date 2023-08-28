@@ -3,7 +3,8 @@ import './ConsultationAll.css'
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
 import { ReactComponent as BackIcon } from '../../assets/back.svg'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 interface ResultItem {
   id: string;
@@ -12,8 +13,25 @@ interface ResultItem {
   type: string
 }
 
+
+
 function ConsultationAll() {
   const navigate = useNavigate();
+  const { user_id } = useParams();
+
+  axios.get(
+    `http://127.0.0.1:8000/teacher/detail/${user_id}`,
+    {
+      headers: {
+          "Content-type": "application/json",
+      },
+      withCredentials: true,
+  }
+  ).then((res: any) => {
+    // 학생 별명, 이미지, 상담 기록
+    console.log(res.data)
+  
+  })
 
   const dummyData: ResultItem[] = [
     {
