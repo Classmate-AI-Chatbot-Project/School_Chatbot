@@ -44,7 +44,7 @@ const ChatModal = (props: ModalProps) => {
   const postResult = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/chat/result/b2stlov@nate.com/2/`,
+        `http://127.0.0.1:8000/chat/result/${user_id}/${chatroom_id}/`,
         {
           headers: {
             "Content-type": "application/json",
@@ -62,7 +62,7 @@ const ChatModal = (props: ModalProps) => {
 
   const handleResultButtonClick = () => {
     // navigate 함수를 사용하여 다른 경로로 이동하면서 데이터 전달 (현재 링크는 임의로 설정)
-    navigate('/chat/result/admin@duksung.ac.kr/2/',
+    navigate(`/chat/result/${user_id}/${chatroom_id}/`,
     { state: {
       data: responseData,
     },

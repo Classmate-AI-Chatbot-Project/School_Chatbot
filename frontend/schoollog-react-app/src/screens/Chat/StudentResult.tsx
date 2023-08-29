@@ -48,7 +48,7 @@ function StudentResult() {
             <button className="SR-closeBtn" onClick={closeTooltip}>✖</button>
           </div>
         )}
-        <Link to="/message">
+        <Link to="/profile">
         <button className="SR-endBtn" onClick={postResult}>상담 신청하기</button>
         </Link>
       </div>
