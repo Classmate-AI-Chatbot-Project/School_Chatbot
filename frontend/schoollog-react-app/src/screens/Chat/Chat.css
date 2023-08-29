@@ -62,7 +62,7 @@
   text-align: center; /* Center align the date text */
 }
 
-.Chat-Q {
+.Chat-student {
   display: flex;
   justify-content: flex-end;
   align-self: flex-end;
@@ -94,15 +94,15 @@
   font-weight: 500;
   word-wrap: break-word;
 }
-.Chat-A1 {
+.Chat-loadAnswer {
   display: flex;
   align-self: flex-end;
-  margin-top: 27px;
+  margin-top: 40px;
   position: relative;
   margin-left: 0;
 }
 
-.Chat-A2 {
+.Chat-chatbot {
   display: flex;
   align-items: flex-end;
   position: relative;
@@ -276,8 +276,6 @@
   margin-left: 5px;
   margin-right: 15px;
 }
-
-
 
 @keyframes loading {        /*loading이라는 keyframe 애니메이션*/
   0%,                      /* 0, 50, 100은 구간*/
