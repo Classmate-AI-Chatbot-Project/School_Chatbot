@@ -87,9 +87,9 @@ function SignupInputInformStudent() {
       dispatch(setLoggedIn(true));
 
       const data = {
-        school: userData.school,
-        nickname: userData.username,
-        job: userData.job,  
+        school: selectedSchool?.SCHUL_NM,
+        nickname: nickname,
+        job: 1,  
       };
 
       axios.put(
