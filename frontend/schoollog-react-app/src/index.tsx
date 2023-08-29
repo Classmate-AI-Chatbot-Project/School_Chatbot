@@ -49,7 +49,7 @@ root.render(
         <Route path="/chat/:user_id/:chatroom_id" element={<Chat />} />
         <Route path="/detail" element={<Result />} />  
         <Route path="/chat/result/:student_id/:chatroom_id" element={<StudentResult />} />
-        <Route path="/teacher_result" element={<TeacherResult />} />
+        <Route path="/teacher/chat/result/:chatroom_id" element={<TeacherResult />} />
         <Route path="/message" element={<Message />} />
         <Route path="/teacher/studentlist" element={<StudentList/>} />
 
@@ -57,9 +57,9 @@ root.render(
         <Route path="/account/naver/callback" element={<NaverRedirect/> }/>
         <Route path="/account/google/callback/" element={<GoogleRedirect/>} />
         <Route path="/account/kakao/callback/" element={<KakaoRedirect/>}></Route>
-        <Route path="/studentProfile" element={<StudentProfile/>} />
+        <Route path="/teacher/detail/:user_id" element={<StudentProfile/>} />
       </Route>
-      <Route path="/consultations" element={<ConsultationAll/>} />
+      <Route path="/teacher/detail/consultlist/:user_id" element={<ConsultationAll/>} />
       
       
     </Routes>
