@@ -5,8 +5,11 @@ import { ReactComponent as ResultGloom } from '../../assets/result-gloom.svg'
 import { ReactComponent as ChartBg } from '../../assets/result-chartbg.svg'
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
+import { useParams, useNavigate} from 'react-router-dom';
 
 function Result() {  
+  const { user_id, chatroom_id } = useParams();
+  const navigate = useNavigate();
   let emotion = "우울";
   const series1 = [{
     name: '행복',
@@ -95,6 +98,10 @@ function Result() {
 
   };
 
+  const handleViewChat = () => {
+    navigate(`/chat/history/${user_id}/${chatroom_id}/`);
+  };
+
   return (
     <div className='Chat-FullBox'>
       <div className='Chat-ContenBox'>
@@ -147,8 +154,8 @@ function Result() {
             </div>
           </div>
         </div>
-        <div className='Result5-viewChat'>
-          전체 채팅 보기 {'>'}
+        <div className='Result5-viewChat' onClick={handleViewChat}>
+        전체 채팅 보기 {'>'}
         </div>
       </div>
     </div>
