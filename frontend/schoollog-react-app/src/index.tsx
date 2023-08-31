@@ -49,7 +49,7 @@ root.render(
         <Route path="/chat" element={<Chat />} />
         <Route path="/chat/:user_id/:chatroom_id" element={<Chat />} />
         <Route path="/detail" element={<Result />} />  
-        <Route path="/chat/result/:student_id/:chatroom_id" element={<StudentResult />} />
+        <Route path="/chat/result/:user_id/:chatroom_id" element={<StudentResult />} />
         <Route path="/chat/history/:student_id/:chatroom_id" element={<ChatHistory />} />
         <Route path="/teacher/chat/result/:chatroom_id" element={<TeacherResult />} />
         <Route path="/message" element={<Message />} />
