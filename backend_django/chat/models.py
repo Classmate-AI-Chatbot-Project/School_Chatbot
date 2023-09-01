@@ -5,7 +5,7 @@ from account.models import User
 class ChatRoom(models.Model):
     chat_id = models.AutoField(primary_key=True, unique=True)
     student_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    chat_date = models.DateField(auto_now_add=True)
+    chat_date = models.DateField(auto_now_add=True)     # 처음 생성 일시만 자동 기록 
 
     def __str__(self):
         return f'ChatRoom[{self.chat_id}] {self.student_id}'
@@ -14,12 +14,12 @@ class ChatMessage(models.Model):
     message_id = models.AutoField(primary_key=True)
     chat_id = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
     sender = models.CharField(max_length=30, choices=(('student', '학생'), ('chatbot', '챗봇')))
-    sender_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    sender_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # 학생 정보 연결
     message_text = models.TextField()
-    message_time = models.DateTimeField(auto_now_add=True)
+    message_time = models.DateTimeField(auto_now_add=True)     # 처음 생성 일시만 자동 기록 
 
     def __str__(self):
-        return f'ChatMessage[{self.message_id}] {self.sender}'
+        return f'ChatMessage[{self.message_id}] {self.message_text} by {self.sender}'
 
 class AllDialogue(models.Model):
     dialogue_id = models.AutoField(primary_key=True)
@@ -29,7 +29,7 @@ class AllDialogue(models.Model):
 
     def __str__(self):
         return f'AllDialogue[{self.dialogue_id}] {self.chat_id}'
-
+ 
 class ConsultResult(models.Model):    # 상담 결과
     member_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     result_time = models.DateTimeField(auto_now_add=True)
@@ -41,3 +41,7 @@ class ConsultResult(models.Model):    # 상담 결과
     emotion_list = models.JSONField()
     want_consult = models.BooleanField()
     chat_id = models.OneToOneField(ChatRoom, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return f'ConsultResult[{self.member_id}] {self.chat_id}'
+ 

@@ -93,6 +93,7 @@
   font-size: 13px;
   font-weight: 500;
   word-wrap: break-word;
+  text-align: left;
 }
 .Chat-loadAnswer {
   display: flex;
@@ -218,7 +219,6 @@
   background: #FFFFFF;
   border-radius: 25px;
   border: 1px solid #D7D7D7;
-  text-align: center;
   padding: 1px 15px 1px 15px;
 }
 
@@ -287,4 +287,41 @@
     opacity: 1;             /* 보였다가 */
     transform: scale(1.2); /* 1.2배 */
   }
+}
+
+.Chat-history-topBar{
+  display: flex;
+  align-items: center;
+  padding: 0px 30px;
+  height: 62px;
+}
+
+.Chat-history-topText{
+  margin-left: 121px;
+  color: var(--bl, #000);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.Chat-history-InputBox {
+  display: flex;
+  align-items: center;
+  width: 260px;
+  height: 42px;
+  background: #EEE;
+  border-radius: 25px;
+  border: 1px solid #D7D7D7;
+  text-align: center;
+  padding: 1px 15px 1px 15px;
+}
+
+.Chat-history-InputMessage {
+  flex-grow: 1;
+  height: 70%;
+  border: none;
+  outline: none;
+  font-family: 'Pretendard';
+  font-size: 14px;
 }

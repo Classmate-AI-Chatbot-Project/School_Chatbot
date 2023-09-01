@@ -69,6 +69,8 @@
   margin-top: 25px;
 }
 
+
+
 .Modal-progressBar {
   width: 242px;
   height: 14px;
@@ -77,11 +79,10 @@
 }
 
 .Modal-progress {
-  width: 0%;
+  width: 50px;
   height: 100%;
   border-radius: 30px;
   background: var(--p, #EBA1B8);
-  animation: progressbar 10s linear;
 }
 
 .DrawingModal-progress {
@@ -89,7 +90,7 @@
   height: 100%;
   border-radius: 30px;
   background: var(--p, #1985C0);
-  animation: progressbar 10s linear;
+  animation: progressbar linear;
 }
 
 @keyframes progressbar {
@@ -98,6 +99,15 @@
   }
   100% {
     width: 100%;
+  }
+}
+
+@keyframes moveLeftRight {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(192px);
   }
 }
 

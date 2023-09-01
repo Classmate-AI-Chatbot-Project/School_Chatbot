@@ -16,6 +16,12 @@
    justify-content: flex-start;
    background: url('../../assets/result-clipboard.svg') no-repeat center center;
 }
+
+.Result1-loading-animation{
+   margin-top: 150px;
+   margin-bottom: 150px;
+}
+
 .Result1-emotion {
    display: flex;
    margin-top: 57px;
@@ -117,6 +123,12 @@
    margin-top: 12px;
 }
 
+.Result3-worldcloud{
+   width: 90%;
+   height: 80%;
+   padding: 5px;
+}
+
 .Result4-summary {
    display: flex;
    width: 423px;
@@ -161,10 +173,11 @@
    flex-direction: column;
    justify-content: center;
    align-items: center;
-   color: var(--gray-2-ac, #ACACAC);
+   color: var(--gray-2-ac, #969696);
    text-align: center;
    font-family: Pretendard;
    font-size: 14px;
    font-weight: 500;
    margin-top: 56px;
+   cursor: pointer;
 }
