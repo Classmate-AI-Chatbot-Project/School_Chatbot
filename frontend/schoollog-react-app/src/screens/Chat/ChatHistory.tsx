@@ -3,10 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
 import { Cookies } from "react-cookie";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 import "./Chat.css";
 import { ReactComponent as ChatDog } from '../../assets/chat-dog.svg';
 import { ReactComponent as ChatBegin } from '../../assets/chat-begin.svg';
+import {ReactComponent as Back} from "../../assets/back.svg"
+import BorderLine from '../../component/BorderLine/BorderLine';
 
 interface ChatMessage {
   id: number;
@@ -37,24 +39,15 @@ function ChatHistory() {
   const [message, setMessage] = useState("");
   const [chatLog, setChatLog] = useState<ChatMessage[]>([]);
   const [showDate, setShowDate] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  const [endModalOpen, setEndModalOpen] = useState(false);
-  const [usageModalOpen, setUsageModalOpen] = useState(false);
-  const [noticeModalOpen, setNoticeModalOpen] = useState(false);
-  const [isChatEnded, setIsChatEnded] = useState(false); // Chat 종료 여부 상태 추가
   const {user_id, chatroom_id} = useParams();
   const cookies = new Cookies();
   const csrftoken = cookies.get("csrftoken");
-
   const generateId = () => {return Date.now();};
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(e.target.value);
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1)
   };
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => { // Enter -> 메세지 전송
-    if (e.key === "Enter") {
-      handleSubmit();
-    }
-  };
+
 
   useEffect(() => { // 이전 채팅 메시지를 서버에서 가져옴
     axios
@@ -84,104 +77,11 @@ function ChatHistory() {
     });
   }, [user_id, chatroom_id]);
 
-  const createAllDialogue = async (all_dialogue: string) => {
-    try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/chat/end/${user_id}/${chatroom_id}/`,
-        { all_dialogue },
-        {
-          headers: {
-            "Content-type": "application/json",
-            "X-CSRFToken": csrftoken,
-          },
-          withCredentials: true,
-        }
-      );
-      if (response.status === 200) { // AllDialogue 모델 생성 성공 처리
-        console.log("AllDialogue 모델이 생성되었습니다.");
-      }
-    } catch (error) {
-      console.error("Error creating AllDialogue:", error);
-    }
-  };
   
-  // 메세지 전송
-  const handleSubmit = async () => {
-    if (message.trim() === "") { return; } //빈 메세지 X
-    const currentTime = new Date().toLocaleTimeString("en-US", { //메세지 전송 시간
-      hour: "2-digit", 
-      minute: "2-digit",
-      hour12: false,
-    });
-    const newChat: ChatMessage = { //새로운 chat
-      id: generateId(),
-      message,
-      date: formatDate(currentDate),
-      time: currentTime,
-      isLoading: true,
-      sender: "student",
-    };
-    setChatLog([...chatLog, newChat]);
-    setMessage('');
 
-    if (!showDate && chatLog.length === 0) {
-      setShowDate(true);
-    }
+
   
-    if (message === "종료하기") {
-      handleChatAnswer(newChat.id, newChat.answer);
-      openEndModal();
-      setIsChatEnded(true); //Chat 종료 상태로 변경
-
-      //AllDialogue 모델 생성
-      const all_dialogue = chatLog
-        .filter((chat) => chat.sender === "student")
-        .map((chat) => chat.message)
-        .join(" ");
-      createAllDialogue(all_dialogue);
-    } else {
-      try { //메세지 post, 응답 받아오기
-        const response = await axios.post(
-          `http://127.0.0.1:8000/chat/${user_id}/${chatroom_id}/`, 
-          { 
-            message,
-            time: currentTime,
-          },
-          {
-            headers: {
-              "Content-type": "application/json",
-              "X-CSRFToken": csrftoken, 
-            },
-            withCredentials: true,
-          }
-        );      
-        const answer = response.data.response;
-        handleChatAnswer(newChat.id, answer);
-      } catch (error) {
-        handleChatAnswer(newChat.id, "post 실패");
-      }
-    }
-  };
-
-  // 챗봇 답변 표시
-  const handleChatAnswer = (id: number, answer?: string) => { 
-    setChatLog((prevChatLog) =>
-      prevChatLog.map((chat) =>
-        chat.id === id 
-          ? { ...chat, isLoading: false, answer: answer } 
-          : chat
-    ));
-  };
   
-  useEffect(() => { //로딩 표시
-    const timeout = setTimeout(() => {
-      const lastChat = chatLog[chatLog.length - 1];
-      if (lastChat && lastChat.isLoading) {
-        handleChatAnswer(lastChat.id);
-      }
-    }, 30000);
-    return () => clearTimeout(timeout);
-  }, [chatLog]);
 
   const chatOutputRef = useRef<HTMLDivElement>(null);
   useEffect(() => { //메세지 스크롤 자동으로 아래로 이동
@@ -190,21 +90,19 @@ function ChatHistory() {
     }
   }, [chatLog]);
 
-  const handlePlusButtonClick = () => { // 메세지 창 + 버튼
-    setIsClicked((prevState) => !prevState);
-  };
-  const openEndModal = () => {setEndModalOpen(true);}; 
-  const closeEndModal = () => {setEndModalOpen(false);};
-  const openUsageModal = () => {setUsageModalOpen(true);}; 
-  const closeUsageModal = () => {setUsageModalOpen(false);};
-  const openNoticeModal = () => {setNoticeModalOpen(true);}; 
-  const closeNoticeModal = () => {setNoticeModalOpen(false);};
 
   return (
     <div className="Chat-Fullbox">
       <header className="Chat-Contentbox">
+        <div className="Chat-history-topBar">
+          <Back onClick={handleGoBack} style={{cursor: "pointer"}}/>
+          <div className="Chat-history-topText">
+            전체 채팅 보기
+          </div>
+        </div>
+        <BorderLine width={'423px'} height={'1px'}/>
         <div className="Chat-Output" ref={chatOutputRef}>
-          {chatLog.length === 0 && !isChatEnded && (
+          {chatLog.length === 0 && (
             <div className="Chat-InitialScreen">
               <ChatBegin className="Chat-InitialScreenIcon" />
             </div>
@@ -226,22 +124,23 @@ function ChatHistory() {
                     <span className="Chat-time">{chat.time}</span>
                   </div>
                 )}
-              <div className="Chat-loadAnswer">
-                {chat.isLoading && ( //로딩
-                  <div className='Chat-loading'>
-                    <span /> <span /> <span />
-                  </div>
-                )}
-                {!chat.isLoading && chat.answer && ( //챗봇 답변
-                  <div className={`Chat-${chat.sender}`}>
-                    <div className="ChatDog-icon"><ChatDog /></div>
-                    <span className="Chat-answer">{chat.answer}</span>
-                    <span className="Chat-time">{chat.time}</span>
-                  </div>
-                )}
-              </div>
             </div>
           ))}
+        </div>
+        <div className="Chat-Input">
+          <button 
+            className="Chat-Plus"
+          ></button>
+          <span className="Chat-history-InputBox">
+            <input 
+              className="Chat-history-InputMessage"
+              type="text"
+              placeholder="대화 종료"
+              value={message}
+              disabled={true}
+            />
+          </span>
+          <button className="Chat-Send-btn" disabled={true}></button>
         </div>
       </header>
     </div>

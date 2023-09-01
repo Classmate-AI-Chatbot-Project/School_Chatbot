@@ -6,6 +6,7 @@ import { ReactComponent as Complete } from '../../assets/modal-chat3.svg'
 import { Cookies, useCookies } from "react-cookie";
 import { Link, useParams, useNavigate} from 'react-router-dom';
 import axios from "axios";
+import { TailSpin } from 'react-loader-spinner'
 
 interface ModalProps {
   open: boolean;
@@ -20,26 +21,14 @@ const ChatModal = (props: ModalProps) => {
   const [progress, setProgress] = useState<number>(0);
   const [completed, setCompleted] = useState<boolean>(false);
   const [responseData, setResponseData] = useState(null);
-  const navigate  = useNavigate(); // useNavigation 훅 사용
+  const navigate = useNavigate(); // useNavigation 훅 사용
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (progress < 100) {
-        setProgress((prevProgress) => prevProgress + 5);
-      } else {
-        clearInterval(interval);
-        handleComplete();
-      }
-    }, 500);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [progress]);
-
-  const handleComplete = async () => {
-    await postResult();
-    setCompleted(true);
-  };
+    // 컴포넌트가 처음 렌더링될 때 데이터를 가져오도록 이동
+    if (open) {
+      postResult();
+    }
+  }, [open]);
 
   const postResult = async () => {
     try {
@@ -55,26 +44,26 @@ const ChatModal = (props: ModalProps) => {
       );
       console.log(response);
       setResponseData(response.data);
+      setCompleted(true);
     } catch (error) {
       console.error("Error posting result:", error);
     }
   };
 
   const handleResultButtonClick = () => {
-    // navigate 함수를 사용하여 다른 경로로 이동하면서 데이터 전달 (현재 링크는 임의로 설정)
-    navigate(`/chat/result/${user_id}/${chatroom_id}/`,
-    { state: {
-      data: responseData,
-    },
-  });
+    // completed 상태가 true일 때만 결과 페이지로 이동하도록 함
+    if (completed) {
+      navigate(`/chat/result/${user_id}/${chatroom_id}/`,
+        { state: { data: responseData } }
+      );
+    }
   };
-  
 
   return (
     <div className={open ? 'openModal modal' : 'modal'}>
       {open ? (
-        <section className="Modal-contentBox">  
-        {completed ? (
+        <section className="Modal-contentBox">
+          {completed ? (
             <div className="Modal-main">
               <Complete className="Modal-completeImg" />
               <button
@@ -88,7 +77,7 @@ const ChatModal = (props: ModalProps) => {
             <main className="Modal-main">
               <Loading1 className="Modal-img1" />
               <div className="Modal-progressBar">
-                <div className="Modal-progress" style={{ width: `${progress}%`}}></div>
+                <div className="Modal-progress" style={{ animation: 'moveLeftRight 6s linear infinite'}}></div>
               </div>
               <Loading2 className="Modal-img2" />
             </main>

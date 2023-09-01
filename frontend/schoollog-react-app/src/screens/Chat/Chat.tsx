@@ -87,11 +87,11 @@ function Chat() {
     });
   }, [user_id, chatroom_id]);
 
-  const createAllDialogue = async (all_dialogue: string) => {
+  const createAllDialogue = async () => {
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/chat/end/${user_id}/${chatroom_id}/`,
-        { all_dialogue },
+        {},
         {
           headers: {
             "Content-type": "application/json",
@@ -137,11 +137,7 @@ function Chat() {
       setIsChatEnded(true); //Chat 종료 상태로 변경
 
       //AllDialogue 모델 생성
-      const all_dialogue = chatLog
-        .filter((chat) => chat.sender === "student")
-        .map((chat) => chat.message)
-        .join(" ");
-      createAllDialogue(all_dialogue);
+      createAllDialogue();
     } else {
       try { //메세지 post, 응답 받아오기
         const response = await axios.post(
@@ -269,11 +265,7 @@ function Chat() {
             <button className="Chat-ToggleButton1" onClick={() => {
               openEndModal(); 
               setIsChatEnded(true);
-              const all_dialogue = chatLog
-                .filter((chat) => chat.sender === "student")
-                .map((chat) => chat.message)
-                .join(" ");
-              createAllDialogue(all_dialogue);
+              createAllDialogue();
               }}>종료하기</button>
             <button className="Chat-ToggleButton2" onClick={openUsageModal}>이용방법</button>
             <button className="Chat-ToggleButton2" onClick={openNoticeModal}>유의사항</button>
