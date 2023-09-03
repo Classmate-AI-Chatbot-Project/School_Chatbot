@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import "./StudentResult.css"
-import "./Result.css"
 import axios from "axios";
-import Result from "./Result";
 import { Cookies } from "react-cookie";
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
@@ -209,11 +207,9 @@ function StudentResult() {
         <div className='Result3-keyword'>
           키워드
           <div className='Result3-box'>
-          <div className='Result3-box'>
             {wordcloudImage && (
-              <img src={"http://127.0.0.1:8000/" + correctedImagePath} alt="Wordcloud" />
+              <img src={"http://127.0.0.1:8000/" + correctedImagePath} alt="Wordcloud" className="Result3-wordcloud"/>
             )}
-          </div>
           </div>
         </div>
         <div className='Result4-summary'>
@@ -227,17 +223,17 @@ function StudentResult() {
         <div className='Result5-viewChat' onClick={handleViewChat}>
         전체 채팅 보기 {'>'}
         </div>
-        <div className="SR-end">
+        <div className="StudentResult-end">
         {showTooltip && (
-          <div className="SR-tooltip">
-            <span className="SR-tooltipContent">
+          <div className="StudentResult-tooltip">
+            <span className="StudentResult-tooltipContent">
               상담 결과를 전송해 선생님과 상담을 할 수 있어요.
             </span>
-            <button className="SR-closeBtn" onClick={closeTooltip}>✖</button>
+            <button className="StudentResult-closeBtn" onClick={closeTooltip}>✖</button>
           </div>
         )}
         <Link to="/profile">
-        <button className="SR-endBtn" onClick={postResult}>상담 신청하기</button>
+        <button className="StudentResult-endBtn" onClick={postResult}>상담 신청하기</button>
         </Link>
       </div>
       </div>
