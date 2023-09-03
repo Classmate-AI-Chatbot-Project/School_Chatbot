@@ -12,7 +12,6 @@ import ConsultaionList from './screens/Teacher_screens/ConsultationList'
 import ConsultationAll from './screens/Teacher_screens/ConsultationAll';
 import Chat from './screens/Chat/Chat';
 import ChatHistory from './screens/Chat/ChatHistory';
-import Result from './screens/Chat/Result'
 import StudentResult from './screens/Chat/StudentResult'
 import TeacherResult from './screens/Chat/TeacherResult'
 import Profile from './screens/Profile/Profile';
@@ -48,7 +47,6 @@ root.render(
         <Route path="/testResult" element={<DrawingResult/>} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/chat/:user_id/:chatroom_id" element={<Chat />} />
-        <Route path="/detail" element={<Result />} />  
         <Route path="/chat/result/:user_id/:chatroom_id" element={<StudentResult />} />
         <Route path="/consult/room/:room_name/student/:student_id/" element={<StudentConsult />} />
         <Route path="/consult/" element={<StudentConsult />} />
