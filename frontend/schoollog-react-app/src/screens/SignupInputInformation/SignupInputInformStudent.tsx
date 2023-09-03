@@ -30,6 +30,7 @@ function SignupInputInformStudent() {
   const dispatch = useDispatch();
   const cookies = new Cookies();
   const csrftoken = cookies.get("csrftoken");
+  const [currentWidth, setCurrentWidth] = useState<number>(0);
 
   const [nickname, setNickname] = useState("");
 
@@ -59,8 +60,13 @@ function SignupInputInformStudent() {
         email: data.email,
       });
     });
-  }, []);
 
+    const fullboxDiv = document.getElementById('fullbox-div');
+    if (fullboxDiv) {
+      const divWidth = fullboxDiv.clientWidth;
+      setCurrentWidth(divWidth);
+    }
+  }, []);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -111,7 +117,20 @@ function SignupInputInformStudent() {
   };
 
   return (
-    <div className='SignupInform-fullbox' id='current-width'>
+    <div className='SignupInform-fullbox' id='fullbox-div'>
+
+      {isModalOpen && (
+      <div className='SignupInform-modalbox'>
+        <SchoolSearchModal
+          modalWidth={`${currentWidth}px`}
+          onSelectSchool={handleSelectSchool}
+          onClose={handleCloseModal}
+        />
+      </div>  
+      )}        
+
+      {!isModalOpen && (
+      <div className='SignupInform-contentbox'>
       <div className='SignupInform-emailbox'>
         <p className='SignupInform-textbox'>계정</p>
         <p className='SignupInform-mail'>{userData.email}</p>
@@ -140,13 +159,6 @@ function SignupInputInformStudent() {
             <SearchIcon />
         </div>
       </div>
-      {isModalOpen && (
-        <SchoolSearchModal
-          modalWidth={'100%'}
-          onSelectSchool={handleSelectSchool}
-          onClose={handleCloseModal}
-        />
-      )}
       <div 
         className={isFormValid ? 'SignupInform-confirmbox-active' : 'SignupInform-confirmbox-inactive'}>
         <Link to='/' style={{textDecoration:'none'}}>
@@ -155,6 +167,8 @@ function SignupInputInformStudent() {
           </p>      
         </Link>
       </div>
+      </div>
+      )}
     </div>  
   )
 }

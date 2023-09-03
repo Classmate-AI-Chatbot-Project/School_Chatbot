@@ -6,7 +6,7 @@ import App from './App';
 import Main from './Main';
 import Login from './screens/Login/Login';
 import Signup from './screens/Signup/Signup';
-import SignupInputInformStudent from './screens/SignupInputInformation/SignupInputInform'
+import SignupInputInformStudent from './screens/SignupInputInformation/SignupInputInformStudent'
 import SignupInputInformTeacher from './screens/SignupInputInformation/SignupInputInformTeacher'
 import ConsultaionList from './screens/Teacher_screens/ConsultationList'
 import ConsultationAll from './screens/Teacher_screens/ConsultationAll';
@@ -37,10 +37,9 @@ root.render(
       <Route path="/" element={<App />}>
         <Route path="/" element={<Main/>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signupInform1" element={<SignupInputInformStudent /> } />
-        <Route path="/signupInform2" element={<SignupInputInformTeacher /> } />
         <Route path="/signupType" element={<SignupType />} />
-        <Route path="/signupInform" element={<SignupInputInformStudent /> } />
+        <Route path="/signupInform/student" element={<SignupInputInformStudent /> } />
+        <Route path="/signupInform/teacher" element={<SignupInputInformTeacher /> } />
         <Route path="/profile" element={<Profile/> } />
         <Route path="/test0" element={<DrawingBegin />} />
         <Route path="/test" element={<DrawingTest />} />
