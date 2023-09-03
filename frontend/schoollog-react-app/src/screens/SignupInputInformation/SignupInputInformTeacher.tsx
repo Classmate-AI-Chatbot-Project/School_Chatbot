@@ -1,56 +1,153 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './SignupInputInform.css';
+import axios from "axios";
+import SchoolSearchModal from './SchoolSearchModal';
 import { ReactComponent as SearchIcon } from '../../assets/signup-input-search.svg'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCookies } from "react-cookie";
+import { Cookies, useCookies } from "react-cookie";
 import { setLoggedIn, setNickname } from '../../actions';
-import { RootState } from '../../reducers';
+// import { RootState } from '../../reducers';
+import { School } from './SchoolSearchModal';
+
+interface UserData {
+  username: string;
+  email: string;
+  school?: string;
+  profilePhoto?: string
+  job?: number;
+}
 
 function SignupInputInformTeacher() {
-  const [email, setEmail] = useState('hello@world.com');
-  const [nickname, setNickname] = useState('조다은 선생님');
+  const [userData, setUserData] = useState<UserData>({
+    username: '',
+    email: '',
+    school: '',
+    job: 1,
+  });
 
-  const isFormValid = email !== '' && nickname !== '';
-
+  const [log, setCookie] = useCookies(['isLoggedIn']);
   const dispatch = useDispatch();
-  const [cookies, setCookie] = useCookies(['isLoggedIn']); // isLoggedIn 쿠키를 사용
+  const cookies = new Cookies();
+  const csrftoken = cookies.get("csrftoken");
+  const [currentWidth, setCurrentWidth] = useState<number>(0);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+
+  const isSchoolSelected = selectedSchool !== null;
+  const isFormValid = isSchoolSelected;
+
+  useEffect(() => {
+    // 초기 로드 시 email과 username을 가져오기
+    axios.get(
+      `http://127.0.0.1:8000/account/decode/`,
+      {
+        headers: {
+          "Content-type": "application/json",
+        },
+        withCredentials: true,
+      }
+    ).then((res: any) => {
+      console.log(res.data);
+      const data = res.data;
+
+      setUserData({
+        username: data.username,
+        email: data.email,
+      });
+    });
+
+    const fullboxDiv = document.getElementById('fullbox-div');
+    if (fullboxDiv) {
+      const divWidth = fullboxDiv.clientWidth;
+      setCurrentWidth(divWidth);
+    }
+  }, []);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSelectSchool = (school: School) => {
+    setSelectedSchool(school);
+  };
 
   const handleSignup = () => {
     if (isFormValid) {
       // Redux 상태 업데이트
-      setNickname('조다은 선생님');
       dispatch(setLoggedIn(true));
 
-      // 쿠키에 저장
-      setCookie('isLoggedIn', true, { path: '/' });
+      const data = {
+        school: selectedSchool?.SCHUL_NM,
+        job: 0,  
+      };
+
+      axios.put(
+        `http://127.0.0.1:8000/account/signup/`,
+        data,
+      {
+        headers: {
+          "Content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        withCredentials: true,
+      }
+    )
+      .then((res: any) => {
+        console.log(res)
+        setCookie('isLoggedIn', true, { path: '/' });
+      })
     }
   };
 
   return (
-    <div className='SignupInputInform-fullbox'>
-      <div className='SignupInputInform-itembox'>
-        <p className='SignupInputInform-textbox'>계정</p>
-        <p className='SignupInputInform-mail'>{email}</p>
-        <div className='SignupInputInform-underline'/>
+    <div className='SignupInform-fullbox' id='fullbox-div'>
+
+      {isModalOpen && (
+      <div className='SignupInform-modalbox'>
+        <SchoolSearchModal
+          modalWidth={`${currentWidth}px`}
+          onSelectSchool={handleSelectSchool}
+          onClose={handleCloseModal}
+        />
+      </div>  
+      )}        
+
+      {!isModalOpen && (
+      <div className='SignupInform-contentbox'>
+      <div className='SignupInform-emailbox'>
+        <p className='SignupInform-textbox'>계정</p>
+        <p className='SignupInform-mail'>{userData.email}</p>
+        <div className='SignupInform-underline'/>
       </div>
-      <div className='SignupInputInform-itembox'>
-        <p className='SignupInputInform-textbox'>학교 및 학급</p>
-        <div className='SignupInputInform-school-search'>
+      <div className='SignupInform-schoolbox'>
+        <p className='SignupInform-textbox'>학교 및 학급</p>
+        <div className='SignupInform-school-search' onClick={handleOpenModal}>
+        {selectedSchool ? (
+          <p style={{ fontWeight: 400, color: 'black' }}>
+            {selectedSchool.SCHUL_NM}
+          </p>
+        ) : (
           <p>학교를 찾아주세요</p>
-          <SearchIcon />
+        )}
+            <SearchIcon />
         </div>
       </div>
       <div 
-        className={isFormValid ? 'SignupInputInform-confirmbox-active' : 'SignupInputInform-confirmbox-inactive'}>
+        className={isFormValid ? 'SignupInform-confirmbox-active' : 'SignupInform-confirmbox-inactive'}>
         <Link to='/' style={{textDecoration:'none'}}>
           <p onClick={handleSignup}>
             가입하기
           </p>      
         </Link>
-
       </div>
+      </div>
+      )}
     </div>  
   )
 }

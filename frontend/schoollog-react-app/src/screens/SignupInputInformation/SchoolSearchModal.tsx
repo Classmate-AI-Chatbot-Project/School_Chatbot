@@ -13,7 +13,7 @@ interface SchoolSearchModalProps {
 
 export interface School {
   SCHUL_NM: string;
-  ADRCD_NM: string;
+  LCTN_SC_NM: string;
 }
 
 const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
@@ -33,7 +33,6 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
     school.SCHUL_NM.includes(searchQuery)
   );
 
-  const SCHOOL_API = `/openApi.do?apiKey=ed9799175a114f848c8d772c443379ee&apiType=62&pbanYr=2020&schulKndCode=${selectedSchoolType}`
   const key = '2a58cfe5fc904bb39bac6c8194b22cb3'
   const getSchoolList = async () => {
     try {
@@ -42,7 +41,7 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
           console.log(response.data.schoolInfo[1].row)
           const filteredSchoolList = response.data.schoolInfo[1].row.map((item: any) => ({
             SCHUL_NM: item.SCHUL_NM,
-            ADRCD_NM: item.LCTN_SC_NM,
+            LCTN_SC_NM: item.LCTN_SC_NM,
           }));
           setSchoolList(filteredSchoolList);
         })
@@ -69,13 +68,13 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
       style={{
         width: modalWidth,
       }}>
-        <div className="ConsultationAll-topbar">
-          <CloseIcon onClick={goBack}/>
-          <p>학교 찾기</p>
-          <p></p>
-        </div>
-        <BorderLine width={'423px'} height={'2px'}/>
-
+        <div className="SchoolSearchModal-topbar">
+          <div className="SchoolSearchModal-topbar-item">
+            <CloseIcon onClick={goBack}/>
+            <p>학교 찾기</p>
+          </div>
+          <BorderLine width={'100%'} height={'2px'}/>
+        </div>       
         <div className="SchoolSearchModal-header">
           <p>학교 종류를 선택한 뒤, 이름을 검색해 주세요.</p>
           <div className="SchoolSearchModal-radiobox">
@@ -106,19 +105,22 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
               />
               고등학교
             </label>
-          </div>          
+          </div>
+          <div className="SchoolSearchModal-searchbox">
+            <input
+              placeholder="학교 이름을 입력해주세요."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button
+              onClick={getSchoolList}
+            >
+              검색
+            </button>            
+          </div>  
         </div>
+
         <div className="SchoolSearchModal-content">
-          <input
-            placeholder="학교 이름 검색"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button
-            onClick={getSchoolList}
-          >
-            검색하기
-          </button>
           <div className="SchoolSearchModal-list">
           <ul>
             {filteredSchools.map((school, index) => (
@@ -129,11 +131,16 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
                   checked={selectedSchoolIndex === index}
                   onChange={() => handleSelectedSchool(school, index)}
                 />
-                {school.SCHUL_NM} / {school.ADRCD_NM}</li>
+                {school.SCHUL_NM} / {school.LCTN_SC_NM}</li>
             ))}
           </ul>
           </div>
-          <button onClick={handleConfirm}>확인</button>
+          <button
+            className="SchoolSearchModal-confirmbtn"
+            onClick={handleConfirm}
+          >
+            확인
+          </button>
         </div>
       </div>
   );

@@ -1,39 +1,178 @@
 .SchoolSearchModal-fullbox {
   display: flex;
-  position: fixed;
-  height: 100%;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  flex: 1 1 auto;
+  position: absolute;
+  height: calc(100dvh - 56px);
+  max-height: calc(100dvh - 56px);
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: white;
-  padding: 0px 40px;
+  background: var(--gray-5-ee, #EEE);
   box-sizing: border-box;
-}
-.SchoolSearchModal-header {
-  font-size: 16px;
-  font-weight: 500;
-}
-.SchoolSearchModal-content {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  font-size: 16px;
-  font-weight: 500;
+  z-index: 2;
+  margin: 0px;
 }
 
+.SchoolSearchModal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 23%;
+  background: var(--w, #FFF);
+  padding: 25px 0px 21px 0px;
+  margin-bottom: 3%;
+  box-sizing: border-box;
+}
+.SchoolSearchModal-header p {
+  display: flex;
+  color: var(--bb, #1D4C5C);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  margin: 0px;
+}
+
+.SchoolSearchModal-topbar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--w, #FFF);
+}
+.SchoolSearchModal-topbar-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 0px 0px 31px;
+}
+.SchoolSearchModal-topbar p {
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 121px;
+}
+
+.SchoolSearchModal-searchbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0px 25px 0px 25px;
+  box-sizing: border-box;
+}
+.SchoolSearchModal-searchbox input {
+  display: flex;
+  align-items: center;
+  width: 72%;
+  height: 45px;
+  border: none;
+  border-radius: 8px;
+  padding-left: 21px;
+  color: var(--gray-169, #696969);
+  font-size: 16px;
+  font-weight: 400;
+  background: var(--gray-5-ee, #EEE);
+  box-sizing: border-box;
+}
+.SchoolSearchModal-searchbox button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24%;
+  height: 45px;
+  border: none;
+  border-radius: 8px;
+  color: var(--w, #FFF);
+  font-size: 15px;
+  font-weight: 700;
+  background: var(--g, #35BA95);
+  box-sizing: border-box;
+}
+
+.SchoolSearchModal-radiobox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  width: 100%;
+  height: 30px;
+  padding: 0px 50px 0px 46px;
+  margin: 22px 0px;
+  box-sizing: border-box;
+}
+.SchoolSearchModal-radiobox label{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.SchoolSearchModal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 72%;
+  max-height: 70%;
+  font-size: 16px;
+  font-weight: 500;
+  background: var(--w, #FFF);
+  padding: 34px 25px 27px 25px;
+  box-sizing: border-box;
+}
 .SchoolSearchModal-list {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 60%;
-  font-size: 16px;
-  font-weight: 500;
+  height: 100%;
   overflow-y: scroll;
-  overflow-x: scroll;
-  margin-top: 20px;
   box-sizing: border-box;
+  background: var(--w, #FFF);
+}
+.SchoolSearchModal-list ul{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: var(--w, #FFF);
+}
+.SchoolSearchModal-list li {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 17px;
+  font-weight: 400;
+  margin: 0px 0px 22px 0px;
+  box-sizing: border-box;
+}
+.SchoolSearchModal-confirmbtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 45px;
+  border-radius: 8px;
+  color: var(--w, #FFF);
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  background: var(--g, #35BA95);
+  box-sizing: border-box;
+}
+
+[type="radio"] {
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  border: 0px;
+  appearance: none;
+  background-color: var(--gray-4-e-3, #E3E3E3);
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+  margin: 0px 5px 0px 0px;
+}
+[type="radio"]:checked {
+  background-color: var(--b, #1985C0);
 }
