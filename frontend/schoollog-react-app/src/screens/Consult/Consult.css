@@ -1,0 +1,201 @@
+/*채팅 창*/
+.Consult-InitialScreen{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.Consult-InitialScreenBtn{
+  width: 240px;
+  height: 57px;
+  flex-shrink: 0;
+  background: url('../../assets/mes-chatbtn.svg') no-repeat center center;
+  border: transparent;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+  margin-bottom: 34px;
+  cursor: pointer;
+
+}
+
+.Consult-you-profile {
+   display: inline-block;
+   width: 34px;
+   height: 34px;
+   cursor: pointer;
+ }
+ 
+ .Consult-you-profile img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+ }
+
+ .Consult-you{
+  display: flex;
+  align-self: flex-end;
+  position: relative;
+  margin-top: 29px;
+  margin-bottom: 2px;
+  margin-left: 0;
+  animation: scaleUp 0.7s both;
+ }
+
+ .Consult-you-box{
+  margin-left: 10px;
+  margin-top: 8px;
+ }
+ .Consult-you-name{
+  color: var(--bb, #1D4C5C);
+  text-align: left;
+  font-family: Pretendard;
+  font-size: 14px; 
+  font-weight: 600;
+  margin-bottom: 8px;
+ }
+
+ .Consult-you-message {
+  align-items: flex-start;
+  max-width: 222px;
+  word-wrap: break-word;
+  border-radius: 0px 16px 16px 16px;
+  background: var(--g, #35BA95);
+  padding: 13px;
+  color: var(--w, #FFF);
+  font-family: Pretendard;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+ }
+
+ .Consult-InputBox {
+  display: flex;
+  align-items: center;
+  width: 288px;
+  height: 42px;
+  background: #FFFFFF;
+  border-radius: 25px;
+  border: 1px solid #D7D7D7;
+  text-align: center;
+  padding: 1px 15px 1px 15px;
+  margin-left: 25px;
+  margin-right: 8px;
+}
+
+.Consult-InputMessage {
+  flex-grow: 1;
+  height: 70%;
+  border: none;
+  outline: none;
+  font-family: 'Pretendard';
+  font-size: 14px;
+}
+
+.Consult-modalProfile {
+  width: 130px;
+   height: 130px;
+ }
+
+ .Consult-modalName {
+  color: var(--bb, #1D4C5C);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 22px;
+ }
+
+ .Consult-modalSchool {
+  color: var(--gray-169, #696969);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 10px;
+ }
+
+ .Consult-request {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 21px;
+ }
+
+ .Consult-request-box {
+  position: relative;
+  text-align: left;
+  min-width: 261px;
+  min-height: 126px;
+  border-radius: 16px 0px 16px 16px;
+  border: 1px solid var(--gray-3-d-7, #D7D7D7);
+  background: var(--W, #FFF);
+ }
+
+ .Consult-request-title {
+  display: flex;
+  color: var(--BL, #000);
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 750;
+  text-align: left;
+  padding: 14px 24px;
+
+ }
+
+ .Consult-request-time {
+  align-self: flex-end;
+  margin-right: 10px;
+  color: var(--gray-169, #696969);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 10px;
+  font-weight: 400;
+ }
+
+ .Consult-request-emmotion {
+  position: relative;
+  top: 15px;
+  left: 22px;
+  bottom: 15px;
+ }
+
+ .Consult-request-category {
+  position: absolute;
+  top: 66px;
+  left: 86px;
+  color: var(--BL, #000);
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 700;
+ }
+
+ .Consult-request-date {
+  position: absolute;
+  top: 94px;
+  left: 86px;
+  color: var(--gray-169, #696969);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+ }
+
+ .InitialConsult-InputBox {
+  display: flex;
+  align-items: center;
+  width: 288px;
+  height: 42px;
+  background: #EEE;
+  border-radius: 25px;
+  border: 1px solid #D7D7D7;
+  text-align: center;
+  padding: 1px 15px 1px 15px;
+  margin-left: 25px;
+  margin-right: 8px;
+}
+.InitialConsult-InputMessage {
+  flex-grow: 1;
+  height: 70%;
+  border: none;
+  outline: none;
+  font-family: 'Pretendard';
+  font-size: 14px;
+  background-color: #EEE;
+}

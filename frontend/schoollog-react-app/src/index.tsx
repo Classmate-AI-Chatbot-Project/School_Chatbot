@@ -16,7 +16,7 @@ import Result from './screens/Chat/Result'
 import StudentResult from './screens/Chat/StudentResult'
 import TeacherResult from './screens/Chat/TeacherResult'
 import Profile from './screens/Profile/Profile';
-import Message from './screens/Message/Message';
+import StudentConsult from './screens/Consult/StudentConsult';
 import DrawingBegin from './screens/Test/DrawingBegin';
 import DrawingTest from './screens/Test/DrawingTest';
 import DrawingResult from './screens/Test/DrawingResult';
@@ -26,6 +26,7 @@ import NaverRedirect from './screens/Login/NaverRedirect';
 import StudentList from './screens/Teacher_screens/StudentList';
 import StudentProfile from './screens/Teacher_screens/StudentProfile';
 import SignupType from './screens/SignupType/SignupType';
+import InitialConsult from './screens/Consult/InitialConsult';
 
 
 const root = ReactDOM.createRoot(
@@ -49,10 +50,10 @@ root.render(
         <Route path="/chat/:user_id/:chatroom_id" element={<Chat />} />
         <Route path="/detail" element={<Result />} />  
         <Route path="/chat/result/:user_id/:chatroom_id" element={<StudentResult />} />
-        <Route path="/teacher/chat/result/:chatroom_id" element={<TeacherResult />} />
-        <Route path="/message" element={<Message />} />
+        <Route path="/consult/room/:room_name/student/:student_id/" element={<StudentConsult />} />
+        <Route path="/consult/" element={<StudentConsult />} />
+        <Route path="/initial/consult/" element={<InitialConsult />} />
         <Route path="/teacher/studentlist" element={<StudentList/>} />
-
 
         <Route path="/account/naver/callback" element={<NaverRedirect/> }/>
         <Route path="/account/google/callback/" element={<GoogleRedirect/>} />
@@ -60,7 +61,8 @@ root.render(
         <Route path="/teacher/detail/:user_id" element={<StudentProfile/>} />
       </Route>
       <Route path="/teacher/detail/consultlist/:user_id" element={<ConsultationAll/>} />
-      <Route path="/chat/history/:student_id/:chatroom_id" element={<ChatHistory />} />
+      <Route path="/chat/history/:chatroom_id" element={<ChatHistory />} />
+      <Route path="/teacher/chat/result/:chatroom_id" element={<TeacherResult />} />
       
       
     </Routes>
