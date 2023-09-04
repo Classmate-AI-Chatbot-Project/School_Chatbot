@@ -27,6 +27,7 @@ function StudentResult() {
   const correctedImagePath = wordcloudImage.replace(/\\/g, '/');
   const [showTooltip, setShowTooltip] = useState(true);
   const [loading, setLoading] = useState(true);
+
   
   const handleViewChat = () => {
     navigate(`/chat/history/${user_id}/${chatroom_id}/`);
@@ -36,38 +37,29 @@ function StudentResult() {
   };
 
   useEffect(() => { //결과 받아오기
-    axios.get(`http://127.0.0.1:8000/chat/result/${user_id}/${chatroom_id}/`,
-    {
-      headers: {
-        "Content-type": "application/json",
-        "X-CSRFToken": csrftoken,
-      },
-      withCredentials: true,
-    })
-      .then(response => {
-        const responseData = response.data;
-        const { category, emotion_count, depression_count, summary, wordcloud } = responseData;
+    console.log(responseData.data);
+    const data = responseData.data;
+
+    
+
+  setEmotionCount(data.emotion_count);
+  setDepressionCount(data.depression_count);
+  setSummaryText(data.summary);
+  setWordcloudImage(data.wordcloud);
+  if (data.depression_count >= 0 && data.depression_count < 35) {
+    setEmotion("행복");
+  } else if (data.depression_count >= 35 && data.depression_count < 65) {
+    setEmotion("평범");
+  } else if (data.depression_count >= 65 && data.depression_count <= 100) {
+    setEmotion("우울");
+  } else {
+    setEmotion("");
+  }
         
-        setEmotionCount(emotion_count);
-        setDepressionCount(depression_count);
-        setSummaryText(summary);
-        setWordcloudImage(wordcloud);
-        if (depression_count >= 0 && depression_count < 35) {
-          setEmotion("행복");
-        } else if (depression_count >= 35 && depression_count < 65) {
-          setEmotion("평범");
-        } else if (depression_count >= 65 && depression_count <= 100) {
-          setEmotion("우울");
-        } else {
-          setEmotion("");
-        }
-        setLoading(false);
-        console.log(responseData)
-      })
-      .catch(error => {
-        console.error("Error fetching wordcloud image:", error);
-      });
+    
   }, [user_id, chatroom_id]);
+        
+        
 
   const series1 = [{
     name: '행복',
@@ -156,31 +148,16 @@ function StudentResult() {
       <div className='Chat-ContenBox'>
         <div className='Result1-bg'>
           <div className='Result1-clipboard'>
-            <div className='Result1-emotion'>
-            {loading ? ( //로딩중
-              <div className="Result1-loading-animation">
-                <TailSpin
-                  height="90"
-                  width="90"
-                  color="#969696"
-                  ariaLabel="tail-spin-loading"
-                  radius="1"
-                  wrapperStyle={{}}
-                  wrapperClass=""
-                  visible={true}
-                />
-              </div>
-            ) : ( 
-            <> 
-              {emotion === "행복" ? (
-                <ResultHappy />
-              ) : emotion === "우울" ? (
-                <ResultGloom />
-              ) : emotion === "평범" ? (
-                <ResultNormal />
-              ) : null}
-            </>
-            )}
+          <div className='Result1-emotion'>
+              <> 
+                {emotion === "행복" ? (
+                  <ResultHappy />
+                ) : emotion === "우울" ? (
+                  <ResultGloom />
+                ) : emotion === "평범" ? (
+                  <ResultNormal />
+                ) : null}
+              </>
             </div>
             <div className="Result1-chart">
               <ChartBg className="R1-ChartBg"/>          
