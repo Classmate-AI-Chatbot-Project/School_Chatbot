@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import "./TeacherResult.css"
-import "./StudentResult.css"
+import "./ChatResult.css"
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
-import { TailSpin } from  'react-loader-spinner'
-import dummyProfile from '../../assets/dummy-profile-img.png'
 import BorderLine from '../../component/BorderLine/BorderLine';
 import {ReactComponent as Back} from "../../assets/back.svg"
 import { ReactComponent as ResultHappy } from '../../assets/result-happy.svg'
@@ -19,7 +17,6 @@ function TeacherResult() {
   const cookies = new Cookies();
   const csrftoken = cookies.get("csrftoken");
   const navigate  = useNavigate();
-  const [loading, setLoading] = useState(true);
   const { chatroom_id } = useParams();
   const handleGoBack = () => {
     navigate(-1)
@@ -86,14 +83,11 @@ function TeacherResult() {
         setEmotion("");
       }
 
-      setLoading(false);
     })
     .catch(error => {
       console.error("Error fetching wordcloud image:", error);
     });
   }, [chatroom_id, csrftoken]);
-
-
 
   const formattedDate = new Date(resultData.result_time).toLocaleDateString('ko-KR', {
     year: 'numeric',
@@ -111,8 +105,6 @@ function TeacherResult() {
     color: '#1985C0',
   }]
   
-
-
   const options1: ApexOptions = { //행복, 우울 막대 그래프
     chart: {
       type: 'bar', 
