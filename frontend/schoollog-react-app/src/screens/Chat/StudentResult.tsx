@@ -1,84 +1,95 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
-import "./StudentResult.css"
+import { useParams, useNavigate } from 'react-router-dom';
+import "./TeacherResult.css"
+import "./ChatResult.css"
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
-import { TailSpin } from  'react-loader-spinner'
+import BorderLine from '../../component/BorderLine/BorderLine';
+import {ReactComponent as Back} from "../../assets/back.svg"
 import { ReactComponent as ResultHappy } from '../../assets/result-happy.svg'
 import { ReactComponent as ResultNormal } from '../../assets/result-normal.svg'
 import { ReactComponent as ResultGloom } from '../../assets/result-gloom.svg'
 import { ReactComponent as ChartBg } from '../../assets/result-chartbg.svg'
 
-function StudentResult() {  
+function StudentResult() {
   const cookies = new Cookies();
   const csrftoken = cookies.get("csrftoken");
-  const { user_id, chatroom_id } = useParams();
-  const location = useLocation();
-  const responseData = location.state;
   const navigate  = useNavigate();
-  const [depressionCount, setDepressionCount] = useState(Number);
-  const [emotionCount, setEmotionCount] = useState([]);
-  const [emotion, setEmotion] = useState("");
-  const seriesData = Object.values(emotionCount);
-  const [summaryText, setSummaryText] = useState(String);
-  const [wordcloudImage, setWordcloudImage] = useState(String);
-  const correctedImagePath = wordcloudImage.replace(/\\/g, '/');
-  const [showTooltip, setShowTooltip] = useState(true);
-  const [loading, setLoading] = useState(true);
-  
-  const handleViewChat = () => {
-    navigate(`/chat/history/${user_id}/${chatroom_id}/`);
+  const { chatroom_id } = useParams();
+  const handleGoBack = () => {
+    navigate(-1)
   };
-  const closeTooltip = () => {
-    setShowTooltip(false);
+  const handleViewChat = () => {
+    navigate(`/chat/history/${chatroom_id}/`);
   };
 
-  useEffect(() => { //결과 받아오기
-    axios.get(`http://127.0.0.1:8000/chat/result/${user_id}/${chatroom_id}/`,
-    {
+  const [resultData, setResultData] = useState({
+    emotion_list: {},
+    emotion_temp: 0,
+    summary: "",
+    wordcloud: "",
+    category: "",
+    result_time: "",
+  });
+  const [emotion, setEmotion] = useState("");
+  const seriesData: number[] = Object.values(resultData.emotion_list);
+
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/teacher/chat/result/${chatroom_id}`, {
       headers: {
         "Content-type": "application/json",
         "X-CSRFToken": csrftoken,
       },
       withCredentials: true,
     })
-      .then(response => {
-        const responseData = response.data;
-        const { category, emotion_count, depression_count, summary, wordcloud } = responseData;
-        
-        setEmotionCount(emotion_count);
-        setDepressionCount(depression_count);
-        setSummaryText(summary);
-        setWordcloudImage(wordcloud);
-        if (depression_count >= 0 && depression_count < 35) {
-          setEmotion("행복");
-        } else if (depression_count >= 35 && depression_count < 65) {
-          setEmotion("평범");
-        } else if (depression_count >= 65 && depression_count <= 100) {
-          setEmotion("우울");
-        } else {
-          setEmotion("");
-        }
-        setLoading(false);
-        console.log(responseData)
-      })
-      .catch(error => {
-        console.error("Error fetching wordcloud image:", error);
+    .then(response => {
+      const data = response.data;
+
+      // resultData에 결과 데이터 매칭
+      setResultData({
+        emotion_list: data.result_data.emotion_list,
+        emotion_temp: data.result_data.emotion_temp,
+        summary: data.result_data.summary,
+        wordcloud: data.result_data.keyword, 
+        category: data.result_data.category,
+        result_time: data.result_data.result_time
       });
-  }, [user_id, chatroom_id]);
+
+      // emotion 변수 설정
+      if (data.result_data.emotion_temp >= 0 && data.result_data.emotion_temp < 35) {
+        setEmotion("행복");
+      } else if (data.result_data.emotion_temp >= 35 && data.result_data.emotion_temp < 65) {
+        setEmotion("평범");
+      } else if (data.result_data.emotion_temp >= 65 && data.result_data.emotion_temp <= 100) {
+        setEmotion("우울");
+      } else {
+        setEmotion("");
+      }
+
+    })
+    .catch(error => {
+      console.error("Error fetching wordcloud image:", error);
+    });
+  }, [chatroom_id, csrftoken]);
+
+  const formattedDate = new Date(resultData.result_time).toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).replace(/(\d{4})-(\d{2})-(\d{2})/, '$1년 $2월 $3일').replace(/\.$/, '');
 
   const series1 = [{
     name: '행복',
-    data: [100-depressionCount],
+    data: [100-resultData.emotion_temp],
     color: '#35BA95',
   }, {
     name: '우울',
-    data: [depressionCount],
+    data: [resultData.emotion_temp],
     color: '#1985C0',
   }]
-
+  
   const options1: ApexOptions = { //행복, 우울 막대 그래프
     chart: {
       type: 'bar', 
@@ -118,7 +129,7 @@ function StudentResult() {
          type: 'pie',
          width: 200,
        },
-       labels: Object.keys(emotionCount),
+       labels: Object.keys(resultData.emotion_list),
        colors: ['#1985C0', '#EBA1B8', '#9C27B0', '#E37354', '#FFC656', '#35BA95'],
        legend: {
          position: 'bottom',
@@ -134,53 +145,28 @@ function StudentResult() {
       },
   };
 
-   const postResult = () => { //전체 결과 전송
-    axios.post(
-      `http://127.0.0.1:8000/chat/result/${user_id}/${chatroom_id}/`,
-      responseData, 
-      {
-          headers: {
-              "Content-type": "application/json",
-              "X-CSRFToken": csrftoken, 
-          },
-          withCredentials: true,
-      }
-  )
-    .then((res: any) => {
-        console.log(res)
-      })
-    }
-
   return (
-    <div className='Chat-FullBox'>
-      <div className='Chat-ContenBox'>
+    <div className='TR-fullbox'>
+      <div className='TR-contentbox'>
+        <div className="TR-dateBar">
+          <Back onClick={handleGoBack} style={{cursor: "pointer"}}/>
+          <div className="TR-date">
+            {formattedDate}
+          </div>
+        </div>
+        <BorderLine width={'423px'} height={'1px'}/>
         <div className='Result1-bg'>
           <div className='Result1-clipboard'>
             <div className='Result1-emotion'>
-            {loading ? ( //로딩중
-              <div className="Result1-loading-animation">
-                <TailSpin
-                  height="90"
-                  width="90"
-                  color="#969696"
-                  ariaLabel="tail-spin-loading"
-                  radius="1"
-                  wrapperStyle={{}}
-                  wrapperClass=""
-                  visible={true}
-                />
-              </div>
-            ) : ( 
-            <> 
-              {emotion === "행복" ? (
-                <ResultHappy />
-              ) : emotion === "우울" ? (
-                <ResultGloom />
-              ) : emotion === "평범" ? (
-                <ResultNormal />
-              ) : null}
-            </>
-            )}
+              <> 
+                {emotion === "행복" ? (
+                  <ResultHappy />
+                ) : emotion === "우울" ? (
+                  <ResultGloom />
+                ) : emotion === "평범" ? (
+                  <ResultNormal />
+                ) : null}
+              </>
             </div>
             <div className="Result1-chart">
               <ChartBg className="R1-ChartBg"/>          
@@ -190,7 +176,7 @@ function StudentResult() {
                 type="bar"
                 height={100}
                 width={320} />
-                <span className="R1-Hp">{Math.round(100-depressionCount)}%</span><span className="R1-Gp">{Math.round(depressionCount)}%</span>
+                <span className="R1-Hp">{Math.round(100-resultData.emotion_temp)}%</span><span className="R1-Gp">{Math.round(resultData.emotion_temp)}%</span>
             </div>
           </div>
         </div>
@@ -207,8 +193,8 @@ function StudentResult() {
         <div className='Result3-keyword'>
           키워드
           <div className='Result3-box'>
-            {wordcloudImage && (
-              <img src={"http://127.0.0.1:8000/" + correctedImagePath} alt="Wordcloud" className="Result3-wordcloud"/>
+            {resultData.wordcloud && (
+              <img src={"http://127.0.0.1:8000" + resultData.wordcloud} alt="Wordcloud" className="Result3-worldcloud" />
             )}
           </div>
         </div>
@@ -216,26 +202,13 @@ function StudentResult() {
           총정리
           <div className='Result4-box'>
             <div className="Result4-box2">
-              {summaryText}
+              {resultData.summary}
             </div>
           </div>
         </div>
-        <div className='Result5-viewChat' onClick={handleViewChat}>
-        전체 채팅 보기 {'>'}
+        <div className='TeacherResult-viewChat' onClick={handleViewChat}>
+          전체 채팅 보기 {'>'}
         </div>
-        <div className="StudentResult-end">
-        {showTooltip && (
-          <div className="StudentResult-tooltip">
-            <span className="StudentResult-tooltipContent">
-              상담 결과를 전송해 선생님과 상담을 할 수 있어요.
-            </span>
-            <button className="StudentResult-closeBtn" onClick={closeTooltip}>✖</button>
-          </div>
-        )}
-        <Link to="/profile">
-        <button className="StudentResult-endBtn" onClick={postResult}>상담 신청하기</button>
-        </Link>
-      </div>
       </div>
     </div>
   );
