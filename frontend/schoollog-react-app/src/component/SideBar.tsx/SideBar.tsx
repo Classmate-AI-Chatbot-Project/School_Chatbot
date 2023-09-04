@@ -1,7 +1,8 @@
-import React, { useRef,useEffect } from 'react';
+import React, { useState, useRef,useEffect } from 'react';
+import axios from 'axios';
+import { Cookies } from "react-cookie";
+import { useParams, useNavigate } from 'react-router-dom';
 import './SideBar.css'
-import { useSelector } from 'react-redux';
-import { RootState } from '../../reducers'
 import BorderLine from '../BorderLine/BorderLine';
 import { ReactComponent as BookIcon } from '../../assets/side-bar-book.svg'
 import { ReactComponent as SpeechIcon } from '../../assets/side-bar-speech.svg'
@@ -10,7 +11,12 @@ import { ReactComponent as PaintingIcon } from '../../assets/side-bar-paint.svg'
 import { Link } from 'react-router-dom';
 
 function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
-  const isTeacher = useSelector((state:RootState) => state.isTeacher);
+  const cookies = new Cookies();
+  const csrftoken = cookies.get("csrftoken");
+  const [userJob, setUserJob] = useState('1');
+  const [roomName, setRoomName] = useState('');
+  const [studentId, setStudentId] = useState('');
+  const navigate = useNavigate();
 
   const outside = useRef<any>();
   useEffect(() => {
@@ -31,9 +37,38 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/consult/create/',
+    {
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      withCredentials: true,
+    }) 
+      .then((response) => {
+        console.log(response.data)
+        const { user_job, room_name, student_id } = response.data;
+        setUserJob(user_job);
+        setRoomName(room_name);
+        setStudentId(student_id);
+      })
+      .catch((error) => {
+        console.error('Error fetching room_name and student_id:', error);
+      });
+  }, []);
+
+  const handleConsultClick = () => {
+    if (!userJob || !roomName || !studentId) { // 로그인 안되어 있는 경우
+      navigate('/initial/consult');
+    } else { // user_id가 있으면 상담 페이지로 이동
+      navigate(`/consult/room/${roomName}/student/${studentId}/`);
+    }
+  };
+
   return (
     <div className={isOpen ? 'Opened-bar':'Closed-bar'} ref={outside}>
-      {!isTeacher && 
+      {userJob === "1" && (
       <ul>
         <li>
           <BookIcon/>
@@ -52,12 +87,12 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
         <BorderLine width={'315px'} height={'1px'}/>
         <li>
           <StudentsIcon/>
-          <a className='Menu-item-text'>선생님과 상담하기</a>
+              <a className='Menu-item-text' onClick={handleConsultClick}>선생님과 상담하기</a>
         </li>
         <BorderLine width={'315px'} height={'1px'}/>
       </ul>
-      }
-      {isTeacher && 
+      )}
+      {userJob !== "1" && (
       <ul>
         <li>
           <BookIcon/>
@@ -78,7 +113,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
 
         <BorderLine width={'315px'} height={'1px'}/>
       </ul>
-      }
+      )}
 
       <BorderLine width={'2px'} height={'918px'}/> 
     </div>
