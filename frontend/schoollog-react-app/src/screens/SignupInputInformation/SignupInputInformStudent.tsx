@@ -71,11 +71,9 @@ function SignupInputInformStudent() {
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
   const handleSelectSchool = (school: School) => {
     setSelectedSchool(school);
   };
@@ -85,7 +83,16 @@ function SignupInputInformStudent() {
     setNickname(value);
     // 추후 백엔드 협의 후 수정
     setIsDuplicated(value === '조다은'); 
-  };
+
+    const guideTextDiv = document.querySelector('.SignupInform-nickname-guide');
+    if (guideTextDiv instanceof HTMLElement) {
+      if (value === '조다은' || value === '') {
+        guideTextDiv.style.display = 'block';
+      } else {
+        guideTextDiv.style.display = 'none';
+      }
+    }
+  };    
 
   const handleSignup = () => {
     if (isFormValid) {
@@ -138,13 +145,22 @@ function SignupInputInformStudent() {
       </div>
       <div className='SignupInform-nicknamebox'>
         <p className='SignupInform-textbox'>닉네임</p>
-        <input className='SignupInform-inputbox'
-          value={nickname}
-          onChange={handleNicknameChange}        
-        ></input>
-        <div className='SignupInform-underline'/>
-        {!isDuplicated && <p className='SignupInform-nickname-warning'></p>}
-        {isDuplicated && <p className='SignupInform-nickname-warning'>이미 사용중인 닉네임입니다.</p>}
+        <div className='SignupInform-inputbox'>
+          <input className='SignupInform-input'
+            value={nickname}
+            onChange={handleNicknameChange}        
+          ></input>
+          <div className='SignupInform-nicknamebtn'
+          >
+            중복확인
+          </div>
+        </div>
+        <div className='SignupInform-underline-nickname'/>
+        <div className='SignupInform-nickname-guide'>
+          {isDuplicated && <p className='SignupInform-nickname-warning'>이미 사용중인 닉네임입니다.</p>}
+          {!isDuplicated && <p className='SignupInform-nickname-success'>사용 가능한 닉네임입니다.</p>}
+          {/* {nickname === '' && <p className='SignupInform-nickname-warning'>닉네임을 입력하세요.</p>} */}
+        </div>        
       </div>
       <div className='SignupInform-schoolbox'>
         <p className='SignupInform-textbox'>학교 및 학급</p>

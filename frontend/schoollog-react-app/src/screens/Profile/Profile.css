@@ -12,15 +12,19 @@
   width: 100%;
   height: 84px;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: 28px;
+  justify-content: space-between;
+  padding: 0px 34px 0px 25px;
   text-align: left;
   background-color: white;
   box-sizing: border-box;
   margin-bottom: 13px;
 }
-.Profile-firstbox div {
+.Profile-firstbox-text {
   padding-left: 16px;
+  flex: 1;
+}
+.Profile-firstbox-editbtn {
+  margin: 0;
 }
 .Profile-firstbox p:first-child {
   font-style: normal;

@@ -6,10 +6,11 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import { ReactComponent as PrevImg } from '../../assets/main-carousel-prev.svg';
 import { ReactComponent as NextImg } from '../../assets/main-carousel-next.svg';
-import step1 from '../../assets/main-carousel-step1.png';
-import step2 from '../../assets/main-carousel-step2.png';
-import step3 from '../../assets/main-carousel-step3.png';
-import step4 from '../../assets/main-carousel-step4.png';
+import { ReactComponent as Step1 } from '../../assets/home-step-one.svg';
+import { ReactComponent as Step2 } from '../../assets/home-step-two.svg';
+import { ReactComponent as Step3 } from '../../assets/home-step-three.svg';
+import { ReactComponent as Step4 } from '../../assets/home-step-four.svg';
+
 
 const ImageCarousel: React.FC = () => {
   const settings = {
@@ -47,16 +48,16 @@ const ImageCarousel: React.FC = () => {
     <div className="ImageCarousel-container">
       <Slider {...settings} ref={slickRef} afterChange={handleAfterChange}>
         <div>
-        <img src={step1} alt="step1" />
+          <Step1 />
         </div>
         <div>
-          <img src={step2} alt="step2" />
+          <Step2 />
         </div>
         <div>
-          <img src={step3} alt="step3" />
+          <Step3 />
         </div>
         <div>
-          <img src={step4} alt="step4" />
+          <Step4 />
         </div>
       </Slider>
       <div className="ImageCarousel-sliderBtn">
