@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: calc(100vh - 53px);;
+  min-height: calc(100vh - 53px);
   justify-content: flex-start;
   align-items: flex-start;
   background-color: white;
@@ -33,4 +33,9 @@
   font-weight: 500;
   margin-right: 4px;
   text-align: right;
+}
+.StudentList-select option {
+  border-radius: 8px;
+  border: 1px solid var(--BL, #000);
+  background: var(--W, #FFF);
 }

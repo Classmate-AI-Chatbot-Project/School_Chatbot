@@ -1,13 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
-import dummyProfile from '../../assets/dummy-student-profile.png'
-import { useSelector } from "react-redux";
-import { useCookies } from "react-cookie";
-import { setLoggedIn } from "../../actions";
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { RootState } from '../../reducers';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import "./StudentProfile.css";
@@ -24,40 +18,45 @@ interface ResultItem {
 
 function StudentProfile() {
   const dummyNumber:Number = 17;
-  const nickname = useSelector((state: RootState) => state.nickname);
-  const email = useSelector((state: RootState) => state.email);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
-  const [responseData, setResponseData] = useState(null);
-  const { user_id } = useParams();
+  const location = useLocation();
 
-  axios.get(
-    `http://127.0.0.1:8000/teacher/detail/${user_id}`,
-    {
-      headers: {
-          "Content-type": "application/json",
-      },
-      withCredentials: true,
-  }
-  ).then((res: any) => {
-    // 학생 별명, 이미지, 상담 기록
-    console.log(res.data)  
-  })
+  const navigate = useNavigate();
+  // const { studentID } = useParams();
+  const studentID = location.state?.studentID || '';
+
+  const [studentData, setStudentData] = useState({
+    nickname: '',
+    studentID: '',
+    profilePhoto: '',
+    consultationList: []
+  });
+
+
+  useEffect(() => {
+    console.log(studentID)
+    axios.get(
+      `http://127.0.0.1:8000/teacher/detail/${studentID}`,
+      {
+        headers: {
+            "Content-type": "application/json",
+        },
+        withCredentials: true,
+    }
+    ).then((res: any) => {
+      // 학생 별명, 이미지, 상담 기록
+      console.log(res.data)  
+      setStudentData({
+        nickname: res.data.nickname,
+        studentID: res.data.studentID,
+        profilePhoto: `http://127.0.0.1:8000${res.data.profile}`,
+        consultationList: res.data.consult_result,
+      })
+      console.log(studentData)
+    })
+  } ,[studentID]);
 
   const handleViewConsultations = () => {
-    navigate(`/teacher/detail/consultlist/${user_id}`);
-  };
-
-  const handleLogout = () => {
-    // Redux 상태 업데이트
-    dispatch(setLoggedIn(false));
-
-    // 쿠키 삭제
-    removeCookie('isLoggedIn');
-
-    // 로그인 페이지로 이동
-    navigate('/login');
+    navigate(`/teacher/detail/consultlist/dda.x.unn@gmail.com`);
   };
 
   const dummyData: ResultItem[] = [
@@ -98,16 +97,16 @@ function StudentProfile() {
       },
     },
       xaxis: {
-         categories: [''],
-         labels: {
+        categories: [''],
+        labels: {
           //  show: false
-         },
-         axisBorder: {
+        },
+        axisBorder: {
           // show: false,
         },
       },
-   };
-   const lineGraphData = {
+  };
+  const lineGraphData = {
     series: [
       {
         name: "Series 1",
@@ -150,10 +149,7 @@ function StudentProfile() {
   const goBack = ()=> { 
     navigate(-1)
   }
-  
-  useEffect(() => {
-      console.log(nickname);
-  }, [])
+
 
   return(
     <div className="StudentProfile-fullbox">
@@ -164,9 +160,8 @@ function StudentProfile() {
         </div>
         <BorderLine width={'423px'} height={'2px'}/>      
       <div className="StudentProfile-firstbox">
-        <img src={dummyProfile}/>
-        <p>닉네임</p>
-        {/* <p>{nickname}</p> */}
+        <img src={studentData.profilePhoto}/>
+        <p>{studentData.nickname}</p>
         <div className="StudentProfile-button">
           상담하기
         </div>

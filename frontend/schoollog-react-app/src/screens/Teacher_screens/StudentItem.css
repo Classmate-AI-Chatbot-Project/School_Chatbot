@@ -20,6 +20,11 @@
   justify-content: center;
   width: max-content;
 }
+.StudentListItem-firstbox img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
 .StudentListItem-secondbox{
   display: flex;
   flex: 1;

@@ -1,15 +1,16 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useCookies } from "react-cookie";
 import { setLoggedIn } from "../../actions";
-import { RootState } from '../../reducers';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import "./Profile.css";
+import ProfileEdit from "./ProfileEdit";
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
+import { ReactComponent as ProfileDetailIcon } from '../../assets/profile-detail.svg'
 import { ReactComponent as NextIcon } from '../../assets/arrow-next.svg'
 import { ReactComponent as PowerIcon } from '../../assets/power-icon.svg'
 import { ReactComponent as SignoutIcon } from '../../assets/signout-icon.svg'
@@ -133,6 +134,10 @@ function Profile() {
     navigate('/consultations');
   };
 
+  const handleProfileEditClick = (email: string) => {
+    navigate(`/profile/edit/${email}`, { state: { email } });
+  };
+
   const handleLogout = () => {
     axios.get(
       `http://127.0.0.1:8000/account/logout/`,
@@ -180,9 +185,13 @@ function Profile() {
     <div className="Profile-fullbox">
       <div className="Profile-firstbox">
         <img src={userData.profilePhoto}/>
-        <div>
+        <div className="Profile-firstbox-text">
           <p>{userData.username}</p>
           <p>{userData.email}</p>
+        </div>
+        <div className="Profile-firstbox-editbtn" 
+          onClick={() => handleProfileEditClick(userData.email)}>
+          <ProfileDetailIcon/>
         </div>
       </div>
       {userData.job === 'Student' &&

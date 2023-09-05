@@ -16,6 +16,7 @@ import ChatResult from './screens/Chat/ChatResult'
 import StudentResult from './screens/Chat/StudentResult'
 import TeacherResult from './screens/Chat/TeacherResult'
 import Profile from './screens/Profile/Profile';
+import ProfileEdit from './screens/Profile/ProfileEdit';
 import StudentConsult from './screens/Consult/StudentConsult';
 import DrawingBegin from './screens/Test/DrawingBegin';
 import DrawingTest from './screens/Test/DrawingTest';
@@ -42,6 +43,7 @@ root.render(
         <Route path="/signupInform/student" element={<SignupInputInformStudent /> } />
         <Route path="/signupInform/teacher" element={<SignupInputInformTeacher /> } />
         <Route path="/profile" element={<Profile/> } />
+        <Route path="/profile/edit/:user_id" element={<ProfileEdit/> } />
         <Route path="/test0" element={<DrawingBegin />} />
         <Route path="/test" element={<DrawingTest />} />
         <Route path="/consultationList" element={<ConsultaionList/>} />

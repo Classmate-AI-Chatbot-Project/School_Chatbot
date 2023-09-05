@@ -1,22 +1,23 @@
-import React, {useState} from "react";
+import React from "react";
 import "./StudentItem.css"
-import { ReactComponent as ProfileIcon } from '../../assets/profile-icon.svg'
 
-interface StudentItemProps {
-  nickname: string;
-  degree: string;
+export interface Student {
+  username: string;
+  email?: string;
+  profile_photo: string;
+  avg_emotion: number;
 }
 
-function StudentItem({nickname, degree}: StudentItemProps) {
+function StudentItem({username, profile_photo, avg_emotion}: Student) {
   return (
   <div className="StudentListItem-fullbox">
     <div className="StudentListItem-content">
       <div className="StudentListItem-firstbox">
-        <ProfileIcon/>
+        <img src={`http://127.0.0.1:8000${profile_photo}`}/> 
       </div>
       <div className="StudentListItem-secondbox">
-        <p>{nickname}</p>
-        <p>{degree}</p>
+        <p>{username}</p>
+        <p>{avg_emotion}</p>
       </div>
     </div>
   </div>

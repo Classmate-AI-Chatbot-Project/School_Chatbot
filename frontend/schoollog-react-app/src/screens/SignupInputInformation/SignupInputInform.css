@@ -46,6 +46,27 @@
   text-align: left;
   box-sizing: border-box;
 }
+.SignupInform-inputbox {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+}
+.SignupInform-nicknamebtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  height: 45px;
+  border-radius: 8px;
+  color: var(--W, #FFF);
+  font-size: 15px;
+  font-weight: 600;
+  background: #35BA95;
+  box-sizing: border-box;
+}
+
 .SignupInform-schoolbox {
   display: flex;
   flex-direction: column;
@@ -64,6 +85,25 @@
   color: black;
   border-bottom: 1.5px solid black;
 }
+.SignupInform-underline-nickname {
+  width: 72%;
+  color: black;
+  border-bottom: 1.5px solid black;
+}
+.SignupInform-nickname-guide {
+  display: none;
+  height: 30px; /* 가이드 텍스트 div 크기 조절 */
+  margin-top: 5px; /* 원하는 여백 조절 */
+}
+.SignupInform-nickname-success {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: var(--B, #1985C0);
+  font-weight: 500;
+  font-size: 0.85rem;
+  line-height: 0.85rem;
+}
 .SignupInform-nickname-warning {
   display: flex;
   justify-content: center;
@@ -73,8 +113,8 @@
   font-size: 0.85rem;
   line-height: 0.85rem;
 }
-.SignupInform-inputbox {
-  width: 100%;
+.SignupInform-input {
+  width: 80%;
   height: 35px;
   padding: 5px 0px 0 10px;
   border-bottom: 1.5px solid black;
