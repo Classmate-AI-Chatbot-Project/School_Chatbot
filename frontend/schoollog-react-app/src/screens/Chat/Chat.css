@@ -325,3 +325,20 @@
   font-family: 'Pretendard';
   font-size: 14px;
 }
+
+.Chat-history-chatbot {
+  display: flex;
+  margin-top: 70px;
+  margin-left: 0;
+  margin-bottom: 10px;
+  animation: scaleUp 0.7s both;
+}
+
+.Chat-history-student {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+  position: relative;
+  margin-top: 40px;
+  animation: scaleUp 0.7s both;
+}
