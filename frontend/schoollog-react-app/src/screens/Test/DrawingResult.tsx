@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./DrawingResult.css"
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import axios from "axios";
 
 function DrawingResult() {
   const [showTooltip, setShowTooltip] = useState(true);
+  const location = useLocation();
+  const Data = location.state.data;
+  console.log(Data)
+  
 
   const closeTooltip = () => {
     setShowTooltip(false);
@@ -12,17 +17,30 @@ function DrawingResult() {
   return (
     <div className="DR-main">
       <div className="DR-title" >테스트결과</div>
-      <div className="DR-board" >img</div>
+      <div className="DR-board" >
+        <img src={Data.image}/>
+      </div>
       <div className="DR-result">
         <div className="DR-resultContent">
-          땅을 그리지 않고 나무만 덩그러니 그렸다면 불
-          안정한 감정과 우울감이 숨어 있다고 볼 수 있
-          어요. 안정적이지 않고 소속감이 없어 보이죠.
-          가지는 사회와의 교류를 의미합니다. 잎은 무
-          성한데 잎을 받쳐주는 가지가 별로 없다면 욕심
-          은 많고 현실은 무시하는 경향이 있으며, 반대
-          로 가지가 너무 많다면 사회관계가 불필요할 정
-          도로 산만하고 정신없는 사람일 수 있습니다.
+          <p className="RV-start">나무는 생명의 상징인 동시에 <br/> 자아를 발견하는 과정을 나타내요. <br/><br/> 나무 그림을 통해 당신의 내면을 <br/> 탐색하는 시간을 가져볼까요?</p>
+          <br/>
+          <p className="RV-detail">가지는 자아 정체감을 상징해요.</p>
+          <p>{Data.branch}</p>
+          <br/>
+          <p className="RV-detail">꽃은 아름다움과 새로운 시작을 상징해요.</p>
+          <p>{Data.flower}</p>
+          <br/>
+          <p className="RV-detail">열매의 개수가 많을수록 <br/>스트레스도가 높다고 해요.</p>
+          <p>{Data.fruit}</p>
+          <br/>
+          <p className="RV-detail">잎은 감수성을 상징해요.</p>
+          <p>{Data.leaf}</p>
+          <br/>
+          <p className="RV-detail">뿌리는 현실을 지배하는 자신의 능력에 대한 인지를 나타내요.</p>
+          <p>{Data.root}</p>
+          <br/><br/>
+          <p className="RV-start">결과 분석은 여기까지예요! <br/>이 테스트 결과는 참고용일 뿐이며, 실제 자신의 상태와는 다를 수 있어요. <br/><br/> 만약 자신의 상태에 대해 궁금한 점이 <br/> 있으면 전문가와 상담하는 것이 좋아요. <br/><br/> 챗봇과 대화를 통해 자신의 감정을 표현하고, 자신을 더 알아보는 시간을 가져보는 건 어떨까요?</p>
+
         </div>
       </div>
       <div className="DR-end">
@@ -34,7 +52,7 @@ function DrawingResult() {
             <button className="DR-closeBtn" onClick={closeTooltip}>✖</button>
           </div>
         )}
-        <Link to="/chat">
+        <Link to="/">
         <button className="DR-endBtn">챗봇과 상담하기</button>
         </Link>
       </div>

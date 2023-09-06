@@ -12,7 +12,16 @@
    font-family: Pretendard;
    font-size: 18px;
    font-weight: 700;
+}
 
+.RV-detail {
+   color: var(--bb, #004c18);
+   font-weight: bold;
+   font-size: 19px;
+ }
+
+.RV-start {
+   font-weight: bold;
 }
 
 .DR-board {
