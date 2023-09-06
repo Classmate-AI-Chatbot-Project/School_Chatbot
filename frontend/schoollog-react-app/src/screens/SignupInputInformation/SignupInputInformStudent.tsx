@@ -53,7 +53,7 @@ function SignupInputInformStudent() {
       }
     ).then((res: any) => {
       console.log(res.data);
-      const data = res.data;
+      const data = res.data.student;
 
       setUserData({
         username: data.username,
@@ -77,21 +77,41 @@ function SignupInputInformStudent() {
   const handleSelectSchool = (school: School) => {
     setSelectedSchool(school);
   };
+
+  const handleAccountExist = () => {
+    const data = {
+      nickname: nickname
+    };
+    axios.post(
+      `http://127.0.0.1:8000/account/account_exist/`,
+      data,
+      {
+        headers: {
+          "Content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        withCredentials: true,
+      }
+    ).then((res: any) => {
+      console.log(res.status);
+
+      const guideTextDiv = document.querySelector('.SignupInform-nickname-guide');
+      if (guideTextDiv instanceof HTMLElement) {
+        if (res.status === 200) {
+          setIsDuplicated(true);
+          guideTextDiv.style.display = 'block';
+        } else if (res.status === 201) {
+          setIsDuplicated(false);
+          console.log(isDuplicated)
+          guideTextDiv.style.display = 'block';
+        }
+      }
+    })
+  };
   
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setNickname(value);
-    // 추후 백엔드 협의 후 수정
-    setIsDuplicated(value === '조다은'); 
-
-    const guideTextDiv = document.querySelector('.SignupInform-nickname-guide');
-    if (guideTextDiv instanceof HTMLElement) {
-      if (value === '조다은' || value === '') {
-        guideTextDiv.style.display = 'block';
-      } else {
-        guideTextDiv.style.display = 'none';
-      }
-    }
   };    
 
   const handleSignup = () => {
@@ -151,14 +171,18 @@ function SignupInputInformStudent() {
             onChange={handleNicknameChange}        
           ></input>
           <div className='SignupInform-nicknamebtn'
+          onClick={handleAccountExist}   
           >
             중복확인
           </div>
         </div>
         <div className='SignupInform-underline-nickname'/>
         <div className='SignupInform-nickname-guide'>
-          {isDuplicated && <p className='SignupInform-nickname-warning'>이미 사용중인 닉네임입니다.</p>}
-          {!isDuplicated && <p className='SignupInform-nickname-success'>사용 가능한 닉네임입니다.</p>}
+        {isDuplicated ? (
+            <p className='SignupInform-nickname-warning'>이미 사용중인 닉네임입니다.</p>
+          ) : (
+            <p className='SignupInform-nickname-success'>사용 가능한 닉네임입니다.</p>
+          )}
           {/* {nickname === '' && <p className='SignupInform-nickname-warning'>닉네임을 입력하세요.</p>} */}
         </div>        
       </div>
