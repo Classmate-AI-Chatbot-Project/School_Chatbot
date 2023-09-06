@@ -49,14 +49,14 @@ function ProfileEdit() {
     }
   ).then((res: any) => {
     console.log(res.data)
-    const data = res.data;
+    const data = res.data.student;
 
     setFormData({
       userData: {
         username: data.username,
         email: data.email,
         school: data.school,
-        profilePhoto: `http://127.0.0.1:8000${res.data.profile_photo}`,
+        profilePhoto: `http://127.0.0.1:8000${data.profile_photo}`,
       // job: data.job === 0 ? 'Teacher' : 'Student',
       }
     });
