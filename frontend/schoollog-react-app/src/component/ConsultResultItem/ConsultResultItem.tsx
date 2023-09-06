@@ -8,16 +8,23 @@ import { ReactComponent as GreenFace } from '../../assets/face-green-icon.svg'
 interface ResultItemProps {
   keywords: string;
   date: string;
-  type: string;
+  emotionTemp: number;
 }
 
-function ConsultResultItem({keywords, date, type}: ResultItemProps) {
+function ConsultResultItem({keywords, date, emotionTemp}: ResultItemProps) {
+  let emotionIcon = null;
+
+  if (emotionTemp >= 0 && emotionTemp < 35) {
+    emotionIcon = <GreenFace />;
+  } else if (emotionTemp >= 35 && emotionTemp < 65) {
+    emotionIcon = <YellowFace />;
+  } else if (emotionTemp >= 65 && emotionTemp <= 100) {
+    emotionIcon = <RedFace />;
+  }
   return (
     <div className="ResultItem-fullbox">
       <div className="ResultItem-typebox">
-      {type === 'red' && <RedFace />}
-          {type === 'yellow' && <YellowFace />}
-          {type === 'green' && <GreenFace />}
+        {emotionIcon}
       </div>
       <div className="ResultItem-textbox">
         <p>{keywords}</p>

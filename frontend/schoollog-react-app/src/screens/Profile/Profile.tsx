@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import "./Profile.css";
-import ProfileEdit from "./ProfileEdit";
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
 import { ReactComponent as ProfileDetailIcon } from '../../assets/profile-detail.svg'
@@ -20,7 +19,7 @@ interface ResultItem {
   id: string;
   keywords: string;
   date: string;
-  type: string
+  type: number
 }
 
 function Profile() {
@@ -66,19 +65,19 @@ function Profile() {
       'id' : '1001',
       'keywords' : '친구, 매점',
       'date' : '2023년 5월 4일',
-      'type' : 'red'
+      'type' : 12
     },
     {
       'id' : '1002',
       'keywords' : '농구, 연습',
       'date' : '2023년 3월 4일',
-      'type' : 'green'
+      'type' : 12
     },
     {
       'id' : '1003',
       'keywords' : '방학, 공부',
       'date' : '2023년 1월 4일',
-      'type' : 'yellow'
+      'type' : 12
     },
   ]
 
@@ -170,7 +169,7 @@ function Profile() {
             <ConsultResultItem
             keywords={item.keywords}
             date={item.date}
-            type={item.type}
+            emotionTemp={item.type}
             />
             {index !== dummyData.length - 1 && (
           <BorderLine width={'100%'} height={'1px'}/>

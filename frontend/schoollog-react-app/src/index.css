@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  src: url('fonts/Pretendard-Regular.woff') format('woff');
+  font-family: 'Pretendard';
 }
 
 code {
