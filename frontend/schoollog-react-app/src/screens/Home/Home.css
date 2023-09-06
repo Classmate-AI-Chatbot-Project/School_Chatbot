@@ -121,6 +121,7 @@
   border-radius: 8px;
   background: var(--yw, #F6F8E3);
 }
+
 .Home-manual-text {
   color: var(--bb, #1D4C5C);
   font-size: 16px;
@@ -225,8 +226,8 @@
   top: 190px;
   color: var(--bb, #1D4C5C);
   text-align: center;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 800;
 }
 .position-character {
   position: absolute;

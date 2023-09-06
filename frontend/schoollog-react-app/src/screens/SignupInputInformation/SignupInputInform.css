@@ -157,7 +157,6 @@
 .SignupInform-confirmbox-inactive p {
   color: var(--w, #FFF);
   text-align: center;
-  /* font-family: Pretendard; */
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
@@ -167,7 +166,6 @@
 .SignupInform-confirmbox-active p {
   color: var(--w, #FFF);
   text-align: center;
-  /* font-family: Pretendard; */
   font-size: 18px;
   font-style: normal;
   font-weight: 700;

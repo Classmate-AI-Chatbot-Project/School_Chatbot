@@ -17,7 +17,7 @@ function StudentItem({username, profile_photo, avg_emotion}: Student) {
       </div>
       <div className="StudentListItem-secondbox">
         <p>{username}</p>
-        <p>{avg_emotion}</p>
+        <p>{avg_emotion}%</p>
       </div>
     </div>
   </div>

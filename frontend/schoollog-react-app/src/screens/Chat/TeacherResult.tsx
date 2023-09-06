@@ -221,7 +221,7 @@ function TeacherResult() {
           키워드
           <div className='Result3-box'>
             {resultData.wordcloud && (
-              <img src={"http://127.0.0.1:8000" + resultData.wordcloud} alt="Wordcloud" className="Result3-worldcloud" />
+              <img src={"http://127.0.0.1:8000" + resultData.wordcloud} alt="Wordcloud" className="Result3-wordcloud" />
             )}
           </div>
         </div>

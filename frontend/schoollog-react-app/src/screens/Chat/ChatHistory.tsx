@@ -113,12 +113,12 @@ function ChatHistory() {
                 <div className="Chat-date">{chat.date}</div>
               )}
               {chat.sender === 'student' ? ( //학생
-                  <div className={`Chat-${chat.sender}`}>
+                  <div className={"Chat-history-student"}>
                     <span className="Chat-time">{chat.time}</span>
                     <span className="Chat-message">{chat.message}</span>
                   </div>
                 ) : ( //챗봇
-                  <div className={`Chat-${chat.sender}`}>
+                  <div className={"Chat-history-chatbot"}>
                     <div className="ChatDog-icon"><ChatDog /></div>
                     <span className="Chat-answer">{chat.message}</span>
                     <span className="Chat-time">{chat.time}</span>

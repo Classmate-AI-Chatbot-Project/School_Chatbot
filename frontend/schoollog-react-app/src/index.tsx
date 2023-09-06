@@ -8,7 +8,7 @@ import Login from './screens/Login/Login';
 import ProfileDetail from './screens/Profile/ProfileDetail';
 import SignupInputInformStudent from './screens/SignupInputInformation/SignupInputInformStudent'
 import SignupInputInformTeacher from './screens/SignupInputInformation/SignupInputInformTeacher'
-import ConsultaionList from './screens/Teacher_screens/ConsultationList'
+import ConsultationList from './screens/Teacher_screens/ConsultationList'
 import ConsultationAll from './screens/Teacher_screens/ConsultationAll';
 import Chat from './screens/Chat/Chat';
 import ChatHistory from './screens/Chat/ChatHistory';
@@ -30,7 +30,6 @@ import StudentProfile from './screens/Teacher_screens/StudentProfile';
 import SignupType from './screens/SignupType/SignupType';
 import InitialConsult from './screens/Consult/InitialConsult';
 
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -44,10 +43,11 @@ root.render(
         <Route path="/signupInform/student" element={<SignupInputInformStudent /> } />
         <Route path="/signupInform/teacher" element={<SignupInputInformTeacher /> } />
         <Route path="/profile" element={<Profile/> } />
+        <Route path="/profile/edit/:user_id" element={<ProfileEdit/> } />
         <Route path="/profile/consultlist" element={<ProfileDetail/> } />
         <Route path="/test0" element={<DrawingBegin />} />
         <Route path="/test" element={<DrawingTest />} />
-        <Route path="/consultationList" element={<ConsultaionList/>} />
+        <Route path="/consultationList" element={<ConsultationList/>} />
         <Route path="/teacher/chatResultList" element={<ChatResultList/>} />
         <Route path="/testResult" element={<DrawingResult/>} />
         <Route path="/chat" element={<Chat />} />
@@ -57,14 +57,16 @@ root.render(
         <Route path="/consult/" element={<StudentConsult />} />
         <Route path="/initial/consult/" element={<InitialConsult />} />
         <Route path="/teacher/studentlist" element={<StudentList/>} />
+        <Route path="/teacher/detail/consultlist/:user_id" element={<ConsultationAll/>} />
 
         <Route path="/account/naver/callback" element={<NaverRedirect/> }/>
-        <Route path="/account/google/callback/" element={<GoogleRedirect/>} />
-        <Route path="/account/kakao/callback/" element={<KakaoRedirect/>}></Route>
+        <Route path="/account/google/callback/" element={<GoogleRedirect/>}/>
+        <Route path="/account/kakao/callback/" element={<KakaoRedirect/>}/>
         <Route path="/teacher/detail/:user_id" element={<StudentProfile/>} />
       </Route>
       <Route path="/teacher/detail/consultlist/:user_id" element={<ConsultationAll/>} />
       <Route path="/chat/history/:chatroom_id" element={<ChatHistory />} />
+      <Route path="/chat/history/:user_id/:chatroom_id" element={<ChatHistory />} />
       <Route path="/teacher/chat/result/:chatroom_id" element={<TeacherResult />} />
       <Route path="/student/chat/result/:chatroom_id" element={<StudentResult />} />
       

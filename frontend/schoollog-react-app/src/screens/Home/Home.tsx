@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, animateScroll as scroll } from 'react-scroll';
 import './Home.css'
 import ImageCarousel from './ImageCarousel';
@@ -47,113 +47,113 @@ function Home() {
   return(
     <div className="Home-fullbox">
       <div className="Home-main-manual" id="Schoollog">
-      <div className="Home-mainbox-button">
-        <Link
-          to="Schoollog"
-          smooth={true}
-          duration={500}
-          onClick={() => handleButtonClick('Schoollog')}
-        >
-          <div
-            className={`Home-button ${
-              activeButton === 'Schoollog'
-                ? 'Home-button-inactive'
-                : 'Home-button-disabled'
-            }`}
-          >
-            스쿨로그
-          </div>
-        </Link>
-        <Link
-          to="DrawingTest"
-          smooth={true}
-          duration={500}
-          onClick={() => handleButtonClick('DrawingTest')}
-        >
-          <div
-            className={`Home-button ${
-              activeButton === 'DrawingTest'
-                ? 'Home-button-inactive'
-                : 'Home-button-disabled'
-            }`}
-          >
-            그림 테스트
-          </div>
-        </Link>
-        <Link
-            to="Chatbot"
+        <div className="Home-mainbox-button">
+          <Link
+            to="Schoollog"
             smooth={true}
             duration={500}
-            onClick={() => handleButtonClick('Chatbot')}
+            onClick={() => handleButtonClick('Schoollog')}
           >
             <div
               className={`Home-button ${
-                activeButton === 'Chatbot'
+                activeButton === 'Schoollog'
                   ? 'Home-button-inactive'
                   : 'Home-button-disabled'
               }`}
             >
-              챗봇 상담
+              스쿨로그
             </div>
           </Link>
-      </div>
-      <div className="Home-mainbox">
-        <Circle className="position-circle"/>
-        <Logo className="position-logo"/>
-        <p className="position-text">
-          나의 학교 기록
-        </p>
-        <Character className="position-character"/>
-      </div>
-      <div className="Home-manual">
-        <SpeechBubble />
-        <p>
-          즐거운 학교생활을 <br/>
-          스쿨로그와 함께 해요.
-        </p>
-        <p>
-          나의 다양한 고민들을 <br/>
-          스쿨로그를 통해 해소할 수 있어요. <br/>
-          부담스럽지 않은 상담을 경험해 보세요. <br/>
-        </p>
-        <div className="Home-manual-firstbox">
-          <DogDoctor  />
+          <Link
+            to="DrawingTest"
+            smooth={true}
+            duration={500}
+            onClick={() => handleButtonClick('DrawingTest')}
+          >
+            <div
+              className={`Home-button ${
+                activeButton === 'DrawingTest'
+                  ? 'Home-button-inactive'
+                  : 'Home-button-disabled'
+              }`}
+            >
+              그림 테스트
+            </div>
+          </Link>
+          <Link
+              to="Chatbot"
+              smooth={true}
+              duration={500}
+              onClick={() => handleButtonClick('Chatbot')}
+            >
+              <div
+                className={`Home-button ${
+                  activeButton === 'Chatbot'
+                    ? 'Home-button-inactive'
+                    : 'Home-button-disabled'
+                }`}
+              >
+                챗봇 상담
+              </div>
+            </Link>
         </div>
-        <p className="Home-manual-text">
-          언제 어디서나 상담을 받을 수 있어요.
-        </p>
-        <div className="Home-manual-secondbox">
-          <ChatManual />
-        </div> 
-        <p className="Home-manual-text">
-          선생님과 익명으로 상담이 진행돼요.
-        </p>
-        <div className="Home-manual-thirdbox">
-          <Emoticons />
+        <div className="Home-mainbox">
+          <Circle className="position-circle"/>
+          <Logo className="position-logo"/>
+          <p className="position-text">
+            나의 상담 기록: 나를 찾아가는 시간
+          </p>
+          <Character className="position-character"/>
         </div>
-        <p className="Home-manual-text">
-          나의 상담 분석 보고서를 확인해요.
-        </p>
-      </div>
-      </div>
+        <div className="Home-manual">
+          <SpeechBubble />
+          <p>
+            즐거운 학교생활을 <br/>
+            스쿨로그와 함께 해요.
+          </p>
+          <p>
+            나의 다양한 고민들을 <br/>
+            스쿨로그를 통해 해소할 수 있어요. <br/>
+            부담스럽지 않은 상담을 경험해 보세요. <br/>
+          </p>
+          <div className="Home-manual-firstbox">
+            <DogDoctor  />
+          </div>
+          <p className="Home-manual-text">
+            언제 어디서나 상담을 받을 수 있어요.
+          </p>
+          <div className="Home-manual-secondbox">
+            <ChatManual />
+          </div> 
+          <p className="Home-manual-text">
+            선생님과 익명으로 상담이 진행돼요.
+          </p>
+          <div className="Home-manual-thirdbox">
+            <Emoticons />
+          </div>
+          <p className="Home-manual-text">
+            나의 상담 분석 보고서를 확인해요.
+          </p>
+        </div>
+        </div>
 
-      <div className="Home-test-manual" id="DrawingTest">
-        <CatFace />
-        <p>
-          그림 테스트를 통해 <br/>
-          나의 심리 상태를 파악해요.
-        </p>
-        <p>
-          지금 어떤 감정을 느끼고 있나요? <br/>
-          간단한 그림을 그려보는 테스트를 통해 <br/>
-          나의 심리 상태를 파악해요. <br />
-        </p>
-        <Phone />
-        <div className="Home-test-manual-button">
-          테스트하러 가기
+        <div className="Home-test-manual" id="DrawingTest">
+          <CatFace />
+          <p>
+            그림 테스트를 통해 <br/>
+            나의 심리 상태를 파악해요.
+          </p>
+          <p>
+            지금 어떤 감정을 느끼고 있나요? <br/>
+            간단한 그림을 그려보는 테스트를 통해 <br/>
+            나의 심리 상태를 파악해요. <br />
+          </p>
+          <Phone />
+          <div className="Home-test-manual-button">
+            테스트하러 가기
+          </div>
         </div>
-      </div>
-      <div className="Home-chatbot-manual" id="Chatbot">
+        <div className="Home-chatbot-manual" id="Chatbot">
         <DogFace />
         <p>
           AI 챗봇과 상담하여 <br/>
