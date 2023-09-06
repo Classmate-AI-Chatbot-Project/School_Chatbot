@@ -63,6 +63,7 @@ root.render(
       </Route>
       <Route path="/teacher/detail/consultlist/:user_id" element={<ConsultationAll/>} />
       <Route path="/chat/history/:chatroom_id" element={<ChatHistory />} />
+      <Route path="/chat/history/:user_id/:chatroom_id" element={<ChatHistory />} />
       <Route path="/teacher/chat/result/:chatroom_id" element={<TeacherResult />} />
       <Route path="/student/chat/result/:chatroom_id" element={<StudentResult />} />
       

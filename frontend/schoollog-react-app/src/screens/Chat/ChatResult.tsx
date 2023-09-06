@@ -30,7 +30,7 @@ function StudentResult() {
 
   
   const handleViewChat = () => {
-    navigate(`/chat/history/${user_id}/${chatroom_id}/`);
+    navigate(`/chat/history/${chatroom_id}/`);
   };
   const closeTooltip = () => {
     setShowTooltip(false);
