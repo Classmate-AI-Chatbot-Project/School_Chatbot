@@ -39,25 +39,25 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    axios.get(
-      `http://127.0.0.1:8000/account/decode/`,
-      {
-        headers: {
-            "Content-type": "application/json",
-        },
-        withCredentials: true,
-    }
-  ).then((res: any) => {
-    console.log(res.data)
-    const data = res.data;
+  // useEffect(() => {
+  //   axios.get(
+  //     `http://127.0.0.1:8000/account/decode/`,
+  //     {
+  //       headers: {
+  //           "Content-type": "application/json",
+  //       },
+  //       withCredentials: true,
+  //   }
+  // ).then((res: any) => {
+  //   console.log(res.data)
+  //   const data = res.data;
 
-    setUserData({
-      job: data.job === 0 ? 'Teacher' : 'Student',
-    });
-    console.log(userData)
-  })
-  }, []);
+  //   setUserData({
+  //     job: data.job === 0 ? 'Teacher' : 'Student',
+  //   });
+  //   console.log(userData)
+  // })
+  // }, []);
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/consult/create/',
