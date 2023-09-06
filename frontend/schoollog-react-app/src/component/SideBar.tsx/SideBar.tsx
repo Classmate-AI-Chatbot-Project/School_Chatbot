@@ -104,7 +104,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
           <a className='Menu-item-text'>상담목록</a>
         </li>
         <BorderLine width={'315px'} height={'1px'}/>
-        <Link style={{textDecorationLine: 'none', color: 'black'}} to='/studentList'>
+        <Link style={{textDecorationLine: 'none', color: 'black'}} to='/teacher/studentList'>
         <li>
           <StudentsIcon/>
           <a className='Menu-item-text'>상담학생목록</a>
