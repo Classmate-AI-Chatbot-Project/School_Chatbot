@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import Main from './Main';
 import Login from './screens/Login/Login';
-import Signup from './screens/Signup/Signup';
+import ProfileDetail from './screens/Profile/ProfileDetail';
 import SignupInputInformStudent from './screens/SignupInputInformation/SignupInputInformStudent'
 import SignupInputInformTeacher from './screens/SignupInputInformation/SignupInputInformTeacher'
 import ConsultationList from './screens/Teacher_screens/ConsultationList'
@@ -18,6 +18,7 @@ import TeacherResult from './screens/Chat/TeacherResult'
 import Profile from './screens/Profile/Profile';
 import ProfileEdit from './screens/Profile/ProfileEdit';
 import StudentConsult from './screens/Consult/StudentConsult';
+import ChatResultList from './screens/Teacher_screens/ChatResultList'
 import DrawingBegin from './screens/Test/DrawingBegin';
 import DrawingTest from './screens/Test/DrawingTest';
 import DrawingResult from './screens/Test/DrawingResult';
@@ -28,7 +29,6 @@ import StudentList from './screens/Teacher_screens/StudentList';
 import StudentProfile from './screens/Teacher_screens/StudentProfile';
 import SignupType from './screens/SignupType/SignupType';
 import InitialConsult from './screens/Consult/InitialConsult';
-
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -44,9 +44,11 @@ root.render(
         <Route path="/signupInform/teacher" element={<SignupInputInformTeacher /> } />
         <Route path="/profile" element={<Profile/> } />
         <Route path="/profile/edit/:user_id" element={<ProfileEdit/> } />
+        <Route path="/profile/consultlist" element={<ProfileDetail/> } />
         <Route path="/test0" element={<DrawingBegin />} />
         <Route path="/test" element={<DrawingTest />} />
         <Route path="/consultationList" element={<ConsultationList/>} />
+        <Route path="/teacher/chatResultList" element={<ChatResultList/>} />
         <Route path="/testResult" element={<DrawingResult/>} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/chat/:user_id/:chatroom_id" element={<Chat />} />
@@ -62,7 +64,8 @@ root.render(
         <Route path="/account/kakao/callback/" element={<KakaoRedirect/>}/>
         <Route path="/teacher/detail/:user_id" element={<StudentProfile/>} />
       </Route>
-            <Route path="/chat/history/:chatroom_id" element={<ChatHistory />} />
+      <Route path="/teacher/detail/consultlist/:user_id" element={<ConsultationAll/>} />
+      <Route path="/chat/history/:chatroom_id" element={<ChatHistory />} />
       <Route path="/chat/history/:user_id/:chatroom_id" element={<ChatHistory />} />
       <Route path="/teacher/chat/result/:chatroom_id" element={<TeacherResult />} />
       <Route path="/student/chat/result/:chatroom_id" element={<StudentResult />} />

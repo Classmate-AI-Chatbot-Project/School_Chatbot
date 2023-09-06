@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import "./DrawingTest.css"
 import DrawingModal from "./DrawingModal";
+import axios from 'axios'
 import {ReactComponent as DrawingTopic} from "../../assets/drawingtest.svg"
 
 interface Point {
@@ -24,12 +25,22 @@ const DrawingTest: React.FC = () => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastPoint, setLastPoint] = useState<Point | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const canvas = canvasRef.current;
+  const context = canvas?.getContext("2d");
+
+  const [Data, setData] = useState({
+    image: '',
+    branch : '',
+    flower : '',
+    leaf : '',
+    root : '',
+    fruit : ''
+  });
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
+    
 
-    if (context) {
+    if (context && canvas) {
       context.lineJoin = "round";
       context.lineCap = "round";
 
@@ -39,7 +50,39 @@ const DrawingTest: React.FC = () => {
     }
   }, [lines]);
 
-  const openModal = () => {
+  const openModal = async () => {
+    const imageDataURL = canvas?.toDataURL();
+    
+    const data = {
+      image_data: imageDataURL
+    };
+
+    try {
+      // Axios를 사용하여 그림 데이터를 서버로 전송
+      await axios.post('http://127.0.0.1:8000/teacher/test',
+      data).then((res) => {
+        axios.get(
+          `http://127.0.0.1:8000/teacher/test/result`
+        ).then((res: any) => {
+          console.log(res);
+          const data = res.data;
+    
+          setData({
+            image: `http://127.0.0.1:8000${data.img}`,
+            branch : data.result.branch,
+            flower : data.result.flower,
+            leaf : data.result.leaf,
+            root : data.result.root,
+            fruit : data.result.fruit
+          });
+        })
+      })
+      console.log('그림 업로드 성공');
+      // 여기에서 modal을 닫을 수 있음
+      closeModal();
+    } catch (error) {
+      console.error('그림 업로드 실패:', error);
+    } 
     setModalOpen(true);
   };
 
@@ -80,8 +123,6 @@ const DrawingTest: React.FC = () => {
   };
 
   const clearCanvas = () => {
-    const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
     if (context && canvas) {
       context.clearRect(0, 0, canvas.width, canvas.height);
       setLines([]);
@@ -135,6 +176,3 @@ const DrawingTest: React.FC = () => {
 };
 
 export default DrawingTest;
-
-
-

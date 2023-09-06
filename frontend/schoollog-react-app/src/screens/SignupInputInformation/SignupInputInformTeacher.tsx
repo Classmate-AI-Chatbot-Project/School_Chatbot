@@ -32,6 +32,8 @@ function SignupInputInformTeacher() {
   const csrftoken = cookies.get("csrftoken");
   const [currentWidth, setCurrentWidth] = useState<number>(0);
 
+  const [nickname, setNickname] = useState("");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
 
@@ -50,7 +52,7 @@ function SignupInputInformTeacher() {
       }
     ).then((res: any) => {
       console.log(res.data);
-      const data = res.data;
+      const data = res.data.student;
 
       setUserData({
         username: data.username,
@@ -77,6 +79,11 @@ function SignupInputInformTeacher() {
     setSelectedSchool(school);
   };
 
+  const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setNickname(value);
+  };   
+
   const handleSignup = () => {
     if (isFormValid) {
       // Redux 상태 업데이트
@@ -84,7 +91,8 @@ function SignupInputInformTeacher() {
 
       const data = {
         school: selectedSchool?.SCHUL_NM,
-        job: 0,  
+        job: 0,
+        nickname: nickname
       };
 
       axios.put(
@@ -125,6 +133,16 @@ function SignupInputInformTeacher() {
         <p className='SignupInform-mail'>{userData.email}</p>
         <div className='SignupInform-underline'/>
       </div>
+      <div className='SignupInform-nicknamebox'>
+        <p className='SignupInform-textbox'>성함</p>
+        <div className='SignupInform-inputbox'>
+          <input className='SignupInform-input'
+            value={nickname}
+            onChange={handleNicknameChange}        
+          ></input>
+        </div>      
+      </div>
+      <div className='SignupInform-underline'/>
       <div className='SignupInform-schoolbox'>
         <p className='SignupInform-textbox'>학교 및 학급</p>
         <div className='SignupInform-school-search' onClick={handleOpenModal}>

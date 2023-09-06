@@ -47,16 +47,18 @@ function Profile() {
     }
   ).then((res: any) => {
     console.log(res.data)
-    const data = res.data;
+    const data = res.data.student;
+    const consult = res.data.consult;
 
     setUserData({
       username: data.username,
       email: data.email,
       school: data.school,
-      profilePhoto: `http://127.0.0.1:8000${res.data.profile_photo}`,
+      profilePhoto: `http://127.0.0.1:8000${data.profile_photo}`,
       job: data.job === 0 ? 'Teacher' : 'Student',
     });
-    console.log(userData)
+
+    console.log(userData.profilePhoto)
   })
   }, []);
 
@@ -130,7 +132,7 @@ function Profile() {
   };
 
   const handleViewConsultations = () => {
-    navigate('/consultations');
+    navigate('/profile/consultlist');
   };
 
   const handleProfileEditClick = (email: string) => {
@@ -147,6 +149,8 @@ function Profile() {
         withCredentials: true,
     }
   )
+
+  
     // Redux 상태 업데이트
     dispatch(setLoggedIn(false));
 
@@ -157,6 +161,26 @@ function Profile() {
     navigate('/login');
   };
 
+  const handleLeave = () => {
+    axios.get(
+      `http://127.0.0.1:8000/account/leave/`,
+      {
+        headers: {
+            "Content-type": "application/json",
+        },
+        withCredentials: true,
+    }
+  )  
+    // Redux 상태 업데이트
+    dispatch(setLoggedIn(false));
+    // 쿠키 삭제
+    removeCookie('isLoggedIn', { path: '/' });
+
+    // 로그인 페이지로 이동
+    navigate('/login');
+  };
+  
+  
   function ConsultationResultItemList() {
     return (
       <div
@@ -225,7 +249,7 @@ function Profile() {
         <BorderLine width={'100%'} height={'1px'}/>
         <div className="Profile-forthbox-menu">
           <SignoutIcon/>
-          <p>탈퇴하기</p>
+          <p onClick={handleLeave}>탈퇴하기</p>
         </div>
         <BorderLine width={'100%'} height={'1px'}/>
         <div className="Profile-forthbox-menu">
