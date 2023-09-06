@@ -1,0 +1,27 @@
+.ConsultationAll-fullbox {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+    text-align: center;
+  }
+  .ConsultationAll-contentbox {
+    min-height: 100vh;
+    width: 423px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .ConsultationAll-topbar {
+    width: 423px;
+    height: 53px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 0px 31px 0px 31px;
+  }
