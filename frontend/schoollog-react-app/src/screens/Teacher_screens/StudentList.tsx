@@ -72,7 +72,7 @@ function StudentList() {
 
   function StudentItemList() {
     return (
-      <div>
+      <Fragment>
         {studentData.map((item, index) => (
           <div 
             key={index}
@@ -88,7 +88,7 @@ function StudentList() {
             )}
           </div>
         ))}
-      </div>
+      </Fragment>
     );
   }
 
@@ -110,10 +110,10 @@ function StudentList() {
           <DownIcon />
         </div>
       </div>
-      <BorderLine width="423px" height="1px"/>
+      <BorderLine width="100%" height="1px"/>
       <div className="StudentList-scrollable">
         <StudentItemList />
-        <BorderLine width="423px" height="1px" />
+        <BorderLine width="100%" height="1px" />
       </div>
     </div>
   )

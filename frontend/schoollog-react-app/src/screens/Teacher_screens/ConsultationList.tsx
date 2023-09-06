@@ -1,4 +1,5 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect} from "react";
+import axios from "axios";
 import "./ConsultationList.css"
 import { ReactComponent as WarningIcon } from '../../assets/warning-icon.svg'
 import BorderLine from "../../component/BorderLine/BorderLine";
@@ -77,6 +78,25 @@ function ConsultationList() {
       type: "red",
     },
   ];
+
+  // useEffect(() => {
+
+  //   axios.get(
+  //     `http://127.0.0.1:8000/teacher/detail/`,
+  //     {
+  //       headers: {
+  //         "Content-type": "application/json",
+  //       },
+  //       withCredentials: true,
+  //   }
+  //   ).then((res: any) => {
+  //     // 학생 별명, 이미지, 상담 기록
+  //     console.log(res.data)  
+
+
+
+  //   })
+  // } ,[]);
   
   function ChatList() {
     return (

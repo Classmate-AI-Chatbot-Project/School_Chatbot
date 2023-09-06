@@ -39,3 +39,8 @@
   border: 1px solid var(--BL, #000);
   background: var(--W, #FFF);
 }
+
+.StudentList-listbox {
+  display: flex;
+  width: 100%;
+}
