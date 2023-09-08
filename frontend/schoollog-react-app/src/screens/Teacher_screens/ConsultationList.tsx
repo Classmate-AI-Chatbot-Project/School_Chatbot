@@ -1,135 +1,78 @@
-import React, {Fragment, useEffect} from "react";
+import React, { Fragment, useEffect, useState} from "react";
 import axios from "axios";
 import "./ConsultationList.css"
 import { ReactComponent as WarningIcon } from '../../assets/warning-icon.svg'
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ListItem from "./ListItem";
 
+interface ConsultRoomItem {
+  username: string;
+  profile_photo: string;
+  emotion_temp: number;
+  latest_message_content: string;
+  latest_message_time: string;
+  room_id: number;
+  student_id: number;
+  is_read: boolean;
+}
+
+// 상담 대화방 목록 페이지 /consult/list
+// 목록 item 클릭하면 /consult/room/${room_id}/student/${student_id} 로 이동하도록 구현하기
 function ConsultationList() {
-  const mockChatData = [
-    {
-      id: 1,
-      nickname: "사용자1",
-      keywords: "리액트, 자바스크립트, 프론트엔드",
-      date: "7월 20일",
-      type: "red",
-    },
-    {
-      id: 2,
-      nickname: "사용자2",
-      keywords: "노드.js, 익스프레스, 백엔드",
-      date: "7월 21일",
-      type: "yellow",
-    },
-    {
-      id: 3,
-      nickname: "사용자3",
-      keywords: "HTML, CSS, 웹 디자인",
-      date: "7월 22일",
-      type: "green",
-    },
-    {
-      id: 4,
-      nickname: "사용자4",
-      keywords: "리덕스, 상태 관리, 프론트엔드",
-      date: "7월 23일",
-      type: "red",
-    },
-    {
-      id: 5,
-      nickname: "사용자5",
-      keywords: "Express.js, REST API, 백엔드",
-      date: "7월 24일",
-      type: "yellow",
-    },
-    {
-      id: 6,
-      nickname: "사용자6",
-      keywords: "CSS Flexbox, 레이아웃 디자인, 프론트엔드",
-      date: "7월 25일",
-      type: "green",
-    },
-    {
-      id: 7,
-      nickname: "사용자7",
-      keywords: "React Hooks, 컴포넌트 상태, 프론트엔드",
-      date: "7월 26일",
-      type: "red",
-    },
-    {
-      id: 8,
-      nickname: "사용자8",
-      keywords: "JWT, 사용자 인증, 백엔드",
-      date: "7월 27일",
-      type: "yellow",
-    },
-    {
-      id: 9,
-      nickname: "사용자9",
-      keywords: "CSS Grid, 레이아웃 시스템, 프론트엔드",
-      date: "7월 28일",
-      type: "green",
-    },
-    {
-      id: 10,
-      nickname: "사용자10",
-      keywords: "Mongoose, MongoDB, 백엔드",
-      date: "7월 29일",
-      type: "red",
-    },
-  ];
+  const [consultRooms, setConsultRooms] = useState<ConsultRoomItem[]>([]);
 
-  // useEffect(() => {
-
-  //   axios.get(
-  //     `http://127.0.0.1:8000/teacher/detail/`,
-  //     {
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //       withCredentials: true,
-  //   }
-  //   ).then((res: any) => {
-  //     // 학생 별명, 이미지, 상담 기록
-  //     console.log(res.data)  
-
-
-
-  //   })
-  // } ,[]);
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/consult/list`, {
+        headers: {
+          "Content-type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        // 상담 대화방 목록 item에 표시할 데이터
+        const ListData = res.data.consult_rooms
+        setConsultRooms(ListData);
+        console.log(consultRooms)
+      })
+      .catch((error) => {
+        console.error('Error fetching consult rooms:', error);
+      });
+  }, []);
   
-  function ChatList() {
+  function ConsultList() {
     return (
-    <div>
-      {/* Map through the mockChatData array and render ListItem components */}
-      {mockChatData.map((chat, index) => (
-        <Fragment key={chat.id}>
-          <ListItem
-            nickname={chat.nickname}
-            keywords={chat.keywords}
-            date={chat.date}
-            type={chat.type}
-          />
-          {/* Render BorderLine except for the last ListItem */}
-          {index !== mockChatData.length - 1 && (
+      <div>
+        {/* {consultRooms?.map((consultRoom) => (
+          <Fragment key={consultRoom.room_id}>
+            <ListItem
+              nickname={consultRoom.username}
+              profile_photo={consultRoom.profile_photo}
+              emotion_temp={consultRoom.emotion_temp}
+              latest_message_content={consultRoom.latest_message_content}
+              latest_message_time={consultRoom.latest_message_time}
+              room_id={consultRoom.room_id}
+              student_id={consultRoom.student_id}
+              is_unread={consultRoom.is_unread}
+              // type={consultRoom.emotion_temp >= 50 ? "red" : "green"}
+            />
             <BorderLine width="423px" height="1px" />
-          )}
-        </Fragment>
-      ))}
-    </div>
+          </Fragment>
+        ))} */}
+      </div>
     );
   }
   
   return (
   <div className="Consultationlist-fullbox">
     <div className="Consultationlist-name">
-      <p>상담 목록</p>
+      <p>상담 대화방 목록</p>
       <WarningIcon/>
     </div>
     <BorderLine width="423px" height="1px"/>
     <div className="Consultationlist-scrollable">
-        {/* ChatList and BorderLine moved to the scrollable area */}
-        <ChatList />
+        {/* ConsultList and BorderLine moved to the scrollable area */}
+        <ConsultList />
         <BorderLine width="423px" height="1px" />
       </div>
   </div>
