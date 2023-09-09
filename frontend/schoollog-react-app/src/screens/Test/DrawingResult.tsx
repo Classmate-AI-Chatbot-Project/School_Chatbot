@@ -2,16 +2,41 @@ import React, { useState, useEffect } from "react";
 import "./DrawingResult.css"
 import { Link, useLocation } from 'react-router-dom';
 import axios from "axios";
+import { Cookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom';
 
 function DrawingResult() {
   const [showTooltip, setShowTooltip] = useState(true);
   const location = useLocation();
   const Data = location.state.data;
+  const cookies = new Cookies();
+  const csrftoken = cookies.get("csrftoken");
+  const isLoggedIn = cookies.get("isLoggedIn");
+  const navigate = useNavigate();
   console.log(Data)
   
-
   const closeTooltip = () => {
     setShowTooltip(false);
+  };
+
+  const gotoChat = () => {
+    if (!isLoggedIn) { // 로그인 안되어 있는 경우
+      navigate('/login');
+    } else { 
+      axios.post('http://127.0.0.1:8000/chat/create/', null, {
+        headers: {
+          "Content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        withCredentials: true,
+      }).then((response) => {
+          const chatroom_id = response.data.chatroom_url; 
+          navigate(`${chatroom_id}`); 
+        })
+        .catch((error) => {
+          console.error('Error creating ChatRoom:', error);
+        });
+    }
   };
 
   return (
@@ -52,9 +77,7 @@ function DrawingResult() {
             <button className="DR-closeBtn" onClick={closeTooltip}>✖</button>
           </div>
         )}
-        <Link to="/">
-        <button className="DR-endBtn">챗봇과 상담하기</button>
-        </Link>
+        <button className="DR-endBtn" onClick={gotoChat}>챗봇과 상담하기</button>
       </div>
     </div>
   );
