@@ -45,7 +45,7 @@ root.render(
         <Route path="/profile" element={<Profile/> } />
         <Route path="/profile/edit/:user_id" element={<ProfileEdit/> } />
         <Route path="/profile/consultlist" element={<ProfileDetail/> } />
-        <Route path="/test0" element={<DrawingBegin />} />
+        <Route path="/test/start" element={<DrawingBegin />} />
         <Route path="/test" element={<DrawingTest />} />
         <Route path="/consultationList" element={<ConsultationList/>} />
         <Route path="/teacher/chatResultList" element={<ChatResultList/>} />

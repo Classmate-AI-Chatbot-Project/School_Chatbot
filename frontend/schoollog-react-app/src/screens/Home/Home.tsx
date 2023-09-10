@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Cookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom';
 import { Link, animateScroll as scroll } from 'react-scroll';
 import './Home.css'
+import '../Chat/Modal.css'
 import ImageCarousel from './ImageCarousel';
 import { ReactComponent as Circle } from '../../assets/main-circle.svg'
 import { ReactComponent as Character } from '../../assets/main-character.svg'
@@ -12,9 +16,78 @@ import { ReactComponent as Emoticons } from '../../assets/main-manual-emoticon.s
 import { ReactComponent as CatFace } from '../../assets/main-test-cat.svg'
 import { ReactComponent as Phone } from '../../assets/main-test-phone.svg'
 import { ReactComponent as DogFace } from '../../assets/main-dog.svg'
+import { ReactComponent as ChatModal } from '../../assets/home-modal-chat.svg'
+import { ReactComponent as TestModal } from '../../assets/home-modal-test.svg'
+interface ModalProps {
+  open: boolean;
+  close: () => void;
+  imageType: string ;
+}
 
 function Home() {
   const [activeButton, setActiveButton] = useState('Schoollog');
+  const [ModalOpen, setModalOpen] = useState(false);
+  const [modalImageType, setModalImageType] = useState('chat');
+  const openModal = (imageType: any) => { 
+    setModalImageType(imageType); 
+    setModalOpen(true);};
+  const closeModal = () => { setModalOpen(false); };
+  const cookies = new Cookies();
+  const csrftoken = cookies.get("csrftoken");
+  const [userData, setUserData] = useState({
+    job: '', 
+  });
+  const isLoggedIn = cookies.get("isLoggedIn");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      axios.get(
+        `http://127.0.0.1:8000/account/decode/`,
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+          withCredentials: true,
+        }
+      ).then((res: any) => {
+        const data = res.data;
+        setUserData({
+          job: data.student.job === 0 ? 'Teacher' : 'Student',
+        });
+      });
+    }
+  }, [isLoggedIn]);  // isLoggedIn 상태가 변경될 때만 실행
+
+  const gotoChat = () => {
+    if (userData.job === "Teacher") {
+      openModal('chat');
+    } else if (!isLoggedIn) { // 로그인 안되어 있는 경우
+      navigate('/login');
+    } else { // user_id가 있으면 ChatRoom 생성 및 이동
+      axios.post('http://127.0.0.1:8000/chat/create/', null, {
+        headers: {
+          "Content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        withCredentials: true,
+      }).then((response) => {
+          const chatroom_id = response.data.chatroom_url; 
+          navigate(`${chatroom_id}`); 
+        })
+        .catch((error) => {
+          console.error('Error creating ChatRoom:', error);
+        });
+    }
+  };
+
+  const gotoTest = () => {
+    if (userData.job === "Teacher") {
+      openModal('test');
+    } else {
+      navigate('/test/start');
+    }
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +115,29 @@ function Home() {
 
   const handleButtonClick = (buttonId: any) => {
     setActiveButton(buttonId);
+  };
+
+  const TeacherModal: React.FC<ModalProps> = (props) => {
+    const { open, close, imageType } = props;
+    const closeBtn = () => { close(); };
+    let modalImage;
+    if (imageType === 'test') {
+      modalImage = <div className="Modal-completeImg"><TestModal /></div>;
+    } else if (imageType === 'chat') {
+      modalImage = <div className="Modal-completeImg"><ChatModal /></div>;
+    }
+    return (
+      <div className={open ? 'openModal modal' : 'modal'}>
+        {open && (imageType === 'test' || imageType === 'chat') ? (
+          <section className="Modal-contentBox">  
+           <div className="Modal-main">
+            {modalImage}
+            <button className="Modal-gotoResult" onClick={closeBtn}>돌아가기</button>
+           </div>
+          </section>
+        ) : null}
+      </div>
+    );
   };
 
   return(
@@ -149,7 +245,8 @@ function Home() {
             나의 심리 상태를 파악해요. <br />
           </p>
           <Phone />
-          <div className="Home-test-manual-button">
+          <TeacherModal open={ModalOpen} close={closeModal} imageType={modalImageType} />
+          <div className="Home-test-manual-button" onClick={gotoTest}>
             테스트하러 가기
           </div>
         </div>
@@ -169,7 +266,7 @@ function Home() {
             <ImageCarousel />
           </div>
         </div>
-        <div className="Home-chatbot-manual-button">
+        <div className="Home-chatbot-manual-button" onClick={gotoChat}>
           상담하러 가기
         </div>
       </div>

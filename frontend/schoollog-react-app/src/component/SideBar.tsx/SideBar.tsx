@@ -1,7 +1,7 @@
 import React, { useState, useRef,useEffect } from 'react';
 import axios from 'axios';
 import { Cookies } from "react-cookie";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './SideBar.css'
 import BorderLine from '../BorderLine/BorderLine';
 import { ReactComponent as BookIcon } from '../../assets/side-bar-book.svg'
@@ -13,11 +13,8 @@ import { Link } from 'react-router-dom';
 function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   const cookies = new Cookies();
   const csrftoken = cookies.get("csrftoken");
-  const [userData, setUserData] = useState({
-    job: 'student',
-  });
-  const [roomName, setRoomName] = useState('');
-  const [studentId, setStudentId] = useState('');
+  const [userData, setUserData] = useState({ job: '' });
+  const isLoggedIn = cookies.get("isLoggedIn");
   const navigate = useNavigate();
 
   const outside = useRef<any>();
@@ -39,48 +36,27 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
     setIsOpen(false);
   };
 
-  // useEffect(() => {
-  //   axios.get(
-  //     `http://127.0.0.1:8000/account/decode/`,
-  //     {
-  //       headers: {
-  //           "Content-type": "application/json",
-  //       },
-  //       withCredentials: true,
-  //   }
-  // ).then((res: any) => {
-  //   console.log(res.data)
-  //   const data = res.data;
-
-  //   setUserData({
-  //     job: data.job === 0 ? 'Teacher' : 'Student',
-  //   });
-  //   console.log(userData)
-  // })
-  // }, []);
-
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/consult/create/',
-    {
-      headers: {
-        "Content-type": "application/json",
-        "X-CSRFToken": csrftoken,
-      },
-      withCredentials: true,
-    }) 
-      .then((response) => {
-        console.log(response.data)
-        const { room_name, student_id } = response.data;
-        setRoomName(room_name);
-        setStudentId(student_id);
-      })
-      .catch((error) => {
-        console.error('Error fetching room_name and student_id:', error);
+    if (isLoggedIn) {
+      axios.get(
+        `http://127.0.0.1:8000/account/decode/`,
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+          withCredentials: true,
+        }
+      ).then((res: any) => {
+        const data = res.data;
+        setUserData({
+          job: data.student.job === 0 ? 'Teacher' : 'Student',
+        });
       });
-  }, []);
+    }
+  }, [isLoggedIn]);  // isLoggedIn 상태가 변경될 때만 실행
 
   const gotoChat = () => {
-    if (!studentId) { // 로그인 안되어 있는 경우
+    if (!isLoggedIn) { // 로그인 안되어 있는 경우
       navigate('/login');
     } else { // user_id가 있으면 ChatRoom 생성 및 이동
       axios.post('http://127.0.0.1:8000/chat/create/', null, {
@@ -90,8 +66,8 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
         },
         withCredentials: true,
       }).then((response) => {
-          const chatroom_id = response.data.chat_id; // Get the chat_id from the response
-          navigate(`/chat/${studentId}/${chatroom_id}`); // Use chat_id in the URL
+          const chatroom_id = response.data.chatroom_url;
+          navigate(`${chatroom_id}`); 
         })
         .catch((error) => {
           console.error('Error creating ChatRoom:', error);
@@ -100,60 +76,76 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   };
 
   const gotoConsult = () => {
-    if (!roomName || !studentId) { // 로그인 안되어 있는 경우
+    if (!isLoggedIn) { 
       navigate('/initial/consult');
-    } else { // user_id가 있으면 상담 페이지로 이동
-      navigate(`/consult/room/${roomName}/student/${studentId}/`);
+    } else { 
+        axios.get('http://127.0.0.1:8000/consult/create/',
+      {
+        headers: {
+          "Content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        withCredentials: true,
+      }) 
+      .then((response) => {
+        window.location.href = response.data.redirect_url;
+      })
+      .catch((error) => {
+        navigate('/initial/consult');
+      });
     }
   };
 
+  const gotoTest = () => {
+    navigate('/test/start');
+  }
+
   return (
     <div className={isOpen ? 'Opened-bar':'Closed-bar'} ref={outside}>
-      {userData.job === "Student" && (
-      <ul>
-        <li>
-          <BookIcon/>
-          <a className='Menu-item-text'>스쿨로그 사용법</a>
-        </li>
-        <BorderLine width={'315px'} height={'1px'}/>
-        <li>
-          <PaintingIcon/>
-          <a className='Menu-item-text'>그림 심리 테스트</a>
-        </li>
-        <BorderLine width={'315px'} height={'1px'}/>
-        <li>
-          <SpeechIcon/>
-          <a className='Menu-item-text' onClick={gotoChat}>챗봇과 상담하기</a>
-        </li>
-        <BorderLine width={'315px'} height={'1px'}/>
-        <li>
-          <StudentsIcon/>
-              <a className='Menu-item-text' onClick={gotoConsult}>선생님과 상담하기</a>
-        </li>
-        <BorderLine width={'315px'} height={'1px'}/>
-      </ul>
-      )}
-      {userData.job === "Teacher" && (
-      <ul>
-        <li>
-          <BookIcon/>
-          <a className='Menu-item-text'>스쿨로그 사용법</a>
-        </li>
-        <BorderLine width={'315px'} height={'1px'}/>
-        <li>
-          <SpeechIcon/>
-          <a className='Menu-item-text'>상담목록</a>
-        </li>
-        <BorderLine width={'315px'} height={'1px'}/>
-        <Link style={{textDecorationLine: 'none', color: 'black'}} to='/teacher/studentList'>
-        <li>
-          <StudentsIcon/>
-          <a className='Menu-item-text'>상담학생목록</a>
-        </li>          
-        </Link>
+      {isLoggedIn && userData.job === "Teacher" ? (
+        <ul>
+          <li>
+            <BookIcon/>
+            <a className='Menu-item-text'>스쿨로그 사용법</a>
+          </li>
+          <BorderLine width={'315px'} height={'1px'}/>
+          <li>
+            <SpeechIcon/>
+            <a className='Menu-item-text'>상담목록</a>
+          </li>
+          <BorderLine width={'315px'} height={'1px'}/>
+          <Link style={{textDecorationLine: 'none', color: 'black'}} to='/teacher/studentList'>
+          <li>
+            <StudentsIcon/>
+            <a className='Menu-item-text'>상담학생목록</a>
+          </li>          
+          </Link>
 
-        <BorderLine width={'315px'} height={'1px'}/>
-      </ul>
+          <BorderLine width={'315px'} height={'1px'}/>
+        </ul>
+      ): (
+        <ul>
+          <li>
+            <BookIcon/>
+            <a className='Menu-item-text'>스쿨로그 사용법</a>
+          </li>
+          <BorderLine width={'315px'} height={'1px'}/>
+          <li>
+            <PaintingIcon/>
+            <a className='Menu-item-text' onClick={gotoTest}>그림 심리 테스트</a>
+          </li>
+          <BorderLine width={'315px'} height={'1px'}/>
+          <li>
+            <SpeechIcon/>
+            <a className='Menu-item-text' onClick={gotoChat}>챗봇과 상담하기</a>
+          </li>
+          <BorderLine width={'315px'} height={'1px'}/>
+          <li>
+            <StudentsIcon/>
+                <a className='Menu-item-text' onClick={gotoConsult}>선생님과 상담하기</a>
+          </li>
+          <BorderLine width={'315px'} height={'1px'}/>
+        </ul>
       )}
 
       <BorderLine width={'2px'} height={'918px'}/> 
