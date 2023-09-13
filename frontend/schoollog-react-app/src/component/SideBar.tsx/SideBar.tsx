@@ -59,25 +59,25 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   // })
   // }, []);
 
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/consult/create/',
-    {
-      headers: {
-        "Content-type": "application/json",
-        "X-CSRFToken": csrftoken,
-      },
-      withCredentials: true,
-    }) 
-      .then((response) => {
-        console.log(response.data)
-        const { room_name, student_id } = response.data;
-        setRoomName(room_name);
-        setStudentId(student_id);
-      })
-      .catch((error) => {
-        console.error('Error fetching room_name and student_id:', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('http://127.0.0.1:8000/consult/create/',
+  //   {
+  //     headers: {
+  //       "Content-type": "application/json",
+  //       "X-CSRFToken": csrftoken,
+  //     },
+  //     withCredentials: true,
+  //   })
+  //     .then((response) => {
+  //       console.log(response.data)
+  //       const { room_name, student_id } = response.data;
+  //       setRoomName(room_name);
+  //       setStudentId(student_id);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching room_name and student_id:', error);
+  //     });
+  // }, []);
 
   const gotoChat = () => {
     if (!studentId) { // 로그인 안되어 있는 경우
