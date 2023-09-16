@@ -80,7 +80,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
     if (!isLoggedIn) { 
       navigate('/initial/consult');
     } else { 
-        axios.get('http://127.0.0.1:8000/consult/create/',
+        axios.get('http://127.0.0.1:8000/consult/redirect_room/',
       {
         headers: {
           "Content-type": "application/json",
@@ -90,7 +90,8 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
       }) 
       .then((response) => {
         toggleSide();
-        window.location.href = response.data.redirect_url;
+        const consult_room_url = response.data.consult_room_url;
+        navigate(`${consult_room_url}`); 
       })
       .catch((error) => {
         navigate('/initial/consult');
