@@ -13,16 +13,25 @@ interface ListItemProps {
   is_read: boolean;
   chat_id: number;
   date: string;
-  type: string;
+  emotionTemp: number;
 }
 
-function ChatResultItem({nickname, keywords, profile_photo, is_read, chat_id, date, type}: ListItemProps) {
+function ChatResultItem({nickname, keywords, profile_photo, is_read, chat_id, date, emotionTemp}: ListItemProps) {
+  let flagIcon = null;
+
+  if (emotionTemp >= 0 && emotionTemp < 35) {
+    flagIcon = <GreenFlag />;
+  } else if (emotionTemp >= 35 && emotionTemp < 65) {
+    flagIcon = <YellowFlag />;
+  } else if (emotionTemp >= 65 && emotionTemp <= 100) {
+    flagIcon = <RedFlag />;
+  }
 
   return (
   <div className="ListItem-fullbox">
     <div className="ListItem-content">
       <div className="ListItem-firstbox">
-      <img src={`http://127.0.0.1:8000${profile_photo}`}/> 
+        <img src={`http://127.0.0.1:8000${profile_photo}`}/> 
       </div>
       <div className="ListItem-secondbox">
         <div className="ListItem-text-first">
@@ -30,9 +39,7 @@ function ChatResultItem({nickname, keywords, profile_photo, is_read, chat_id, da
         </div>
         <div className="ListItem-text-second">
           <div>
-            {type === 'red' && <RedFlag />}
-            {type === 'yellow' && <YellowFlag />}
-            {type === 'green' && <GreenFlag />}
+            {flagIcon}
           </div>
           <p>{keywords}</p>
         </div> 
@@ -42,7 +49,7 @@ function ChatResultItem({nickname, keywords, profile_photo, is_read, chat_id, da
       <div className="ListItem-addition-date">
         {date}
       </div>
-      {!is_read && (
+        {!is_read && (
           <div>
             <NewIcon />
           </div>

@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
+  height: calc(100dvh - 56px);
   justify-content: flex-start;
   align-items: flex-start;
   background-color: #EEEEEE;
@@ -11,9 +12,11 @@
   display: flex;
   width: 100%;
   height: 84px;
+  /* height: 84px; */
   align-items: center;
   justify-content: space-between;
   padding: 0px 34px 0px 25px;
+  padding: 19px 34px 16px 25px;
   text-align: left;
   background-color: white;
   box-sizing: border-box;
@@ -49,6 +52,7 @@
   flex-direction: column;
   width: 100%;
   height: 250px;
+  height: fit-content;
   align-items: flex-start;
   justify-content: flex-start;
   padding-left: 24px;
@@ -73,6 +77,8 @@
 .Profile-secondbox-graph {
   width: 360px;
   height: 180px;
+  width: 340px;
+  /* height: 150px; */
 }
 @media (max-width: 768px) {
   .Profile-secondbox-graph {
