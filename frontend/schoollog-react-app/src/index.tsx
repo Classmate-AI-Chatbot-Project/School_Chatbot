@@ -44,10 +44,10 @@ root.render(
         <Route path="/signupInform/teacher" element={<SignupInputInformTeacher /> } />
         <Route path="/profile" element={<Profile/> } />
         <Route path="/profile/edit/:user_id" element={<ProfileEdit/> } />
-        <Route path="/profile/consultlist" element={<ProfileDetail/> } />
+        <Route path="/profile/consultlist" element={<ConsultationAll/> } />
         <Route path="/test/start" element={<DrawingBegin />} />
         <Route path="/test" element={<DrawingTest />} />
-        <Route path="/consultationList" element={<ConsultationList/>} />
+        <Route path="/teacher/consultationList" element={<ConsultationList/>} />
         <Route path="/teacher/chatResultList" element={<ChatResultList/>} />
         <Route path="/testResult" element={<DrawingResult/>} />
         <Route path="/chat" element={<Chat />} />

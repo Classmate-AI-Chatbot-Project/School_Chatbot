@@ -33,6 +33,13 @@ function StudentProfile() {
     profilePhoto: '',
     consultationList: []
   });
+  const [graphData, setGraphData] = useState<{
+    series: { name: string; data: number[] }[];
+    xaxis: { categories: string[] };
+  }>({
+    series: [{ name: 'Series 1', data: [] }],
+    xaxis: { categories: [] },
+  });  
 
 
   useEffect(() => {
@@ -47,8 +54,6 @@ function StudentProfile() {
     }
     ).then((res: any) => {
       // 학생 별명, 이미지, 상담 기록
-      console.log(res.data)  
-
       const consultationList = res.data.consult_result.map((item: any) => ({
         chat_id: item.chat_id.toString(),
         keywords: item.category,
@@ -56,23 +61,69 @@ function StudentProfile() {
         emotionTemp: item.emotion_temp
     }));
 
+    const graphSeries = [
+      {
+        name: 'Series 1',
+        data: consultationList.map((item: ResultItem) => item.emotionTemp),
+      },
+    ];
+    const graphXAxis = {
+      categories: consultationList.map((item: ResultItem) => formatGraphDate(item.date)), 
+    };    
+
       setStudentData({
         nickname: res.data.nickname,
-        studentID: res.data.studentID,
+        studentID: res.data.student_id,
         profilePhoto: `http://127.0.0.1:8000${res.data.profile}`,
         consultationList: consultationList,
       })
-      console.log(studentData.consultationList)
+
+      setGraphData({
+        series: graphSeries,
+        xaxis: graphXAxis,
+      });
+
+      // console.log(userData)
+      console.log(graphData)      
+      console.log(res.data);
+      console.log(studentData);
     })
   } ,[studentID]);
 
   const handleViewConsultations = () => {
     navigate(`/teacher/detail/consultlist/${studentID}`, {
-      state: { consultationList: studentData.consultationList },
+      state: { 
+        consultationList: studentData.consultationList,
+        pageType: 'teacherPage'
+      },
     });
   };
 
-  const options1: ApexOptions = {
+  const goBack = ()=> { 
+    navigate(-1)
+  }
+
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}년 ${month.replace(/^0/, '')}월 ${day.replace(/^0/, '')}일`;
+  }
+
+  function formatGraphDate(dateString: string) {
+    const dateParts = dateString.match(/(\d{1,2})월 (\d{1,2})일/);
+
+    if (dateParts) {
+      const month = dateParts[1].padStart(2, '0');
+      const day = dateParts[2].padStart(2, '0');
+      return month + day;
+    }
+  
+    return ''; 
+  }  
+
+  const graphOptions: ApexOptions = {
     chart: {
       type: 'bar',
       toolbar: {
@@ -82,41 +133,32 @@ function StudentProfile() {
     plotOptions: {
       bar: {
         horizontal: true,
-        barHeight: 10,
+        barHeight: 50,
         dataLabels: {
           position: 'left'
         }
       },
     },
-      xaxis: {
-        categories: [''],
-        labels: {
-          //  show: false
-        },
-        axisBorder: {
-          // show: false,
-        },
+    xaxis: graphData.xaxis,
+    yaxis: {
+      max: 100,
+      min: 0,
+      tickAmount: 2, 
+      labels: {
+        formatter: (value) => String(Math.floor(value)),
       },
-  };
-  const lineGraphData = {
-    series: [
-      {
-        name: "Series 1",
-        data: [30, 40, 35, 50], // Replace this with your data points
-      },
-    ],
-    options: {
-      chart: {
-        id: "line-chart",
-      },
-      xaxis: {
-        categories: ['0202', '0302', '0321', '0411'], // Replace this with your categories
-      },
-      colors: ['#E37354'],
+    },
+    colors: ['#E37354'],
+    stroke: {
+      width: 2,
     },
     markers: {
-      size: 10
-    }
+      size: 6,
+      strokeWidth: 2,
+    },
+    tooltip: {
+      enabled: false // 마우스 호버 효과 비활성화
+    },
   };
 
   const initialConsultations = studentData.consultationList.slice(0, 3);
@@ -145,18 +187,6 @@ function StudentProfile() {
     )
   }
 
-  const goBack = ()=> { 
-    navigate(-1)
-  }
-
-  function formatDate(dateString: string) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}년 ${month.replace(/^0/, '')}월 ${day.replace(/^0/, '')}일`;
-  }
-
   return(
     <div className="StudentProfile-fullbox">
         <div className="ConsultationAll-topbar">
@@ -174,13 +204,12 @@ function StudentProfile() {
       </div>
       <div className="Profile-secondbox">
         <div>
-          <p>나의 우울도</p>
+          <p>우울도</p>
           <ApexChart 
-            options={options1} 
-            series={lineGraphData.series} 
+            options={graphOptions} 
+            series={graphData.series} 
             type="line" 
-            width={370} 
-            height={200}
+            className="Profile-secondbox-graph"
           />
         </div>
       </div>   
@@ -188,7 +217,7 @@ function StudentProfile() {
         <div className="Profile-thirdbox-title">
           <div>
             <p>상담 기록</p>
-            <p>{studentData.consultationList.length}</p>            
+            <p>{studentData.consultationList.length.toString()}</p>            
           </div>
           <NextIcon onClick={handleViewConsultations} />
         </div>

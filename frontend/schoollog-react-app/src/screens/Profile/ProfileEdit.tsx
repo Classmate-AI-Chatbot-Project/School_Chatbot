@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { Cookies, useCookies } from "react-cookie";
 import "./ProfileEdit.css";
 import SchoolSearchModal from "../SignupInputInformation/SchoolSearchModal";
 import { School } from "../SignupInputInformation/SchoolSearchModal";
@@ -19,6 +20,8 @@ export interface ProfileUserData {
 }
 
 function ProfileEdit() {
+  const cookies = new Cookies();
+  const csrftoken = cookies.get("csrftoken");
   const navigate = useNavigate();
   const [formData, setFormData] = useState<ProfileUserData>({
     userData: {
@@ -28,14 +31,12 @@ function ProfileEdit() {
       profilePhoto: '',
     }
   });
-
+  const [currentWidth, setCurrentWidth] = useState<number>(0);
+  const [nickname, setNickname] = useState<string>(formData.userData.username || '');
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState<boolean | null>(null);
   const [uploadedImage, setUploadedImage] = useState(null);
-  const imgRef = useRef();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
-  const [currentWidth, setCurrentWidth] = useState<number>(0);
-
 
   useEffect(() => {
     console.log()
@@ -82,6 +83,10 @@ function ProfileEdit() {
     setIsModalOpen(false);
   };
 
+  const handleSelectSchool = (school: School) => {
+    setSelectedSchool(school);
+  };
+
   const onProfilePhotoChange = (e: any) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -92,10 +97,53 @@ function ProfileEdit() {
     }
   }
 
-
-  const handleSelectSchool = (school: School) => {
-    setSelectedSchool(school);
+  const checkNicknameAvailability = () => {
+    const currentNickname = nickname;
+  
+    axios
+      .post('http://127.0.0.1:8000/account/check-nickname-availability/', {
+        nickname: currentNickname,
+      })
+      .then((response) => {
+        const { available } = response.data;
+  
+        if (available) {
+          setIsNicknameAvailable(true);
+        } else {
+          setIsNicknameAvailable(false);
+        }
+      })
+      .catch((error) => {
+        console.error('서버 요청 중 오류:', error);
+      });
   };
+  
+
+  const handleSaveProfile = () => {
+    const updatedUserData = {
+      username: nickname || formData.userData.username,
+      email: formData.userData.email,
+      school: selectedSchool ? selectedSchool.SCHUL_NM : formData.userData.school,
+      profile_photo: uploadedImage || formData.userData.profilePhoto,
+    };
+
+    axios
+      .put('http://127.0.0.1:8000/account/edit/', updatedUserData, {
+        headers: {
+          "Content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        withCredentials: true,
+      })
+      .then(() => {
+        console.log('프로필이 성공적으로 업데이트되었습니다.');
+        navigate('/profile');
+      })
+      .catch((error) => {
+        console.error('프로필 업데이트 중 오류 발생:', error);
+      });
+  };
+
 
   return (
     <div className="ProfileEdit-fullbox" id="fullbox-div">
@@ -128,7 +176,6 @@ function ProfileEdit() {
                 src={formData.userData.profilePhoto}
               />
             )}
-            {/* use CamerIcon as ProfilePhoto Input button */}
             <label htmlFor="profilePhoto" className="ProfileEdit-profilephoto-input">
               <input
                 id="profilePhoto"
@@ -140,16 +187,28 @@ function ProfileEdit() {
               <CamerIcon/> 
             </label>
 
-            {/* <CamerIcon/> */}
           </div>
           <div className="ProfileEdit-namebox">
             <input
               type="text"
               placeholder={formData.userData.username}
-              value={formData.userData.username}
+              onChange={(e) => setNickname(e.target.value)}
             />
+            <div className="ProfileEdit-namebtn" onClick={checkNicknameAvailability}>
+              중복확인
+            </div>
           </div>
-          
+          <div>
+            {isNicknameAvailable === null && <p></p>}
+            {isNicknameAvailable === true && 
+              <p className='SignupInform-nickname-success'>사용 가능한 닉네임입니다.</p>
+            }
+            {isNicknameAvailable === false && 
+              <p className='SignupInform-nickname-warning'>이미 사용 중인 닉네임입니다.</p>
+            }
+   
+          </div>
+
         </div>
       </div>
       )}
@@ -174,7 +233,7 @@ function ProfileEdit() {
               <SearchIcon />
             </div>
           </div>
-          <div className='ProfileEdit-confirmbox'>
+          <div className='ProfileEdit-confirmbox' onClick={handleSaveProfile}>
             저장하기
           </div>
         </div>

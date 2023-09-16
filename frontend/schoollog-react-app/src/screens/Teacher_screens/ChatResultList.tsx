@@ -1,9 +1,10 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import "./ConsultationList.css";
 import { ReactComponent as WarningIcon } from "../../assets/warning-icon.svg";
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ChatResultItem from "./ChatResultItem";
-import axios from "axios";
 
 interface Result {
     username: string;
@@ -27,46 +28,61 @@ const [resultData, setResultData] = useState<Result[]>([]);
         withCredentials: true,
       })
       .then((res) => {
-        // 학생 별명, 이미지, 상담 기록
-        const ListData = res.data.consult_result
-        setResultData(ListData); // 상담 결과 데이터를 상태에 저장
-        console.log(resultData)
-      });
-  }, []); // 빈 배열을 전달하여 컴포넌트가 처음 마운트될 때만 실행
+        const listData = res.data.consult_result
 
-  // 결과 데이터를 기반으로 ListItem 컴포넌트 출력
+        listData.sort((a: Result, b: Result) => {
+          const dateA = new Date(a.result_time).getTime();
+          const dateB = new Date(b.result_time).getTime();
+          return dateB - dateA;
+        });
+
+        console.log(res.data.consult_result)
+        setResultData(listData);
+        console.log(resultData)
+    });
+  }, []);
+
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${month.replace(/^0/, '')}월 ${day.replace(/^0/, '')}일`;
+  }
+
   function ChatList() {
     return (
-      <div>
+      <Fragment>
         {resultData?.map((result, index) => (
-          <div key={index}>
-            <ChatResultItem
-              nickname={result.username}
-              keywords={result.category}
-              profile_photo={result.profile_photo}
-              is_read={result.is_read}
-              chat_id={result.chat_id}
-              date={result.result_time}
-              type={result.emotion_temp >= 50 ? "red" : "green"}
-            />
-            <BorderLine width="423px" height="1px" />
-          </div>
+          <Fragment key={index}>
+            <Link 
+              className="ResultItem-link"            
+              to={`/teacher/chat/result/${result.chat_id}`}>
+              <ChatResultItem
+                nickname={result.username}
+                keywords={result.category}
+                profile_photo={result.profile_photo}
+                is_read={result.is_read}
+                chat_id={result.chat_id}
+                date={formatDate(result.result_time)}
+                emotionTemp={result.emotion_temp}
+              />
+            </Link>
+            <BorderLine width="100%" height="1px" />
+          </Fragment>
         ))}
-      </div>
+      </Fragment>
     );
   }
 
   return (
     <div className="Consultationlist-fullbox">
       <div className="Consultationlist-name">
-        <p>상담 목록</p>
-        <WarningIcon />
+        <p>챗봇 대화 분석 리스트</p>
       </div>
-      <BorderLine width="423px" height="1px" />
+      <BorderLine width="100%" height="1px"/>
       <div className="Consultationlist-scrollable">
-        {/* ChatList and BorderLine moved to the scrollable area */}
         <ChatList />
-        <BorderLine width="423px" height="1px" />
+        <BorderLine width="100%" height="1px" />
       </div>
     </div>
   );

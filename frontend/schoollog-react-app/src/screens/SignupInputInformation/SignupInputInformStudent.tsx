@@ -171,7 +171,7 @@ function SignupInputInformStudent() {
             onChange={handleNicknameChange}        
           ></input>
           <div className='SignupInform-nicknamebtn'
-          onClick={handleAccountExist}   
+            onClick={handleAccountExist}   
           >
             중복확인
           </div>
@@ -183,7 +183,6 @@ function SignupInputInformStudent() {
           ) : (
             <p className='SignupInform-nickname-success'>사용 가능한 닉네임입니다.</p>
           )}
-          {/* {nickname === '' && <p className='SignupInform-nickname-warning'>닉네임을 입력하세요.</p>} */}
         </div>        
       </div>
       <div className='SignupInform-schoolbox'>

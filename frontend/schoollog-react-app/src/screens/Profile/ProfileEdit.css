@@ -69,6 +69,13 @@
   left: 90px;
   z-index: 2;
 }
+.ProfileEdit-namebox {
+  display: flex;
+  width: 75%;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+}
 .ProfileEdit-namebox input{
   width: 214px;
   height: 46px;
@@ -76,12 +83,23 @@
   border: 1.6px solid var(--gray-4-e-3, #E3E3E3);
   background: var(--W, #FFF);
   outline: none;
-  margin-top: 20px;
   padding-left: 16px;
   font-size: 17px;
   font-style: normal;
   font-weight: 700;
   box-sizing: border-box;
+}
+.ProfileEdit-namebtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 82px;
+  height: 45px;
+  color: var(--W, #FFF);
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: var(--G, #35BA95);
 }
 
 .ProfileEdit-bottombox {

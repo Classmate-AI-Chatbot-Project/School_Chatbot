@@ -7,19 +7,32 @@ import { ReactComponent as GreenFlag } from '../../assets/flag-green-icon.svg'
 import { ReactComponent as NewIcon } from '../../assets/alert-new-icon.svg'
 
 interface ListItemProps {
+  student_id: number;
+  room_id: number;
   nickname: string;
-  keywords: string;
+  latestMessageContent: string;
+  profilePhoto: string;
+  isRead: boolean;
   date: string;
-  type: string;
+  emotionTemp: number;
 }
 
-function ListItem({nickname, keywords, date, type}: ListItemProps) {
+function ListItem({student_id, room_id, nickname, latestMessageContent, profilePhoto, isRead, date, emotionTemp}: ListItemProps) {
+  let flagIcon = null;
 
+  if (emotionTemp >= 0 && emotionTemp < 35) {
+    flagIcon = <GreenFlag />;
+  } else if (emotionTemp >= 35 && emotionTemp < 65) {
+    flagIcon = <YellowFlag />;
+  } else if (emotionTemp >= 65 && emotionTemp <= 100) {
+    flagIcon = <RedFlag />;
+  }
+  
   return (
   <div className="ListItem-fullbox">
     <div className="ListItem-content">
       <div className="ListItem-firstbox">
-        <ProfileIcon/>
+        <img src={`http://127.0.0.1:8000${profilePhoto}`}/>
       </div>
       <div className="ListItem-secondbox">
         <div className="ListItem-text-first">
@@ -27,11 +40,9 @@ function ListItem({nickname, keywords, date, type}: ListItemProps) {
         </div>
         <div className="ListItem-text-second">
           <div>
-            {type === 'red' && <RedFlag />}
-            {type === 'yellow' && <YellowFlag />}
-            {type === 'green' && <GreenFlag />}
+            {flagIcon}
           </div>
-          <p>{keywords}</p>
+          <p>{latestMessageContent}</p>
         </div> 
       </div>
     </div>
@@ -39,9 +50,11 @@ function ListItem({nickname, keywords, date, type}: ListItemProps) {
       <div className="ListItem-addition-date">
         {date}
       </div>
-      <div>
-        <NewIcon/>
-      </div>
+      {!isRead && (
+        <div>
+          <NewIcon />
+        </div>
+      )}
     </div>
   </div>
   )

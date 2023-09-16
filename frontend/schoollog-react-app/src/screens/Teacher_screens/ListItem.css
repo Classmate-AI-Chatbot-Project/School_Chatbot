@@ -17,7 +17,11 @@
 .ListItem-firstbox {
   display: flex;
   justify-content: center;
-  /* background-color: aquamarine; */
+}
+.ListItem-firstbox img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 .ListItem-secondbox{
   display: flex;
@@ -35,6 +39,7 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 16px;
+  color: black;
 }
 .ListItem-text-second {
   display: flex;
@@ -50,6 +55,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: black;
 }
 .ListItem-addition {
   display: flex;
@@ -57,15 +63,15 @@
   align-items: flex-end;
   justify-content: space-between;
   height: 50%;
-  /* margin-left: 20%; */
-  /* background-color: aqua; */
 }
 .ListItem-addition-date {
   white-space: nowrap;
   font-size: 14px;
   font-weight: 400;
+  color: black;
 }
 .ListItem-addition div:last-child {
   display: flex;
   justify-content: center;
+  word-break: break-all;
 }

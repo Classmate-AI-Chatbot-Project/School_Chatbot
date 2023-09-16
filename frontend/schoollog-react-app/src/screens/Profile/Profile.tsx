@@ -16,74 +16,118 @@ import { ReactComponent as SignoutIcon } from '../../assets/signout-icon.svg'
 import { ReactComponent as PaperIcon } from '../../assets/paper-icon.svg'
 
 interface ResultItem {
-  id: string;
+  chat_id: string;
   keywords: string;
-  date: string;
-  type: number
+  date: Date;
+  emotionTemp: number;
 }
 
 function Profile() {
-  const dummyNumber:Number = 17;
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<{
+    username: string;
+    email: string;
+    school: string;
+    profilePhoto: string;
+    job: string;
+    consultationList: ResultItem[];
+  }>({
     username: '',
     email: '',
     school: '',
     profilePhoto: '',
     job: '',
+    consultationList: []
+  });
+  const [graphData, setGraphData] = useState<{
+    series: { name: string; data: number[] }[];
+    xaxis: { categories: string[] };
+  }>({
+    series: [{ name: 'Series 1', data: [] }],
+    xaxis: { categories: [] },
   });
 
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
   const navigate = useNavigate();
 
+
   useEffect(() => {
-    axios.get(
-      `http://127.0.0.1:8000/account/decode/`,
-      {
-        headers: {
-            "Content-type": "application/json",
-        },
-        withCredentials: true,
-    }
-  ).then((res: any) => {
-    console.log(res.data)
-    const data = res.data.student;
-    const consult = res.data.consult;
+      axios.get(
+        `http://127.0.0.1:8000/account/decode/`,
+        {
+          headers: {
+              "Content-type": "application/json",
+          },
+          withCredentials: true,
+      }
+      ).then((res: any) => {
+        console.log(res.data)
+        const data = res.data.student;
 
-    setUserData({
-      username: data.username,
-      email: data.email,
-      school: data.school,
-      profilePhoto: `http://127.0.0.1:8000${data.profile_photo}`,
-      job: data.job === 0 ? 'Teacher' : 'Student',
-    });
-
-    console.log(userData.profilePhoto)
-  })
+        if(res.data.student.job === 0) {
+          setUserData({
+            username: data.username,
+            email: data.email,
+            school: data.school,
+            profilePhoto: `http://127.0.0.1:8000${data.profile_photo}`,
+            job: 'Teacher',
+            consultationList: []
+          });
+        } else if(res.data.student.job === 1) {
+          const consultationList = res.data.consult_result.map((item: any) => ({
+            chat_id: item.chat_id.toString(),
+            keywords: item.category,
+            date: new Date(item.result_time),
+            emotionTemp: item.emotion_temp
+          }));
+  
+          consultationList.sort((a: ResultItem, b: ResultItem) => {
+            const dateA = a.date.getTime();
+            const dateB = b.date.getTime();
+            return dateB - dateA;
+          });        
+  
+          const graphSeries = [
+            {
+              name: 'Series 1',
+              data: consultationList.map((item: ResultItem) => item.emotionTemp),
+            },
+          ];
+          const graphXAxis = {
+            categories: consultationList.map((item: ResultItem) => formatGraphDate(item.date)), 
+          };
+  
+          setUserData({
+            username: data.username,
+            email: data.email,
+            school: data.school,
+            profilePhoto: `http://127.0.0.1:8000${data.profile_photo}`,
+            job: data.job === 0 ? 'Teacher' : 'Student',
+            consultationList: consultationList,
+          });
+  
+          setGraphData({
+            series: graphSeries,
+            xaxis: graphXAxis,
+          });
+        }
+      });
   }, []);
 
-  const dummyData: ResultItem[] = [
-    {
-      'id' : '1001',
-      'keywords' : '친구, 매점',
-      'date' : '2023년 5월 4일',
-      'type' : 12
-    },
-    {
-      'id' : '1002',
-      'keywords' : '농구, 연습',
-      'date' : '2023년 3월 4일',
-      'type' : 12
-    },
-    {
-      'id' : '1003',
-      'keywords' : '방학, 공부',
-      'date' : '2023년 1월 4일',
-      'type' : 12
-    },
-  ]
+  function formatDate(date: Date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}년 ${month.replace(/^0/, '')}월 ${day.replace(/^0/, '')}일`;
+  }
 
-  const options1: ApexOptions = {
+  function formatGraphDate(date: Date) {
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return month + day;
+  }
+
+  const graphOptions: ApexOptions = {
     chart: {
       type: 'bar',
       toolbar: {
@@ -93,46 +137,41 @@ function Profile() {
     plotOptions: {
       bar: {
         horizontal: true,
-        barHeight: 10,
+        barHeight: 50,
         dataLabels: {
           position: 'left'
         }
       },
     },
-      xaxis: {
-        categories: [''],
-        labels: {
-          //  show: false
-        },
-        axisBorder: {
-          // show: false,
-        },
+    xaxis: graphData.xaxis,
+    yaxis: {
+      max: 100,
+      min: 0,
+      tickAmount: 2, 
+      labels: {
+        formatter: (value) => String(Math.floor(value)),
       },
-  };
-
-  const lineGraphData = {
-    series: [
-      {
-        name: "Series 1",
-        data: [30, 40, 35, 50], // Replace this with your data points
-      },
-    ],
-    options: {
-      chart: {
-        id: "line-chart",
-      },
-      xaxis: {
-        categories: ['0202', '0302', '0321', '0411'], // Replace this with your categories
-      },
-      colors: ['#E37354'],
+    },
+    colors: ['#E37354'],
+    stroke: {
+      width: 2,
     },
     markers: {
-      size: 10
-    }
+      size: 6,
+      strokeWidth: 2,
+    },
+    tooltip: {
+      enabled: false // 마우스 호버 효과 비활성화
+    },
   };
 
   const handleViewConsultations = () => {
-    navigate('/profile/consultlist');
+    navigate('/profile/consultlist', {
+      state: { 
+        consultationList: userData.consultationList,
+        pageType: 'myPage'
+      }
+    });
   };
 
   const handleProfileEditClick = (email: string) => {
@@ -180,27 +219,25 @@ function Profile() {
     navigate('/login');
   };
   
-  
+  const initialConsultations = userData.consultationList.slice(0, 3);
   function ConsultationResultItemList() {
     return (
-      <div
-      style={{
-        width: '100%',
-      }}      
-      >
-        {dummyData.map((item, index) => (
-          <Fragment key={item.id}>
+      <Fragment>
+        {initialConsultations.map((item, index) => (
+          <Fragment key={index}>
             <ConsultResultItem
-            keywords={item.keywords}
-            date={item.date}
-            emotionTemp={item.type}
+              keywords={item.keywords}
+              date={formatDate(item.date)}
+              emotionTemp={item.emotionTemp}
             />
-            {index !== dummyData.length - 1 && (
-          <BorderLine width={'100%'} height={'1px'}/>
-        )}
+
+            {index !== initialConsultations.length - 1 && (
+            <BorderLine width={'100%'} height={'1px'}/>
+            )}
+
           </Fragment>
         ))}
-      </div>
+      </Fragment>
     )
   }
 
@@ -209,7 +246,12 @@ function Profile() {
       <div className="Profile-firstbox">
         <img src={userData.profilePhoto}/>
         <div className="Profile-firstbox-text">
-          <p>{userData.username}</p>
+          {userData.job === 'Student' &&
+            <p>{userData.username}</p>
+          }
+          {userData.job === 'Teacher' &&
+            <p>{userData.username} 선생님</p>
+          }
           <p>{userData.email}</p>
         </div>
         <div className="Profile-firstbox-editbtn" 
@@ -221,8 +263,8 @@ function Profile() {
       <div className="Profile-secondbox">
           <p>나의 우울도</p>
           <ApexChart 
-            options={options1} 
-            series={lineGraphData.series} 
+            options={graphOptions} 
+            series={graphData.series} 
             type="line" 
             className="Profile-secondbox-graph"
           />
@@ -233,7 +275,7 @@ function Profile() {
         <div className="Profile-thirdbox-title">
           <div>
             <p>나의 상담 기록</p>
-            <p>{dummyNumber.toString()}</p>            
+            <p>{userData.consultationList.length.toString()}</p>            
           </div>
           <NextIcon onClick={handleViewConsultations} />
         </div>

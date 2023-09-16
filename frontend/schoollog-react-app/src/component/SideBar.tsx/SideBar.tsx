@@ -67,6 +67,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
         withCredentials: true,
       }).then((response) => {
           const chatroom_id = response.data.chatroom_url;
+          toggleSide();
           navigate(`${chatroom_id}`); 
         })
         .catch((error) => {
@@ -88,6 +89,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
         withCredentials: true,
       }) 
       .then((response) => {
+        toggleSide();
         window.location.href = response.data.redirect_url;
       })
       .catch((error) => {
@@ -97,8 +99,36 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   };
 
   const gotoTest = () => {
+    toggleSide();
     navigate('/test/start');
   }
+
+  const gotoTeacherChatList = () => {
+    if (!isLoggedIn) { 
+      navigate('/login');
+    } else {
+      toggleSide();
+      navigate('/teacher/consultationList');
+    };
+  }  
+
+  const gotoConsultResulList = () => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    } else {
+      toggleSide();
+      navigate('/teacher/chatResultList');
+    };
+  }
+
+  const gotoStudentList = () => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    } else {
+      toggleSide();
+      navigate('/teacher/studentList');
+    };
+  }  
 
   return (
     <div className={isOpen ? 'Opened-bar':'Closed-bar'} ref={outside}>
@@ -108,20 +138,23 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
             <BookIcon/>
             <a className='Menu-item-text'>스쿨로그 사용법</a>
           </li>
-          <BorderLine width={'315px'} height={'1px'}/>
+          <BorderLine width={'100%'} height={'1px'}/>
           <li>
             <SpeechIcon/>
-            <a className='Menu-item-text'>상담목록</a>
+            <a className='Menu-item-text' onClick={gotoTeacherChatList}>상담 대화방 목록</a>
+          </li>
+          <BorderLine width={'100%'} height={'1px'}/>
+          <li>
+            <SpeechIcon/>
+            <a className='Menu-item-text' onClick={gotoConsultResulList}>챗봇 대화 분석 결과 리스트</a>
           </li>
           <BorderLine width={'315px'} height={'1px'}/>
-          <Link style={{textDecorationLine: 'none', color: 'black'}} to='/teacher/studentList'>
           <li>
             <StudentsIcon/>
-            <a className='Menu-item-text'>상담학생목록</a>
-          </li>          
-          </Link>
+            <a className='Menu-item-text' onClick={gotoStudentList}>상담학생목록</a>
+          </li>
 
-          <BorderLine width={'315px'} height={'1px'}/>
+          <BorderLine width={'100%'} height={'1px'}/>
         </ul>
       ): (
         <ul>
