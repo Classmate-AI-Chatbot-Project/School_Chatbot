@@ -79,7 +79,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
     if (!isLoggedIn) { 
       navigate('/initial/consult');
     } else { 
-        axios.get('http://127.0.0.1:8000/consult/redirect_room/',
+        axios.get('http://127.0.0.1:8000/consult/create/',
       {
         headers: {
           "Content-type": "application/json",

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Cookies } from "react-cookie";
 import { useParams } from 'react-router-dom';
+import ReconnectingWebSocket from 'reconnecting-websocket';
 import "../Chat/Chat.css";
 import "./Consult.css";
 import "../Chat/Modal.css";
@@ -32,6 +33,7 @@ function Consult() {
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState("");
+  const [socket, setSocket] = useState<ReconnectingWebSocket | null>(null); 
 
   const [roomData, setRoomData] = useState({
     room_id_json: 0,
@@ -39,20 +41,17 @@ function Consult() {
     other_username: "",
     user_profile: "",
     other_user_profile: "",
-    teacher_school: "",
-    student_profile_id: "",
-    last_messages: [],
-    //consult_request_messages: [],
-    has_new_consult_result: false,
+    consult_request_messages: [],
     category: "",
     emotion_temp: "",
     result_time: "",
+    has_consult_result: false,
   });
 
   // get roomData
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/consult/room/${room_name}/student/${student_id}/`, {
-      headers: { 
+    axios.get(`http://127.0.0.1:8000/room/${room_name}/student/${student_id}/`, {
+      headers: {
         "Content-type": "application/json",
         "X-CSRFToken": csrftoken,
       },
@@ -68,14 +67,11 @@ function Consult() {
           other_username: responseData.other_username,
           user_profile: responseData.user_profile,
           other_user_profile: responseData.other_user_profile,
-          teacher_school: responseData.teacher_school,
-          student_profile_id: responseData.student_profile_id,
-          last_messages: responseData.last_messages,
-          //consult_request_messages: responseData.consult_request_messages,
-          has_new_consult_result: responseData.has_new_consult_result,
+          consult_request_messages: responseData.consult_request_messages,
           category: responseData.category,
           emotion_temp: responseData.emotion_temp,
           result_time: responseData.result_time,
+          has_consult_result: responseData.has_consult_result,
         });
       })
       .catch((error) => {
@@ -83,28 +79,67 @@ function Consult() {
       });
   }, []);
 
-  // 새 메시지 POST 전송
-  const sendMessage = () => {
-    axios.post(`http://127.0.0.1:8000/consult/room/${room_name}/student/${student_id}/`,
-        { message: messageInput,},
-        {
-          headers: {
-            "Content-type": "application/json",
-            "X-CSRFToken": csrftoken,
+  // send request message
+  useEffect(() => {
+    const sendConsultationRequest = () => {
+      if (socket) {
+        const result_content = `Category: ${roomData.category}, Emotion Temp: ${roomData.emotion_temp}, Result Time: ${roomData.result_time}`;
+        const message = {
+          command: "new_message",
+          message: {
+            author: roomData.username, // Use the sender's username
+            content: result_content
           },
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        console.log("Message sent:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error sending message:", error);
-      });
+        };
+        socket.send(JSON.stringify(message));
+      }
+    };
 
-    setMessageInput("");  // 메시지 입력창 비우기
+    // Call the function to send the consultation request message
+    sendConsultationRequest();
+  }, [socket, roomData]);
+
+  const sendMessage = () => {
+    if (socket && messageInput) {
+      const message = {
+        command: "new_message",
+        message: {
+          author: roomData.username, // Use the sender's username
+          content: messageInput,
+        },
+      };
+      socket.send(JSON.stringify(message));
+      setMessageInput("");
+    }
   };
 
+  // connect websocket
+  useEffect(() => {
+    const socket = new ReconnectingWebSocket(`ws://${window.location.host}/ws/chat/${room_name}/`);
+    
+    socket.addEventListener('open', () => {
+      console.log("WebSocket 연결 성공!");
+      setSocket(socket);
+    });
+
+    socket.addEventListener('message', (event) => {
+      const data = JSON.parse(event.data);
+      if (data.command === "new_message") {
+        // Append the received message to the chat log
+        setMessages((prevMessages) => [...prevMessages, data.message]);
+      }
+    });
+
+    socket.addEventListener('close', () => {
+      console.log("WebSocket 연결 종료");
+      // WebSocket 연결 종료 시에 필요한 처리
+    });
+
+    return () => {
+      // 컴포넌트 언마운트 시 WebSocket 연결 해제
+      socket.close();
+    };
+  }, [room_name]);
 
   // 선생님 프로필 모달 창
   const ProfileModal: React.FC<ModalProps> = (props) => {
@@ -118,7 +153,7 @@ function Consult() {
           <div className="Modal-main">
             <img className="Consult-modalProfile" src={"http://127.0.0.1:8000/" + roomData.other_user_profile} alt="Profile" />
             <div className="Consult-modalName">{roomData.other_username}</div>
-            <div className="Mes-modalSchool">{roomData.teacher_school}</div>
+            <div className="Mes-modalSchool">{/* 선생님 학교 */}</div>
             <button className="Modal-gotoResult" onClick={handleCloseButtonClick}>확인</button>
           </div>
         </section>
@@ -142,8 +177,8 @@ function Consult() {
     <div className="Chat-Fullbox">
       <header className="Chat-Contentbox">
         <div className="Chat-Output" ref={mesOutputRef}>
-          {/* 새로운 상담 신청이 있을 때 */}
-          {roomData.has_new_consult_result && (
+          {/* 신청이 있을때 */}
+          {roomData.has_consult_result && (
             <>
               <div className="Chat-date">{roomData.result_time}</div>
               <div className="Consult-request">
@@ -153,7 +188,6 @@ function Consult() {
                     <span style={{ color: '#35BA95' }}>상담</span>을 신청해요.
                   </span>
                   <BorderLine width={"260px"} height={"1px"} />
-                  {/* roomData.emotion_temp 값에 따라 이모티콘 표시하기 */}
                   <span className="Consult-request-emmotion"><RedFace /></span>
                   <span className="Consult-request-category">{roomData.category}</span>
                   <span className="Consult-request-date">{roomData.result_time}</span>
@@ -162,7 +196,7 @@ function Consult() {
             </>
           )}
 
-          {/* 만약 message log 가 없으면 아래 화면 띄움 */}
+          {/* 만약 message log 가 없으면 아래 화면띄움 */}
           {messages.length === 0 && (
             <div className="Consult-InitialScreen">
               <Link to="/chat">
@@ -171,7 +205,6 @@ function Consult() {
               <MesBegin className="Consult-InitialScreenIcon" />
             </div>
           )}
-          {/* 메시지 출력 부분 */}
           {messages.map((msg, index) => (
             <div key={index}>
               {/* if (author === username) */}
