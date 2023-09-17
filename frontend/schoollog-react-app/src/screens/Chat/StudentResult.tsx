@@ -130,11 +130,11 @@ function StudentResult() {
          width: 200,
        },
        labels: Object.keys(resultData.emotion_list),
-       colors: ['#1985C0', '#EBA1B8', '#9C27B0', '#E37354', '#FFC656', '#35BA95'],
+       colors: ['#1985C0', '#EBA1B8', '#9C27B0', '#E37354', '#FFC656', '#35BA95', '#5DC8AE'],
        legend: {
          position: 'bottom',
          horizontalAlign: 'center',
-         itemMargin: {horizontal: 18, vertical: 5},
+         itemMargin: {horizontal: 15, vertical: 5},
       },
       stroke: {
          show: false

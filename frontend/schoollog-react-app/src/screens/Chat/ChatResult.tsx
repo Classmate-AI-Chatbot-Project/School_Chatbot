@@ -111,11 +111,11 @@ function StudentResult() {
          width: 200,
        },
        labels: Object.keys(emotionCount),
-       colors: ['#1985C0', '#EBA1B8', '#9C27B0', '#E37354', '#FFC656', '#35BA95'],
+       colors: ['#1985C0', '#EBA1B8', '#9C27B0', '#E37354', '#FFC656', '#35BA95', '#5DC8AE'],
        legend: {
          position: 'bottom',
          horizontalAlign: 'center',
-         itemMargin: {horizontal: 18, vertical: 5},
+         itemMargin: {horizontal: 15, vertical: 5},
       },
       stroke: {
          show: false
@@ -136,12 +136,27 @@ function StudentResult() {
               "X-CSRFToken": csrftoken, 
           },
           withCredentials: true,
-      }
-  )
+      })
     .then((res: any) => {
         console.log(res)
       })
-    }
+  }
+
+  const postRequest = () => { //전체 결과 전송
+    axios.post(
+      `http://127.0.0.1:8000/consult/request_consult/`,
+      {},
+      {
+          headers: {
+              "Content-type": "application/json",
+              "X-CSRFToken": csrftoken, 
+          },
+          withCredentials: true,
+      })
+    .then((res: any) => {
+        console.log(res)
+      })
+  }
 
   return (
     <div className='Chat-FullBox'>
@@ -210,7 +225,7 @@ function StudentResult() {
           </div>
         )}
         <Link to="/profile">
-        <button className="StudentResult-endBtn" onClick={postResult}>상담 신청하기</button>
+        <button className="StudentResult-endBtn" onClick={() => { postResult(); postRequest(); }}>상담 신청하기</button>
         </Link>
       </div>
       </div>

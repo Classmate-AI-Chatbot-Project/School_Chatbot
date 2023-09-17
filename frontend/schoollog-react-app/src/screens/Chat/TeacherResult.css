@@ -39,6 +39,7 @@
    left: 25px;
    width: 46px;
    height: 46px;
+   border-radius: 50%;
 }
 
 .TR-title-nickname {

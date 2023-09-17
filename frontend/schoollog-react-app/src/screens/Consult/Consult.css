@@ -17,20 +17,21 @@
 
 }
 
-.Consult-you-profile {
-   display: inline-block;
-   width: 34px;
-   height: 34px;
-   cursor: pointer;
+.Consult-other-profile {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
  }
  
- .Consult-you-profile img {
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
+ .Consult-other-profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 100%;
  }
 
- .Consult-you{
+ .Consult-other{
   display: flex;
   align-self: flex-end;
   position: relative;
@@ -40,11 +41,11 @@
   animation: scaleUp 0.7s both;
  }
 
- .Consult-you-box{
+ .Consult-other-box{
   margin-left: 10px;
   margin-top: 8px;
  }
- .Consult-you-name{
+ .Consult-other-name{
   color: var(--bb, #1D4C5C);
   text-align: left;
   font-family: Pretendard;
@@ -53,7 +54,7 @@
   margin-bottom: 8px;
  }
 
- .Consult-you-message {
+ .Consult-other-message {
   align-items: flex-start;
   max-width: 222px;
   word-wrap: break-word;
@@ -92,7 +93,8 @@
 
 .Consult-modalProfile {
   width: 130px;
-   height: 130px;
+  height: 130px;
+  border-radius: 50%;
  }
 
  .Consult-modalName {
@@ -122,7 +124,7 @@
  .Consult-request-box {
   position: relative;
   text-align: left;
-  min-width: 261px;
+  width: 270px;
   min-height: 126px;
   border-radius: 16px 0px 16px 16px;
   border: 1px solid var(--gray-3-d-7, #D7D7D7);
@@ -150,7 +152,7 @@
   font-weight: 400;
  }
 
- .Consult-request-emmotion {
+ .Consult-request-emotion {
   position: relative;
   top: 15px;
   left: 22px;
@@ -158,23 +160,51 @@
  }
 
  .Consult-request-category {
+  white-space: nowrap; 
+  overflow: hidden;    
+  text-overflow: ellipsis; 
   position: absolute;
   top: 66px;
-  left: 86px;
+  left: 83px;
   color: var(--BL, #000);
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
  }
 
  .Consult-request-date {
   position: absolute;
   top: 94px;
-  left: 86px;
+  left: 83px;
   color: var(--gray-169, #696969);
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
+ }
+
+ .Consult-request-detail {
+  position: absolute;
+  top: 74px;
+  left: 245px;
+  cursor: pointer;
+  text-decoration: none;
+ }
+
+ .Consult-request-other {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 21px;
+ }
+
+ .Consult-request-box-other {
+  position: relative;
+  text-align: left;
+  width: 270px;
+  min-height: 126px;
+  border-radius: 0px 16px 16px 16px;
+  border: 1px solid var(--gray-3-d-7, #D7D7D7);
+  background: var(--W, #FFF);
+  margin-right: 10px;
  }
 
  .InitialConsult-InputBox {
