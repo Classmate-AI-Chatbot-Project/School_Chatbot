@@ -12,7 +12,7 @@ import axios from "axios";
 interface ResultItem {
   chat_id: string;
   keywords: string;
-  date: string;
+  date: Date;
   emotionTemp: number;
 }
 
@@ -54,10 +54,13 @@ function StudentProfile() {
     }
     ).then((res: any) => {
       // 학생 별명, 이미지, 상담 기록
+      console.log(typeof(
+        new Date(res.data.consult_result[0].result_time)
+        ))
       const consultationList = res.data.consult_result.map((item: any) => ({
         chat_id: item.chat_id.toString(),
         keywords: item.category,
-        date: formatDate(item.result_time),
+        date: new Date(item.result_time),
         emotionTemp: item.emotion_temp
     }));
 
@@ -69,19 +72,25 @@ function StudentProfile() {
     ];
     const graphXAxis = {
       categories: consultationList.map((item: ResultItem) => formatGraphDate(item.date)), 
-    };    
+    };
+    
+    consultationList.sort((a: ResultItem, b: ResultItem) => {
+      const dateA = a.date.getTime();
+      const dateB = b.date.getTime();
+      return dateB - dateA;
+    })
 
-      setStudentData({
-        nickname: res.data.nickname,
-        studentID: res.data.student_id,
-        profilePhoto: `http://127.0.0.1:8000${res.data.profile}`,
-        consultationList: consultationList,
-      })
+    setStudentData({
+      nickname: res.data.nickname,
+      studentID: res.data.student_id,
+      profilePhoto: `http://127.0.0.1:8000${res.data.profile}`,
+      consultationList: consultationList,
+    })
 
-      setGraphData({
-        series: graphSeries,
-        xaxis: graphXAxis,
-      });
+    setGraphData({
+      series: graphSeries,
+      xaxis: graphXAxis,
+    });
 
       // console.log(userData)
       console.log(graphData)      
@@ -103,25 +112,20 @@ function StudentProfile() {
     navigate(-1)
   }
 
-  function formatDate(dateString: string) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
+  function formatDate(date: Date) {
+    const newDate = new Date(date);
+    const year = newDate.getFullYear();
+    const month = (newDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = newDate.getDate().toString().padStart(2, '0');
     return `${year}년 ${month.replace(/^0/, '')}월 ${day.replace(/^0/, '')}일`;
   }
 
-  function formatGraphDate(dateString: string) {
-    const dateParts = dateString.match(/(\d{1,2})월 (\d{1,2})일/);
-
-    if (dateParts) {
-      const month = dateParts[1].padStart(2, '0');
-      const day = dateParts[2].padStart(2, '0');
-      return month + day;
-    }
-  
-    return ''; 
-  }  
+  function formatGraphDate(date: Date) {
+    const newDate = new Date(date);
+    const month = (newDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = newDate.getDate().toString().padStart(2, '0');
+    return month + day;
+  }
 
   const graphOptions: ApexOptions = {
     chart: {
@@ -162,23 +166,27 @@ function StudentProfile() {
   };
 
   const initialConsultations = studentData.consultationList.slice(0, 3);
+  const lastChatId = studentData.consultationList.length > 0
+  ? studentData.consultationList[0].chat_id
+  : 'defaultChatId'; 
+
   function ConsultationResultItemList() {
     return (
       <Fragment>
         {initialConsultations.map((item, index) => (
           <Fragment key={item.chat_id}>
             <Link 
-              className="ResultItem-link"
+              className="StudentProfile-link"
               to={`/teacher/chat/result/${item.chat_id}`}>
               <ConsultResultItem
                 keywords={item.keywords}
-                date={item.date}
+                date={formatDate(item.date)}
                 emotionTemp={item.emotionTemp}
               />
             </Link>
 
             {index !== initialConsultations.length - 1 && (
-              <BorderLine width="423px" height="1px" />
+              <BorderLine width="100%" height="1px" />
             )}
 
           </Fragment>
@@ -198,9 +206,12 @@ function StudentProfile() {
       <div className="StudentProfile-firstbox">
         <img src={studentData.profilePhoto}/>
         <p>{studentData.nickname}</p>
-        <div className="StudentProfile-button">
-          상담하기
-        </div>
+        {/* /consult/room/상담방id/student/학생.id */}
+        <Link to={`/consult/room/${lastChatId}/student/${studentData.studentID}/`}>
+          <div className="StudentProfile-button">
+            상담하기
+          </div>
+        </Link>
       </div>
       <div className="Profile-secondbox">
         <div>

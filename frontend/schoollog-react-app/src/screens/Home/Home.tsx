@@ -130,10 +130,10 @@ function Home() {
       <div className={open ? 'openModal modal' : 'modal'}>
         {open && (imageType === 'test' || imageType === 'chat') ? (
           <section className="Modal-contentBox">  
-           <div className="Modal-main">
+          <div className="Modal-main">
             {modalImage}
             <button className="Modal-gotoResult" onClick={closeBtn}>돌아가기</button>
-           </div>
+          </div>
           </section>
         ) : null}
       </div>

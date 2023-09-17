@@ -50,6 +50,7 @@
   position: fixed;
   top: 67px;
   z-index: 3;
+  cursor: pointer;
 }
 .Home-button-disabled {
   display: flex;
@@ -65,6 +66,7 @@
   position: fixed;
   top: 67px;
   z-index: 3;
+  cursor: pointer;
 }
 
 .Home-manual {
