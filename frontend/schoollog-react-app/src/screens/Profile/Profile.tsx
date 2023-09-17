@@ -80,13 +80,7 @@ function Profile() {
             date: new Date(item.result_time),
             emotionTemp: item.emotion_temp
           }));
-  
-          consultationList.sort((a: ResultItem, b: ResultItem) => {
-            const dateA = a.date.getTime();
-            const dateB = b.date.getTime();
-            return dateB - dateA;
-          });        
-  
+
           const graphSeries = [
             {
               name: 'Series 1',
@@ -96,6 +90,12 @@ function Profile() {
           const graphXAxis = {
             categories: consultationList.map((item: ResultItem) => formatGraphDate(item.date)), 
           };
+            
+          consultationList.sort((a: ResultItem, b: ResultItem) => {
+            const dateA = a.date.getTime();
+            const dateB = b.date.getTime();
+            return dateB - dateA;
+          });        
   
           setUserData({
             username: data.username,
@@ -224,18 +224,21 @@ function Profile() {
     return (
       <Fragment>
         {initialConsultations.map((item, index) => (
-          <Fragment key={index}>
-            <ConsultResultItem
-              keywords={item.keywords}
-              date={formatDate(item.date)}
-              emotionTemp={item.emotionTemp}
-            />
-
+          <div key={index} className="Profile-consult-item">
+            <Link 
+            className="ResultItem-link"
+            to={`/teacher/chat/result/${item.chat_id}`}>               
+              <ConsultResultItem
+                keywords={item.keywords}
+                date={formatDate(item.date)}
+                emotionTemp={item.emotionTemp}
+              />
+            </Link>
             {index !== initialConsultations.length - 1 && (
             <BorderLine width={'100%'} height={'1px'}/>
             )}
 
-          </Fragment>
+          </div>
         ))}
       </Fragment>
     )

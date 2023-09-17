@@ -136,11 +136,6 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
       {isLoggedIn && userData.job === "Teacher" ? (
         <ul>
           <li>
-            <BookIcon/>
-            <a className='Menu-item-text'>스쿨로그 사용법</a>
-          </li>
-          <BorderLine width={'100%'} height={'1px'}/>
-          <li>
             <SpeechIcon/>
             <a className='Menu-item-text' onClick={gotoTeacherChatList}>상담 대화방 목록</a>
           </li>
@@ -159,11 +154,6 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
         </ul>
       ): (
         <ul>
-          <li>
-            <BookIcon/>
-            <a className='Menu-item-text'>스쿨로그 사용법</a>
-          </li>
-          <BorderLine width={'315px'} height={'1px'}/>
           <li>
             <PaintingIcon/>
             <a className='Menu-item-text' onClick={gotoTest}>그림 심리 테스트</a>

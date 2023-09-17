@@ -76,6 +76,7 @@ function StudentList() {
         {studentData.map((item, index) => (
           <div 
             key={index}
+            className="Profile-consult-item"
             onClick={() => handleStudentItemClick(item.email)}
             >
             <StudentItem

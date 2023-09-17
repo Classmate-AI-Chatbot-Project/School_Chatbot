@@ -27,6 +27,7 @@
   flex: 1;
 }
 .Profile-firstbox-editbtn {
+  cursor: pointer;
   margin: 0;
 }
 .Profile-firstbox p:first-child {
@@ -121,6 +122,9 @@
   padding-left: 10px;
   color: #35BA95;
 }
+.Profile-thirdbox-title svg {
+  cursor: pointer;
+}
 .Profile-forthbox {
   display: flex;
   width: 100%;
@@ -138,7 +142,12 @@
   align-items: center;
   height: 73px;
   padding-left: 26px;
+  cursor: pointer;
 }
 .Profile-forthbox-menu p{
   padding-left: 16px;
+}
+.Profile-consult-item {
+  width: 100%;
+  cursor: pointer;
 }
