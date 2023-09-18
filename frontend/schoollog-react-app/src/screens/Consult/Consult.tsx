@@ -21,6 +21,7 @@ interface ModalProps {
 
 interface Message {
   timestamp: string;
+  date: string;
   author: string;
   content: string;
   request: boolean,
@@ -33,6 +34,7 @@ interface GroupedMessage {
 
 interface HistoryMessage {
   timestamp: string;
+  date: string;
   author: string;
   content: string;
   request: boolean;
@@ -80,13 +82,14 @@ function Consult() {
   }, [messages]);
 
   useEffect(() => { // get roomData
-  axios.get(`http://127.0.0.1:8000/consult/room/${room_name}/student/${student_id}/`, {
-    headers: { 
-      "Content-type": "application/json",
-      "X-CSRFToken": csrftoken,
-    },
-    withCredentials: true,
-  })
+    setMessages([]);
+    axios.get(`http://127.0.0.1:8000/consult/room/${room_name}/student/${student_id}/`, {
+      headers: { 
+        "Content-type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      withCredentials: true,
+    })
     .then((response) => {
       const responseData = response.data.consult_room_data;
 
@@ -108,7 +111,7 @@ function Consult() {
       console.log(responseData)
 
       const previousMessagesData: HistoryMessage[] = responseData.last_messages;
-      setMessages((prevMessages) => [...prevMessages, ...previousMessagesData]);
+      setMessages([...previousMessagesData]);
       })
       .catch((error) => {
         console.error('Error fetching room_name and student_id:', error);
@@ -133,6 +136,11 @@ function Consult() {
         // 메시지 목록을 업데이트
         const newMessage: Message = {
           timestamp: currentTime, 
+          date: new Date().toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }),
           author: roomData.username,
           content: messageInput,
           request: false,
@@ -150,25 +158,23 @@ function Consult() {
     let currentDate: string | null = null;
   
     messages.forEach((msg) => {
-      const messageDate = new Date(msg.timestamp).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
+      const messageDate = msg.date; // '%Y년 %m월 %d일' 형식으로 이미 지정된 날짜
   
       if (messageDate !== currentDate) {
         currentDate = messageDate;
         groupedMessages.push({
-          date: currentDate,
+          date: messageDate, 
           messages: [msg],
         });
       } else {
         groupedMessages[groupedMessages.length - 1].messages.push(msg);
       }
     });
+  
+    console.log(groupedMessages);
     return groupedMessages;
   }
-
+  
   //상담신청 내용 불러오기
   function parseRequestMessage(requestMessage: string) { 
     requestMessage = requestMessage.replace(/^"(.*)"$/, "$1");
@@ -234,7 +240,7 @@ function Consult() {
           ) : ( // 메시지 출력
             groupedMessages.map((group, groupIndex) => (
               <div key={groupIndex}>
-                <div className="Chat-date">{roomData.result_time}</div>
+                <div className="Consult-date">{group.date}</div>
                 {group.messages.map((msg, index) => (
                   <div key={index}>
                     {!msg.request ? (

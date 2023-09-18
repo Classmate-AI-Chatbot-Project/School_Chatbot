@@ -112,6 +112,20 @@ function StudentProfile() {
     navigate(-1)
   }
 
+  const goConsultRoom = () => {
+    axios.get(`http://127.0.0.1:8000/consult/start_consult/${studentID}/`,
+    {
+      headers: {
+        "Content-type": "application/json",
+      },
+      withCredentials: true,
+    }) 
+    .then((response) => {
+      const consult_room_url = response.data.consult_room_url;
+      navigate(`${consult_room_url}`); 
+    })
+  };
+
   function formatDate(date: Date) {
     const newDate = new Date(date);
     const year = newDate.getFullYear();
@@ -206,12 +220,9 @@ function StudentProfile() {
       <div className="StudentProfile-firstbox">
         <img src={studentData.profilePhoto}/>
         <p>{studentData.nickname}</p>
-        {/* /consult/room/상담방id/student/학생.id */}
-        <Link to={`/consult/room/${lastChatId}/student/${studentData.studentID}/`}>
-          <div className="StudentProfile-button">
-            상담하기
-          </div>
-        </Link>
+        <div className="StudentProfile-button" onClick={goConsultRoom}>
+          상담하기
+        </div>
       </div>
       <div className="Profile-secondbox">
         <div>
