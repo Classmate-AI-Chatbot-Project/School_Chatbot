@@ -158,6 +158,23 @@ function StudentResult() {
       })
   }
 
+  const gotoConsult = () => { 
+      axios.get('http://127.0.0.1:8000/consult/redirect_room/',
+    {
+      headers: {
+        "Content-type": "application/json",
+      },
+      withCredentials: true,
+    }) 
+    .then((response) => {
+      const consult_room_url = response.data.consult_room_url;
+      navigate(`${consult_room_url}`); 
+    })
+    .catch((error) => {
+      navigate('/profile');
+    });
+  };
+
   return (
     <div className='Chat-FullBox'>
       <div className='Chat-ContenBox'>
@@ -225,7 +242,7 @@ function StudentResult() {
           </div>
         )}
         <Link to="/profile">
-        <button className="StudentResult-endBtn" onClick={() => { postResult(); postRequest(); }}>상담 신청하기</button>
+        <button className="StudentResult-endBtn" onClick={() => { postResult(); postRequest(); gotoConsult(); }}>상담 신청하기</button>
         </Link>
       </div>
       </div>
