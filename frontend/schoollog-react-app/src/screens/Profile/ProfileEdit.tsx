@@ -173,7 +173,7 @@ function ProfileEdit() {
               />
             ) : (
               <img className="ProfileEdit-profilephoto"
-                src={formData.userData.profilePhoto}
+                src={`${formData.userData.profilePhoto}?${new Date().getTime()}`}
               />
             )}
             <label htmlFor="profilePhoto" className="ProfileEdit-profilephoto-input">

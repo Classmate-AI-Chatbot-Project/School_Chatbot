@@ -247,7 +247,7 @@ function Profile() {
   return (
     <div className="Profile-fullbox">
       <div className="Profile-firstbox">
-        <img src={userData.profilePhoto}/>
+      <img src={`${userData.profilePhoto}?${new Date().getTime()}`} alt="Profile" />
         <div className="Profile-firstbox-text">
           {userData.job === 'Student' &&
             <p>{userData.username}</p>
