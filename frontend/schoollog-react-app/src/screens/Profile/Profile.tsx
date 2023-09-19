@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { useCookies } from "react-cookie";
-import { setLoggedIn } from "../../actions";
 import { Link, useNavigate } from 'react-router-dom';
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
@@ -191,7 +190,7 @@ function Profile() {
 
   
     // Redux 상태 업데이트
-    dispatch(setLoggedIn(false));
+    // dispatch(setLoggedIn(false));
 
     // 쿠키 삭제
     removeCookie('isLoggedIn', { path: '/' });
@@ -211,7 +210,7 @@ function Profile() {
     }
   )  
     // Redux 상태 업데이트
-    dispatch(setLoggedIn(false));
+    // dispatch(setLoggedIn(false));
     // 쿠키 삭제
     removeCookie('isLoggedIn', { path: '/' });
 

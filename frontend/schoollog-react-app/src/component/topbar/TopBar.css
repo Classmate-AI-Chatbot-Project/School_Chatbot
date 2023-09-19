@@ -27,6 +27,17 @@
   color: #f2f2f2;
   font-size: 17px;
 }
+.Topbar-hamburger-menu {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.Topbar-hamburger-menu img {
+  width: 10px;
+  height: 10px;
+  margin: 0px;
+  padding-bottom: 10px;
+}
 @media (max-width: 768px) {
   .topnav {
     width: 100dvw;

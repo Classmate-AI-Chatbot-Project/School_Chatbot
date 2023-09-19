@@ -5,7 +5,7 @@ import TopBar from './component/topbar/TopBar';
 import SideBar from './component/SideBar.tsx/SideBar';
 import BorderLine from './component/BorderLine/BorderLine';
 import { Provider } from 'react-redux';
-import store from './store';
+import store from './reducers/store';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
