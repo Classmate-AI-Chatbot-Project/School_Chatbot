@@ -118,6 +118,19 @@ function Consult() {
       });
   }, [room_name, student_id]);
 
+  function formatDate(dateString: string): string {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit', 
+      day: '2-digit',  
+    };
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString('ko-KR', options);
+    // 날짜를 "yyyy년 mm월 dd일" 형식으로 맞추기
+    const [year, month, day] = formattedDate.split('.');
+    return `${year}년${month}월${day}일`;
+  }
+  
   // 새 메시지 POST 전송
   const sendMessage = () => {
     axios
@@ -136,11 +149,7 @@ function Consult() {
         // 메시지 목록을 업데이트
         const newMessage: Message = {
           timestamp: currentTime, 
-          date: new Date().toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
+          date: formatDate(new Date().toISOString()),
           author: roomData.username,
           content: messageInput,
           request: false,
@@ -152,6 +161,7 @@ function Consult() {
         console.error("Error sending message:", error);
       });
   };
+  
 
   function groupMessagesByDate(messages: Message[]): GroupedMessage[] {
     const groupedMessages: GroupedMessage[] = [];
@@ -176,33 +186,39 @@ function Consult() {
   }
   
   //상담신청 내용 불러오기
-  function parseRequestMessage(requestMessage: string) { 
+  function parseRequestMessage(requestMessage: string) {
     requestMessage = requestMessage.replace(/^"(.*)"$/, "$1");
-    const parts = requestMessage.split("/n");  
-    const [emotion, category, date, chatIdPart] = parts;
-    const chatIdMatch = chatIdPart.match(/\[(\d+)\]/);
-    const chat_id = chatIdMatch ? chatIdMatch[1] : ''; 
-    let emotionComponent;
-    
-    if (parseInt(emotion) >= 0 && parseInt(emotion) < 35) { // emotion 값에 따라 다른 컴포넌트 선택
-      emotionComponent = <GreenFace />;
-    } else if (parseInt(emotion) >= 35 && parseInt(emotion) < 65) {
-      emotionComponent = <YellowFace />;
-    } else {
-      emotionComponent = <RedFace />;
-    }
+    const parts = requestMessage.split("/n");
   
-    return (
-      <>
-        <span className="Consult-request-emotion">{emotionComponent}</span>
-        <span className="Consult-request-category">{category}</span>
-        <span className="Consult-request-date">{date}</span>
-        <Link to={`/teacher/chat/result/${chat_id}`} className="Consult-request-detail">
-          <RequestDetail />
-        </Link>
-      </>
-    );
+    if (parts.length >= 4) { 
+      const [emotion, category, date, chatIdPart] = parts;
+      const chatIdMatch = chatIdPart.match(/\[(\d+)\]/);
+      const chat_id = chatIdMatch ? chatIdMatch[1] : '';
+      let emotionComponent;
+  
+      if (parseInt(emotion) >= 0 && parseInt(emotion) < 35) {
+        emotionComponent = <GreenFace />;
+      } else if (parseInt(emotion) >= 35 && parseInt(emotion) < 65) {
+        emotionComponent = <YellowFace />;
+      } else {
+        emotionComponent = <RedFace />;
+      }
+  
+      return (
+        <>
+          <span className="Consult-request-emotion">{emotionComponent}</span>
+          <span className="Consult-request-category">{category}</span>
+          <span className="Consult-request-date">{date}</span>
+          <Link to={`/teacher/chat/result/${chat_id}`} className="Consult-request-detail">
+            <RequestDetail />
+          </Link>
+        </>
+      );
+    } else {
+      return null; // 오류 처리) null 반환
+    }
   }
+  
 
   // 상대방 프로필 모달 창
   const ProfileModal: React.FC<ModalProps> = (props) => {
@@ -224,7 +240,6 @@ function Consult() {
     );
   };
 
-
   return (
     <div className="Chat-Fullbox">
       <header className="Chat-Contentbox">
@@ -243,13 +258,14 @@ function Consult() {
                 <div className="Consult-date">{group.date}</div>
                 {group.messages.map((msg, index) => (
                   <div key={index}>
-                    {!msg.request ? (
-                      msg.author === roomData.username ? (
-                        <div className="Chat-student">
-                          <span className="Chat-time">{msg.timestamp}</span>
-                          <span className="Chat-message">{msg.content}</span>
-                        </div>
-                      ) : (
+                    {(msg.request && msg.content === "상담을 신청해요.") ? null :
+                      !msg.request ? (
+                        msg.author === roomData.username ? (
+                          <div className="Chat-student">
+                            <span className="Chat-time">{msg.timestamp}</span>
+                            <span className="Chat-message">{msg.content}</span>
+                          </div>
+                        ) : (
                         <div className="Consult-other">
                           <span className="Consult-other-profile">
                             <img onClick={openProfileModal} src={"http://127.0.0.1:8000" + roomData.other_user_profile} alt="Profile" />
@@ -292,7 +308,7 @@ function Consult() {
                           </span>
                           <span className="Chat-time">{msg.timestamp}</span>
                         </div>
-                      )
+                      ) //
                     )}
                   </div>
                 ))}
