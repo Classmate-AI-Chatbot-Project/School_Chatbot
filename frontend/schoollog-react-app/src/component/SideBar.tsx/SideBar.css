@@ -23,6 +23,8 @@ ul{
   margin: 0px;
 }
 li {
+  display: flex;
+  align-items: center;
   margin: 25px 0px 30px 27px;
   text-align: left;
 }
@@ -32,5 +34,6 @@ li {
   font-size: 15px;
   line-height: 18px;
   margin-left: 15px;
+  margin-right: 7px;
   cursor: pointer;
 }

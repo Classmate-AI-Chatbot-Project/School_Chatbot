@@ -6,8 +6,7 @@ import { ReactComponent as SearchIcon } from '../../assets/signup-input-search.s
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Cookies, useCookies } from "react-cookie";
-import { setLoggedIn, setNickname } from '../../actions';
-import { RootState } from '../../reducers';
+// import { setLoggedIn, setNickname } from '../../actions';
 import { School } from './SchoolSearchModal';
 
 interface UserData {
@@ -117,7 +116,7 @@ function SignupInputInformStudent() {
   const handleSignup = () => {
     if (isFormValid) {
       // Redux 상태 업데이트
-      dispatch(setLoggedIn(true));
+      // dispatch(setLoggedIn(true));
 
       const data = {
         school: selectedSchool?.SCHUL_NM,

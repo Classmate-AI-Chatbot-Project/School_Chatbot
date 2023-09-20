@@ -2,9 +2,11 @@ import React, { useState, useRef,useEffect } from 'react';
 import axios from 'axios';
 import { Cookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../reducers/store';
 import './SideBar.css'
 import BorderLine from '../BorderLine/BorderLine';
-import { ReactComponent as BookIcon } from '../../assets/side-bar-book.svg'
+import { ReactComponent as NewIcon } from '../../assets/alert-new-icon.svg'
 import { ReactComponent as SpeechIcon } from '../../assets/side-bar-speech.svg'
 import { ReactComponent as StudentsIcon } from '../../assets/side-bar-students.svg'
 import { ReactComponent as PaintingIcon } from '../../assets/side-bar-paint.svg'
@@ -16,6 +18,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   const [userData, setUserData] = useState({ job: '' });
   const isLoggedIn = cookies.get("isLoggedIn");
   const navigate = useNavigate();
+  const isRead = useSelector((state: RootState) => state.notifications.isRead);
 
   const outside = useRef<any>();
   useEffect(() => {
@@ -138,6 +141,9 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
           <li>
             <SpeechIcon/>
             <a className='Menu-item-text' onClick={gotoTeacherChatList}>상담 대화방 목록</a>
+            {isRead && 
+              <NewIcon />
+            }
           </li>
           <BorderLine width={'100%'} height={'1px'}/>
           <li>
@@ -147,7 +153,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
           <BorderLine width={'315px'} height={'1px'}/>
           <li>
             <StudentsIcon/>
-            <a className='Menu-item-text' onClick={gotoStudentList}>상담학생목록</a>
+            <a className='Menu-item-text' onClick={gotoStudentList}>상담 학생 목록</a>
           </li>
 
           <BorderLine width={'100%'} height={'1px'}/>

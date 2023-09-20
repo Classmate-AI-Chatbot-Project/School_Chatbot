@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from './reducers'
+import { RootState } from './reducers/store'
 import './Main.css';
 import Home from './screens/Home/Home';
 
 function Main() {
   const navigate = useNavigate();
-  const isTeacher = useSelector((state:RootState) => state.isTeacher);
 
   const [chatCounter, setChatCounter] = useState(1);
   const student_id = "soohyun";
@@ -17,12 +16,6 @@ function Main() {
     const newChatCounter = chatCounter + 1;
     setChatCounter(newChatCounter);
   };
-
-  useEffect(() => {
-    if (isTeacher) {
-      navigate("/consultationList");
-    }
-  }, [isTeacher, navigate]);
 
   return (
     <div

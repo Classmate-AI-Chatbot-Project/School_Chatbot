@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setNotification } from '../../reducers/store/notifications'
 import "./ConsultationList.css"
 import { ReactComponent as WarningIcon } from '../../assets/warning-icon.svg'
 import BorderLine from "../../component/BorderLine/BorderLine";
@@ -21,6 +23,7 @@ interface ConsultRoomItem {
 // 목록 item 클릭하면 /consult/room/${room_id}/student/${student_id} 로 이동하도록 구현하기
 function ConsultationList() {
   const [consultRooms, setConsultRooms] = useState<ConsultRoomItem[]>([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/consult/list`, {
@@ -42,6 +45,9 @@ function ConsultationList() {
         setConsultRooms(ListData);
 
         console.log(consultRooms)
+
+        const hasUnreadMessages = ListData.some((room) => !room.is_read);
+        dispatch(setNotification(hasUnreadMessages));
       })
       .catch((error) => {
         console.error('Error fetching consult rooms:', error);
