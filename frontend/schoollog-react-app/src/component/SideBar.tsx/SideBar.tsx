@@ -19,7 +19,8 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   const isLoggedIn = cookies.get("isLoggedIn");
   const navigate = useNavigate();
   // const isRead = useSelector((state: RootState) => state.notifications.isRead);
-  const [isUnread, setIsUnread] = useState(false); // isUnread 상태를 useState로 관리
+  const [isUnread, setIsUnread] = useState(false);        // 안 읽은 메시지가 있는가?
+  const [hasNewResult, setHasNewResult] = useState(false);  // 새로운 상담 결과가 있는가?
 
   const outside = useRef<any>();
   useEffect(() => {
@@ -71,12 +72,16 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
           withCredentials: true,
         }
       ).then((response) => {
-        const { is_unread } = response.data;
+        const { is_unread, has_new_result } = response.data;
         setIsUnread(is_unread);   // 가져온 데이터를 상태에 저장
-        console.log('미확인 메시지가 있는가 is_unread: ', is_unread);
+        setHasNewResult(has_new_result);
+        
+        console.log('SideBar is_unread: ', is_unread);
+        console.log('SideBar has_new_result: ', has_new_result);
       })
       .catch((error) => {
         console.error('Error fetching is_unread:', error);
+        console.error('Error fetching has_new_result:', error);
       });
     }
   });
@@ -172,6 +177,9 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
           <li>
             <SpeechIcon/>
             <a className='Menu-item-text' onClick={gotoConsultResulList}>챗봇 대화 분석 결과 리스트</a>
+            {hasNewResult && 
+              <NewIcon />
+            }
           </li>
           <BorderLine width={'315px'} height={'1px'}/>
           <li>
