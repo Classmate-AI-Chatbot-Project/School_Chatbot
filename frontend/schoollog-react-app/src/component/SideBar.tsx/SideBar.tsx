@@ -18,7 +18,9 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   const [userData, setUserData] = useState({ job: '' });
   const isLoggedIn = cookies.get("isLoggedIn");
   const navigate = useNavigate();
-  const isRead = useSelector((state: RootState) => state.notifications.isRead);
+  // const isRead = useSelector((state: RootState) => state.notifications.isRead);
+  const [isUnread, setIsUnread] = useState(false);        // 안 읽은 메시지가 있는가?
+  const [hasNewResult, setHasNewResult] = useState(false);  // 새로운 상담 결과가 있는가?
 
   const outside = useRef<any>();
   useEffect(() => {
@@ -57,6 +59,32 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
       });
     }
   }, [isLoggedIn]);  // isLoggedIn 상태가 변경될 때만 실행
+
+  // 로그인했을 때만 미확인 메시지 여부 is_unread 데이터 가져오기
+  useEffect(() => {
+    if (isLoggedIn) {
+      axios.get(
+        `http://127.0.0.1:8000/consult/check_unread_messages/`,
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+          withCredentials: true,
+        }
+      ).then((response) => {
+        const { is_unread, has_new_result } = response.data;
+        setIsUnread(is_unread);   // 가져온 데이터를 상태에 저장
+        setHasNewResult(has_new_result);
+        
+        console.log('SideBar is_unread: ', is_unread);
+        console.log('SideBar has_new_result: ', has_new_result);
+      })
+      .catch((error) => {
+        console.error('Error fetching is_unread:', error);
+        console.error('Error fetching has_new_result:', error);
+      });
+    }
+  });
 
   const gotoChat = () => {
     if (!isLoggedIn) { // 로그인 안되어 있는 경우
@@ -141,7 +169,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
           <li>
             <SpeechIcon/>
             <a className='Menu-item-text' onClick={gotoTeacherChatList}>상담 대화방 목록</a>
-            {isRead && 
+            {isUnread && 
               <NewIcon />
             }
           </li>
@@ -149,6 +177,9 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
           <li>
             <SpeechIcon/>
             <a className='Menu-item-text' onClick={gotoConsultResulList}>챗봇 대화 분석 결과 리스트</a>
+            {hasNewResult && 
+              <NewIcon />
+            }
           </li>
           <BorderLine width={'315px'} height={'1px'}/>
           <li>
@@ -172,7 +203,10 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
           <BorderLine width={'315px'} height={'1px'}/>
           <li>
             <StudentsIcon/>
-                <a className='Menu-item-text' onClick={gotoConsult}>선생님과 상담하기</a>
+            <a className='Menu-item-text' onClick={gotoConsult}>선생님과 상담하기</a>
+            {isUnread && 
+              <NewIcon />
+            }
           </li>
           <BorderLine width={'315px'} height={'1px'}/>
         </ul>
