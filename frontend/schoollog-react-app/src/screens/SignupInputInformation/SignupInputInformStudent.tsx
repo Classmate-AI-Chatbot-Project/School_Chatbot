@@ -120,6 +120,7 @@ function SignupInputInformStudent() {
 
       const data = {
         school: selectedSchool?.SCHUL_NM,
+        school_code: selectedSchool?.SD_SCHUL_CODE,
         nickname: nickname,
         job: 1,  
       };
