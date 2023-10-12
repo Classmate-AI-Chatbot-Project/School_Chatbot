@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import "./Profile.css";
+import '../Chat/Modal.css'
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
 import { ReactComponent as ProfileDetailIcon } from '../../assets/profile-detail.svg'
@@ -19,6 +20,12 @@ interface ResultItem {
   keywords: string;
   date: Date;
   emotionTemp: number;
+}
+
+interface ModalProps {
+  open: boolean;
+  close: () => void;
+
 }
 
 function Profile() {
@@ -48,7 +55,9 @@ function Profile() {
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
   const navigate = useNavigate();
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => { setIsModalOpen(true); };
+  const closeModal = () => { setIsModalOpen(false); };
 
   useEffect(() => {
       axios.get(
@@ -243,6 +252,32 @@ function Profile() {
     )
   }
 
+  //탈퇴하기 모달창
+  const SignOutModal: React.FC<ModalProps> = (props) => {
+    const { open, close } = props;
+    const closeBtn = () => { close(); };
+    return (
+      <div className={open ? 'openModal modal' : 'modal'}>
+          <section className="Modal-SiginOut-contentBox">  
+          <div className="Modal-main">
+            <div className="Modal-SiginOut-title">
+              탈퇴하기
+            </div>
+            <div className="Modal-SiginOut-content">
+              회원 탈퇴 시, 계정 정보 및 이용 내역은 {<br />}
+              모두 삭제되며 복구되지 않습니다.{<br />}{<br />}
+              정말 탈퇴하겠습니까?
+            </div>
+            <div className="Modal-SignOut-button">
+              <button className="Modal-SiginOut-cancel" onClick={closeBtn}>취소</button>
+              <button className="Modal-SiginOut-leave" onClick={handleLeave}>탈퇴</button>
+            </div>
+          </div>
+          </section>
+      </div>
+    );
+  };
+
   return (
     <div className="Profile-fullbox">
       <div className="Profile-firstbox">
@@ -293,8 +328,9 @@ function Profile() {
         <BorderLine width={'100%'} height={'1px'}/>
         <div className="Profile-forthbox-menu">
           <SignoutIcon/>
-          <p onClick={handleLeave}>탈퇴하기</p>
+          <p onClick={openModal}>탈퇴하기</p>
         </div>
+        <SignOutModal open={isModalOpen} close={closeModal} />
         <BorderLine width={'100%'} height={'1px'}/>
         <div className="Profile-forthbox-menu">
           <PaperIcon/>

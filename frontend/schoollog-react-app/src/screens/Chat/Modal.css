@@ -254,3 +254,72 @@
   cursor: pointer;
   margin-right: 280px;
 }
+
+
+.Modal-SiginOut-contentBox{
+  width: 340px;
+  height: 302px;
+  margin: 0 auto;
+  border-radius: 16px;
+  background: var(--w, #FFF);
+  animation: modal-show 0.3s;
+  overflow: hidden;
+}
+
+.Modal-SiginOut-title{
+  color: var(--BB, #1D4C5C);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.Modal-SiginOut-content{
+  color: var(--gray-169, #696969);
+  text-align: center;
+  line-height: 20px;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 45px;
+}
+
+.Modal-SignOut-button{
+  display: flex;
+}
+
+.Modal-SiginOut-cancel{
+  color: var(--W, #FFF);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 700;
+  border:none;
+  border-radius: 8px;
+  background: var(--gray-3-d-7, #D7D7D7);
+  display: flex;
+  width: 134px;
+  height: 43px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 21px;
+  cursor: pointer;
+}
+
+.Modal-SiginOut-leave{
+  color: var(--W, #FFF);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 700;
+  border:none;
+  border-radius: 8px;
+  background: var(--g, #35BA95);
+  display: flex;
+  width: 134px;
+  height: 43px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
