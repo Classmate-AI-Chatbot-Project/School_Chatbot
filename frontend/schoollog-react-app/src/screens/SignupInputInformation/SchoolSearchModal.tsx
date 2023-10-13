@@ -14,6 +14,7 @@ interface SchoolSearchModalProps {
 export interface School {
   SCHUL_NM: string;
   LCTN_SC_NM: string;
+  SD_SCHUL_CODE: string;
 }
 
 const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
@@ -42,6 +43,7 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
           const filteredSchoolList = response.data.schoolInfo[1].row.map((item: any) => ({
             SCHUL_NM: item.SCHUL_NM,
             LCTN_SC_NM: item.LCTN_SC_NM,
+            SD_SCHUL_CODE: item.SD_SCHUL_CODE,
           }));
           setSchoolList(filteredSchoolList);
         })
@@ -52,6 +54,13 @@ const SchoolSearchModal: React.FC<SchoolSearchModalProps> = ({
   
   const handleSelectedSchool = (school: School, index: number) => {
     setSelectedSchoolIndex(index);
+
+    setSelectedSchool({
+      SCHUL_NM: school.SCHUL_NM,
+      LCTN_SC_NM: school.LCTN_SC_NM,
+      SD_SCHUL_CODE: school.SD_SCHUL_CODE
+    });
+    
     onSelectSchool(school);
   };
   

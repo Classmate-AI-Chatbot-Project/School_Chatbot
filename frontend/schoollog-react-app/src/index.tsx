@@ -58,7 +58,7 @@ root.render(
         <Route path="/teacher/studentlist" element={<StudentList/>} />
         <Route path="/teacher/detail/consultlist/:user_id" element={<ConsultationAll/>} />
 
-        <Route path="/account/naver/callback" element={<NaverRedirect/> }/>
+        <Route path="/account/naver/callback/" element={<NaverRedirect/> }/>
         <Route path="/account/google/callback/" element={<GoogleRedirect/>}/>
         <Route path="/account/kakao/callback/" element={<KakaoRedirect/>}/>
         <Route path="/teacher/detail/:user_id" element={<StudentProfile/>} />
