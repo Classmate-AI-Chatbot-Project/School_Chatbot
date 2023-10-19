@@ -59,16 +59,17 @@ const DrawingTest: React.FC = () => {
 
     try {
       // Axios를 사용하여 그림 데이터를 서버로 전송
-      await axios.post('http://127.0.0.1:8000/teacher/test',
+      //await axios.post('http://127.0.0.1:8000/teacher/test', //로컬 연결시
+      await axios.post('http://34.22.65.41:8000/teacher/test',
       data).then((res) => {
         axios.get(
-          `http://127.0.0.1:8000/teacher/test/result`
+          `http://34.22.65.41:8000/teacher/test/result`
         ).then((res: any) => {
           console.log(res);
           const data = res.data;
     
           setData({
-            image: `http://127.0.0.1:8000${data.img}`,
+            image: `http://34.22.65.41:8000${data.img}`,
             branch : data.result.branch,
             flower : data.result.flower,
             leaf : data.result.leaf,

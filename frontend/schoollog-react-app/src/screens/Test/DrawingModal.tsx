@@ -42,13 +42,13 @@ const DrawingModal = (props: ModalProps) => {
 
   const handleComplete = async () => {
     axios.get(
-      `http://127.0.0.1:8000/teacher/test/result`
+      `http://34.22.65.41:8000/teacher/test/result`
     ).then((res: any) => {
       console.log(res);
       const data = res.data;
   
       setData({
-        image: `http://127.0.0.1:8000${res.data.img}`,
+        image: `http://34.22.65.41:8000${res.data.img}`,
         branch : data.result.branch,
         flower : data.result.flower,
         leaf : data.result.leaf,

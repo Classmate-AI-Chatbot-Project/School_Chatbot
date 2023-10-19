@@ -23,7 +23,7 @@ function DrawingResult() {
     if (!isLoggedIn) { // 로그인 안되어 있는 경우
       navigate('/login');
     } else { 
-      axios.post('http://127.0.0.1:8000/chat/create/', null, {
+      axios.post('http://34.22.65.41:8000/chat/create/', null, {
         headers: {
           "Content-type": "application/json",
           "X-CSRFToken": csrftoken,
