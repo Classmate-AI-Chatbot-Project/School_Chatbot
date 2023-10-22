@@ -91,7 +91,7 @@ function Chat() {
   const createAllDialogue = async () => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/chat/end/${user_id}/${chatroom_id}/`,
+        `${API_BASE_URL}:8000/chat/end/${user_id}/${chatroom_id}/`,
         {},
         {
           headers: {

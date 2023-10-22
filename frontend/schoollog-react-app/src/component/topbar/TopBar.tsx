@@ -9,7 +9,7 @@ import { ReactComponent as PersonIcon } from '../../assets/top-bar-person.svg';
 import { ReactComponent as Logo } from '../../assets/main-logo.svg';
 import RedIcon from '../../assets/red-alert-icon.webp';
 import axios from 'axios';
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL } from '../../screens/config';
 
 function TopBar({ setIsOpen, isFixed }: { setIsOpen: any, isFixed?: boolean }) {
   const cookies = new Cookies();

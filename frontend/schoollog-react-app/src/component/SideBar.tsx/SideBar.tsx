@@ -11,7 +11,7 @@ import { ReactComponent as SpeechIcon } from '../../assets/side-bar-speech.svg'
 import { ReactComponent as StudentsIcon } from '../../assets/side-bar-students.svg'
 import { ReactComponent as PaintingIcon } from '../../assets/side-bar-paint.svg'
 import { Link } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL } from '../../screens/config';
 
 function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   const cookies = new Cookies();

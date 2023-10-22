@@ -218,7 +218,7 @@ function StudentResult() {
           키워드
           <div className='Result3-box'>
             {wordcloudImage && (
-              <img src={`${API_BASE_URL}:8000` + correctedImagePath} alt="Wordcloud" className="Result3-wordcloud"/>
+              <img src={`${API_BASE_URL}:8000/` + correctedImagePath} alt="Wordcloud" className="Result3-wordcloud"/>
             )}
           </div>
         </div>
