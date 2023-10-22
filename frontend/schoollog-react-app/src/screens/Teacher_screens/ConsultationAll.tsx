@@ -5,6 +5,7 @@ import BorderLine from "../../component/BorderLine/BorderLine";
 import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
 import { ReactComponent as BackIcon } from '../../assets/back.svg'
 import { useNavigate, useParams } from "react-router-dom";
+import { API_BASE_URL } from '../config';
 
 interface ResultItem {
   chat_id: string;

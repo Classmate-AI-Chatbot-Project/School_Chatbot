@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Cookies, useCookies } from "react-cookie";
 // import { setLoggedIn, setNickname } from '../../actions';
 import { School } from './SchoolSearchModal';
+import { API_BASE_URL } from '../config';
 
 interface UserData {
   username: string;
@@ -43,7 +44,7 @@ function SignupInputInformStudent() {
   useEffect(() => {
     // 초기 로드 시 email과 username을 가져오기
     axios.get(
-      `http://127.0.0.1:8000/account/decode/`,
+      `${API_BASE_URL}:8000/account/decode/`,
       {
         headers: {
           "Content-type": "application/json",
@@ -82,7 +83,7 @@ function SignupInputInformStudent() {
       nickname: nickname
     };
     axios.post(
-      `http://127.0.0.1:8000/account/account_exist/`,
+      `${API_BASE_URL}:8000/account/account_exist/`,
       data,
       {
         headers: {
@@ -126,7 +127,7 @@ function SignupInputInformStudent() {
       };
 
       axios.put(
-        `http://127.0.0.1:8000/account/signup/`,
+        `${API_BASE_URL}:8000/account/signup/`,
         data,
       {
         headers: {

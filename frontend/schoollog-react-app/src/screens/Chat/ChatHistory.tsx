@@ -8,6 +8,7 @@ import "./Chat.css";
 import { ReactComponent as ChatDog } from '../../assets/chat-dog.svg';
 import { ReactComponent as ChatBegin } from '../../assets/chat-begin.svg';
 import {ReactComponent as Back} from "../../assets/back.svg"
+import { API_BASE_URL } from '../config';
 import BorderLine from '../../component/BorderLine/BorderLine';
 
 interface ChatMessage {
@@ -52,7 +53,7 @@ function ChatHistory() {
   useEffect(() => { // 이전 채팅 메시지를 서버에서 가져옴
     axios
     .get<ChatHistoryMessage[]>(
-      `http://127.0.0.1:8000/chat/history/${user_id}/${chatroom_id}/`,
+      `${API_BASE_URL}:8000/chat/history/${user_id}/${chatroom_id}/`,
       {
         headers: {
           "Content-type": "application/json",

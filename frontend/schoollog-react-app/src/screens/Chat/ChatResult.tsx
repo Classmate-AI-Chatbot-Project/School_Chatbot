@@ -6,6 +6,7 @@ import { Cookies } from "react-cookie";
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import { TailSpin } from  'react-loader-spinner'
+import { API_BASE_URL } from '../config';
 import { ReactComponent as ResultHappy } from '../../assets/result-happy.svg'
 import { ReactComponent as ResultNormal } from '../../assets/result-normal.svg'
 import { ReactComponent as ResultGloom } from '../../assets/result-gloom.svg'
@@ -128,7 +129,7 @@ function StudentResult() {
 
    const postResult = () => { //전체 결과 전송
     axios.post(
-      `http://127.0.0.1:8000/chat/result/${user_id}/${chatroom_id}/`,
+      `${API_BASE_URL}:8000/chat/result/${user_id}/${chatroom_id}/`,
       responseData, 
       {
           headers: {
@@ -144,7 +145,7 @@ function StudentResult() {
 
   const postRequest = () => { //전체 결과 전송
     axios.post(
-      `http://127.0.0.1:8000/consult/request_consult/`,
+      `${API_BASE_URL}:8000/consult/request_consult/`,
       {},
       {
           headers: {
@@ -159,7 +160,7 @@ function StudentResult() {
   }
 
   const gotoConsult = () => { 
-      axios.get('http://127.0.0.1:8000/consult/redirect_room/',
+      axios.get(`${API_BASE_URL}:8000/consult/redirect_room/`,
     {
       headers: {
         "Content-type": "application/json",
@@ -217,7 +218,7 @@ function StudentResult() {
           키워드
           <div className='Result3-box'>
             {wordcloudImage && (
-              <img src={"http://127.0.0.1:8000/" + correctedImagePath} alt="Wordcloud" className="Result3-wordcloud"/>
+              <img src={`${API_BASE_URL}:8000` + correctedImagePath} alt="Wordcloud" className="Result3-wordcloud"/>
             )}
           </div>
         </div>

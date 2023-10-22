@@ -8,6 +8,7 @@ import "./StudentProfile.css";
 import { ReactComponent as NextIcon } from '../../assets/arrow-next.svg'
 import { ReactComponent as BackIcon } from '../../assets/back.svg'
 import axios from "axios";
+import { API_BASE_URL } from '../config';
 
 interface ResultItem {
   chat_id: string;
@@ -45,7 +46,7 @@ function StudentProfile() {
   useEffect(() => {
     console.log(studentID)
     axios.get(
-      `http://127.0.0.1:8000/teacher/detail/${studentID}`,
+      `${API_BASE_URL}:8000/teacher/detail/${studentID}`,
       {
         headers: {
           "Content-type": "application/json",
@@ -83,7 +84,7 @@ function StudentProfile() {
     setStudentData({
       nickname: res.data.nickname,
       studentID: res.data.student_id,
-      profilePhoto: `http://127.0.0.1:8000${res.data.profile}`,
+      profilePhoto: `${API_BASE_URL}:8000${res.data.profile}`,
       consultationList: consultationList,
     })
 
@@ -113,7 +114,7 @@ function StudentProfile() {
   }
 
   const goConsultRoom = () => {
-    axios.get(`http://127.0.0.1:8000/consult/start_consult/${studentID}/`,
+    axios.get(`${API_BASE_URL}:8000/consult/start_consult/${studentID}/`,
     {
       headers: {
         "Content-type": "application/json",

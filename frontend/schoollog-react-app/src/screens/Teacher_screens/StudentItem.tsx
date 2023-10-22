@@ -1,5 +1,6 @@
 import React from "react";
 import "./StudentItem.css"
+import { API_BASE_URL } from '../config';
 
 export interface Student {
   username: string;
@@ -13,7 +14,7 @@ function StudentItem({username, profile_photo, avg_emotion}: Student) {
   <div className="StudentListItem-fullbox">
     <div className="StudentListItem-content">
       <div className="StudentListItem-firstbox">
-        <img src={`http://127.0.0.1:8000${profile_photo}`}/> 
+        <img src={`${API_BASE_URL}:8000${profile_photo}`}/> 
       </div>
       <div className="StudentListItem-secondbox">
         <p>{username}</p>

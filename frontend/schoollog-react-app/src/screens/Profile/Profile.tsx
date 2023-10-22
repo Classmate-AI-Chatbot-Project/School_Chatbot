@@ -7,6 +7,7 @@ import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import "./Profile.css";
 import '../Chat/Modal.css'
+import { API_BASE_URL } from '../config';
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
 import { ReactComponent as ProfileDetailIcon } from '../../assets/profile-detail.svg'
@@ -61,7 +62,7 @@ function Profile() {
 
   useEffect(() => {
       axios.get(
-        `http://127.0.0.1:8000/account/decode/`,
+        `${API_BASE_URL}:8000/account/decode/`,
         {
           headers: {
               "Content-type": "application/json",
@@ -77,7 +78,7 @@ function Profile() {
             username: data.username,
             email: data.email,
             school: data.school,
-            profilePhoto: `http://127.0.0.1:8000${data.profile_photo}`,
+            profilePhoto: `${API_BASE_URL}:8000${data.profile_photo}`,
             job: 'Teacher',
             consultationList: []
           });
@@ -109,7 +110,7 @@ function Profile() {
             username: data.username,
             email: data.email,
             school: data.school,
-            profilePhoto: `http://127.0.0.1:8000${data.profile_photo}`,
+            profilePhoto: `${API_BASE_URL}:8000${data.profile_photo}`,
             job: data.job === 0 ? 'Teacher' : 'Student',
             consultationList: consultationList,
           });
@@ -188,7 +189,7 @@ function Profile() {
 
   const handleLogout = () => {
     axios.get(
-      `http://127.0.0.1:8000/account/logout/`,
+      `${API_BASE_URL}:8000/account/logout/`,
       {
         headers: {
             "Content-type": "application/json",
@@ -210,7 +211,7 @@ function Profile() {
 
   const handleLeave = () => {
     axios.get(
-      `http://127.0.0.1:8000/account/leave/`,
+      `${API_BASE_URL}:8000/account/leave/`,
       {
         headers: {
             "Content-type": "application/json",

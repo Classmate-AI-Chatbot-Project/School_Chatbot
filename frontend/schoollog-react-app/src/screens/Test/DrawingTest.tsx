@@ -4,6 +4,7 @@ import "./DrawingTest.css"
 import DrawingModal from "./DrawingModal";
 import axios from 'axios'
 import {ReactComponent as DrawingTopic} from "../../assets/drawingtest.svg"
+import { API_BASE_URL } from '../config';
 
 interface Point {
   x: number;
@@ -60,16 +61,16 @@ const DrawingTest: React.FC = () => {
     try {
       // Axios를 사용하여 그림 데이터를 서버로 전송
       //await axios.post('http://127.0.0.1:8000/teacher/test', //로컬 연결시
-      await axios.post('http://34.22.65.41:8000/teacher/test',
+      await axios.post(`${API_BASE_URL}:8000/teacher/test`,
       data).then((res) => {
         axios.get(
-          `http://34.22.65.41:8000/teacher/test/result`
+          `${API_BASE_URL}:8000/teacher/test/result`
         ).then((res: any) => {
           console.log(res);
           const data = res.data;
     
           setData({
-            image: `http://34.22.65.41:8000${data.img}`,
+            image: `${API_BASE_URL}:8000${data.img}`,
             branch : data.result.branch,
             flower : data.result.flower,
             leaf : data.result.leaf,

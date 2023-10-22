@@ -6,6 +6,7 @@ import axios from "axios";
 import { Cookies } from "react-cookie";
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
+import { API_BASE_URL } from '../config';
 import BorderLine from '../../component/BorderLine/BorderLine';
 import {ReactComponent as Back} from "../../assets/back.svg"
 import { ReactComponent as ResultHappy } from '../../assets/result-happy.svg'
@@ -37,7 +38,7 @@ function StudentResult() {
   const seriesData: number[] = Object.values(resultData.emotion_list);
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/teacher/chat/result/${chatroom_id}`, {
+    axios.get(`${API_BASE_URL}:8000/teacher/chat/result/${chatroom_id}`, {
       headers: {
         "Content-type": "application/json",
         "X-CSRFToken": csrftoken,
@@ -194,7 +195,7 @@ function StudentResult() {
           키워드
           <div className='Result3-box'>
             {resultData.wordcloud && (
-              <img src={"http://127.0.0.1:8000" + resultData.wordcloud} alt="Wordcloud" className="Result3-wordcloud" />
+              <img src={`${API_BASE_URL}:8000` + resultData.wordcloud} alt="Wordcloud" className="Result3-wordcloud" />
             )}
           </div>
         </div>

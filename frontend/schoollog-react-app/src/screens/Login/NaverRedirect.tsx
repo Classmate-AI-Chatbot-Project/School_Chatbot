@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from '../config';
 
 function NaverRedirect() {
   const code = new URL(window.location.href).searchParams.get("code");
@@ -19,7 +20,7 @@ function NaverRedirect() {
     };
 
     axios.post(
-        `http://127.0.0.1:8000/account/naver/callback/`,
+        `${API_BASE_URL}:8000/account/naver/callback/`,
         data,
       {
           headers: {
@@ -32,7 +33,7 @@ function NaverRedirect() {
       console.log("email token : ", token)
       
       axios.post(
-        `http://127.0.0.1:8000/account/login/`,
+        `${API_BASE_URL}:8000/account/login/`,
         {'token' : token},
         { withCredentials: true }
       )

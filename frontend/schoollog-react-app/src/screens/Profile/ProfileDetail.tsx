@@ -5,6 +5,7 @@ import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultIt
 import { ReactComponent as BackIcon } from '../../assets/back.svg'
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from '../config';
 
 interface ResultItem {
   chat_id: string;

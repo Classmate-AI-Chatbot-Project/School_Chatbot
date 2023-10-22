@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from '../config';
 
 function GoogleRedirect() {
   const code = new URL(window.location.href).searchParams.get("code"); // 현재 URL에서 코드만 추출
@@ -20,7 +21,7 @@ function GoogleRedirect() {
     };
 
     axios.post(
-        `http://127.0.0.1:8000/account/google/callback/`,
+        `${API_BASE_URL}:8000/account/google/callback/`,
         data,
       {
           headers: {
@@ -33,7 +34,7 @@ function GoogleRedirect() {
       console.log("email token : ", token)
       
       axios.post(
-        `http://127.0.0.1:8000/account/login/`,
+        `${API_BASE_URL}:8000/account/login/`,
         {'token' : token},
         { withCredentials: true }
       )

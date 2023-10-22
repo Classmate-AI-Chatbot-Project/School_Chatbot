@@ -4,6 +4,7 @@ import './Signup.css'
 import { ReactComponent as StudentsIcon } from '../../assets/signup-student.svg'
 import { ReactComponent as TeacherIcon } from '../../assets/signup-teacher.svg'
 import { ReactComponent as NextIcon } from '../../assets/arrow-next.svg'
+import { API_BASE_URL } from '../config';
 
 class Signup extends React.Component {
   render() {

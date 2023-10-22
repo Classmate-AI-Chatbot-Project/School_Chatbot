@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 function DrawingResult() {
   const [showTooltip, setShowTooltip] = useState(true);
@@ -23,7 +24,7 @@ function DrawingResult() {
     if (!isLoggedIn) { // 로그인 안되어 있는 경우
       navigate('/login');
     } else { 
-      axios.post('http://34.22.65.41:8000/chat/create/', null, {
+      axios.post('http://34.64.189.164:8000/chat/create/', null, {
         headers: {
           "Content-type": "application/json",
           "X-CSRFToken": csrftoken,

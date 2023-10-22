@@ -7,6 +7,7 @@ import "../Chat/Chat.css";
 import "./Consult.css";
 import "../Chat/Modal.css";
 import { formatDate, currentDate } from '../Chat/Chat';
+import { API_BASE_URL } from '../config';
 import { ReactComponent as MesBegin } from '../../assets/mes-begin.svg';
 import BorderLine from "../../component/BorderLine/BorderLine";
 import { ReactComponent as RedFace } from '../../assets/face-red-icon.svg';
@@ -83,7 +84,7 @@ function Consult() {
 
   useEffect(() => { // get roomData
     setMessages([]);
-    axios.get(`http://127.0.0.1:8000/consult/room/${room_name}/student/${student_id}/`, {
+    axios.get(`${API_BASE_URL}:8000/consult/room/${room_name}/student/${student_id}/`, {
       headers: { 
         "Content-type": "application/json",
         "X-CSRFToken": csrftoken,
@@ -134,7 +135,7 @@ function Consult() {
   // 새 메시지 POST 전송
   const sendMessage = () => {
     axios
-    .post(`http://127.0.0.1:8000/consult/room/${room_name}/student/${student_id}/`,
+    .post(`${API_BASE_URL}:8000/consult/room/${room_name}/student/${student_id}/`,
         { message: messageInput },
         {
           headers: {
@@ -230,7 +231,7 @@ function Consult() {
       <div className={open ? 'openModal modal' : 'modal'}>
         <section className="MessageModal-contentBox">
           <div className="Modal-main">
-            <img className="Consult-modalProfile" src={"http://127.0.0.1:8000" + roomData.other_user_profile} alt="Profile" />
+            <img className="Consult-modalProfile" src={`${API_BASE_URL}:8000` + roomData.other_user_profile} alt="Profile" />
             <div className="Consult-modalName">{roomData.other_username}</div>
             <div className="Consult-modalSchool">{roomData.teacher_school}</div>
             <button className="Modal-gotoResult" onClick={handleCloseButtonClick}>확인</button>
@@ -268,7 +269,7 @@ function Consult() {
                         ) : (
                         <div className="Consult-other">
                           <span className="Consult-other-profile">
-                            <img onClick={openProfileModal} src={"http://127.0.0.1:8000" + roomData.other_user_profile} alt="Profile" />
+                            <img onClick={openProfileModal} src={`${API_BASE_URL}:8000` + roomData.other_user_profile} alt="Profile" />
                           </span>
                           <span className="Consult-other-box">
                             <div className="Consult-other-name">{roomData.other_username}</div>
@@ -294,7 +295,7 @@ function Consult() {
                       ):(
                         <div className="Consult-other">
                           <span className="Consult-other-profile">
-                            <img onClick={openProfileModal} src={"http://127.0.0.1:8000" + roomData.other_user_profile} alt="Profile" />
+                            <img onClick={openProfileModal} src={`${API_BASE_URL}:8000` + roomData.other_user_profile} alt="Profile" />
                           </span>
                           <span className="Consult-other-box">
                             <div className="Consult-other-name">{roomData.other_username}</div>

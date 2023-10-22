@@ -6,6 +6,7 @@ import BorderLine from "../../component/BorderLine/BorderLine";
 import StudentItem from "./StudentItem";
 import { Student } from "./StudentItem";
 import { ReactComponent as DownIcon } from '../../assets/down-icon.svg'
+import { API_BASE_URL } from '../config';
 
 
 function StudentList() {
@@ -24,7 +25,7 @@ function StudentList() {
 
   useEffect(() => {
     axios.get(
-      `http://127.0.0.1:8000/teacher/studentlist`,
+      `${API_BASE_URL}:8000/teacher/studentlist`,
       {
         headers: {
           "Content-type": "application/json",
