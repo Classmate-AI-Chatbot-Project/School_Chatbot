@@ -9,6 +9,7 @@ import { ReactComponent as PersonIcon } from '../../assets/top-bar-person.svg';
 import { ReactComponent as Logo } from '../../assets/main-logo.svg';
 import RedIcon from '../../assets/red-alert-icon.webp';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function TopBar({ setIsOpen, isFixed }: { setIsOpen: any, isFixed?: boolean }) {
   const cookies = new Cookies();
@@ -28,7 +29,7 @@ function TopBar({ setIsOpen, isFixed }: { setIsOpen: any, isFixed?: boolean }) {
     if (isLoggedIn) {
       // axios.get('http://127.0.0.1:8000/consult/check_unread_messages/')
       axios.get(
-        `http://127.0.0.1:8000/consult/check_unread_messages/`,
+        `${API_BASE_URL}:8000/consult/check_unread_messages/`,
         {
           headers: {
             "Content-type": "application/json",
@@ -53,7 +54,7 @@ function TopBar({ setIsOpen, isFixed }: { setIsOpen: any, isFixed?: boolean }) {
   useEffect(() => {
     if (isLoggedIn) {
       axios.get(
-        `http://127.0.0.1:8000/account/decode/`,
+        `${API_BASE_URL}:8000/account/decode/`,
         {
           headers: {
             "Content-type": "application/json",
