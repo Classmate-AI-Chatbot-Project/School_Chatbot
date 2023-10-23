@@ -92,8 +92,9 @@ function SignupInputInformTeacher() {
 
       const data = {
         school: selectedSchool?.SCHUL_NM,
-        job: 0,
-        nickname: nickname
+        school_code: selectedSchool?.SD_SCHUL_CODE,
+        nickname: nickname,
+        job: 0,  
       };
 
       axios.put(
