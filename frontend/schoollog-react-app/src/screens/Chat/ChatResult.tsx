@@ -140,6 +140,7 @@ function StudentResult() {
       })
     .then((res: any) => {
         console.log(res)
+        postRequest();
       })
   }
 
@@ -156,6 +157,7 @@ function StudentResult() {
       })
     .then((res: any) => {
         console.log(res)
+        gotoConsult();
       })
   }
 
@@ -243,7 +245,7 @@ function StudentResult() {
           </div>
         )}
         <Link to="/profile">
-        <button className="StudentResult-endBtn" onClick={() => { postResult(); postRequest(); gotoConsult(); }}>상담 신청하기</button>
+        <button className="StudentResult-endBtn" onClick={() => { postResult();  }}>상담 신청하기</button>
         </Link>
       </div>
       </div>
