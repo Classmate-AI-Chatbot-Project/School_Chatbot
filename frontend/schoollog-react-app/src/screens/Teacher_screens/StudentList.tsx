@@ -9,6 +9,44 @@ import { ReactComponent as DownIcon } from '../../assets/down-icon.svg'
 
 
 function StudentList() {
+  const mockChatData = [
+    {
+      id: 1,
+      nickname: "사용자1",
+      degree: "58%"
+    },
+    {
+      id: 2,
+      nickname: "사용자2",
+      degree: "58%"
+
+    },
+    {
+      id: 3,
+      nickname: "사용자3",
+      degree: "58%"
+    },
+    {
+      id: 4,
+      nickname: "사용자4",
+      degree: "58%"
+
+    },
+    {
+      id: 5,
+      nickname: "사용자5",
+      degree: "58%"
+    },
+    {
+      id: 6,
+      nickname: "사용자6",
+      degree: "18%"
+    },
+  ];
+
+
+
+
   const navigate = useNavigate();
 
   const [studentData, setStudentData] = useState<Student[]>([]);
@@ -22,23 +60,23 @@ function StudentList() {
   const [sortingOption, setSortingOption] = useState<string>('최신순');
 
 
-  useEffect(() => {
-    axios.get(
-      `http://127.0.0.1:8000/teacher/studentlist`,
-      {
-        headers: {
-          "Content-type": "application/json",
-        },
-        withCredentials: true,
-    }
-    ).then((res: any) => {
-      console.log(res.data.student_data)
+  // useEffect(() => {
+  //   axios.get(
+  //     `http://127.0.0.1:8000/teacher/studentlist`,
+  //     {
+  //       headers: {
+  //         "Content-type": "application/json",
+  //       },
+  //       withCredentials: true,
+  //   }
+  //   ).then((res: any) => {
+  //     console.log(res.data.student_data)
       
-      const studentData = res.data.student_data;
-      setOriginalData(studentData); // 원본 데이터 설정
-      setStudentData(studentData);
-    })
-  }, []);
+  //     const studentData = res.data.student_data;
+  //     setOriginalData(studentData); // 원본 데이터 설정
+  //     setStudentData(studentData);
+  //   })
+  // }, []);
 
   const sortStudents = (option: string) => {
     const sortedData = [...studentData];
@@ -85,7 +123,7 @@ function StudentList() {
               avg_emotion={item.avg_emotion}
             />
             {index !== studentData.length - 1 && (
-              <BorderLine width="423px" height="1px" />
+              <BorderLine width="100%" height="1px" />
             )}
           </div>
         ))}

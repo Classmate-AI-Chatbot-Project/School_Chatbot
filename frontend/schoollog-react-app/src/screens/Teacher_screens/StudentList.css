@@ -8,6 +8,9 @@
   background-color: white;
   overflow: hidden; 
 }
+.StudentList-scrollable {
+  width: 100%;
+}
 .StudentList-name {
   display: flex;
   flex-direction: row;

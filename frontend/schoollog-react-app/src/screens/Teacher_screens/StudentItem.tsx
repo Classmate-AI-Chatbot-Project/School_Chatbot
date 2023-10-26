@@ -4,7 +4,7 @@ import "./StudentItem.css"
 export interface Student {
   username: string;
   email?: string;
-  profile_photo: string;
+  profile_photo?: string;
   avg_emotion: number;
 }
 
