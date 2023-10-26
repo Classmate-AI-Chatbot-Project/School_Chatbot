@@ -9,6 +9,7 @@ import BorderLine from "../../component/BorderLine/BorderLine";
 import { ReactComponent as CloseIcon } from "../../assets/back.svg";
 import { ReactComponent as CamerIcon } from "../../assets/profile-edit-camera.svg";
 import { ReactComponent as SearchIcon } from '../../assets/signup-input-search.svg'
+import { API_BASE_URL } from '../config';
 
 export interface ProfileUserData {
   userData: {
@@ -41,7 +42,7 @@ function ProfileEdit() {
   useEffect(() => {
     console.log()
     axios.get(
-      `http://127.0.0.1:8000/account/decode/`,
+      `${API_BASE_URL}:8000/account/decode/`,
       {
         headers: {
             "Content-type": "application/json",
@@ -57,7 +58,7 @@ function ProfileEdit() {
         username: data.username,
         email: data.email,
         school: data.school,
-        profilePhoto: `http://127.0.0.1:8000${data.profile_photo}`,
+        profilePhoto: `${API_BASE_URL}:8000${data.profile_photo}`,
       // job: data.job === 0 ? 'Teacher' : 'Student',
       }
     });
@@ -101,7 +102,7 @@ function ProfileEdit() {
     const currentNickname = nickname;
   
     axios
-      .post('http://127.0.0.1:8000/account/check-nickname-availability/', {
+      .post(`${API_BASE_URL}:8000/account/check-nickname-availability/`, {
         nickname: currentNickname,
       })
       .then((response) => {
@@ -128,7 +129,7 @@ function ProfileEdit() {
     };
 
     axios
-      .put('http://127.0.0.1:8000/account/edit/', updatedUserData, {
+      .put(`${API_BASE_URL}:8000/account/edit/`, updatedUserData, {
         headers: {
           "Content-type": "application/json",
           "X-CSRFToken": csrftoken,

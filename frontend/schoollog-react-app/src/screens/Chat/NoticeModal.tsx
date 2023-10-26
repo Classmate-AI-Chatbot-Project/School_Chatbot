@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Modal.css';
+import { API_BASE_URL } from '../config';
 import { ReactComponent as CloseX } from '../../assets/modal-X.svg';
 import { ReactComponent as Img1 } from '../../assets/noticeModal-img1.svg';
 import { ReactComponent as Img2 } from '../../assets/noticeModal-img2.svg';

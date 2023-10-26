@@ -11,6 +11,7 @@ import { ReactComponent as SpeechIcon } from '../../assets/side-bar-speech.svg'
 import { ReactComponent as StudentsIcon } from '../../assets/side-bar-students.svg'
 import { ReactComponent as PaintingIcon } from '../../assets/side-bar-paint.svg'
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../../screens/config';
 
 function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   const cookies = new Cookies();
@@ -44,7 +45,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   useEffect(() => {
     if (isLoggedIn) {
       axios.get(
-        `http://127.0.0.1:8000/account/decode/`,
+        `${API_BASE_URL}:8000/account/decode/`,
         {
           headers: {
             "Content-type": "application/json",
@@ -64,7 +65,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
   useEffect(() => {
     if (isLoggedIn) {
       axios.get(
-        `http://127.0.0.1:8000/consult/check_unread_messages/`,
+        `${API_BASE_URL}:8000/consult/check_unread_messages/`,
         {
           headers: {
             "Content-type": "application/json",
@@ -90,7 +91,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
     if (!isLoggedIn) { // 로그인 안되어 있는 경우
       navigate('/login');
     } else { // user_id가 있으면 ChatRoom 생성 및 이동
-      axios.post('http://127.0.0.1:8000/chat/create/', null, {
+      axios.post(`${API_BASE_URL}:8000/chat/create/`, null, {
         headers: {
           "Content-type": "application/json",
           "X-CSRFToken": csrftoken,
@@ -111,7 +112,7 @@ function SideBar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
     if (!isLoggedIn) { 
       navigate('/initial/consult');
     } else { 
-        axios.get('http://127.0.0.1:8000/consult/redirect_room/',
+        axios.get(`${API_BASE_URL}:8000/consult/redirect_room/`,
       {
         headers: {
           "Content-type": "application/json",

@@ -5,6 +5,7 @@ import "./ConsultationList.css";
 import { ReactComponent as WarningIcon } from "../../assets/warning-icon.svg";
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ChatResultItem from "./ChatResultItem";
+import { API_BASE_URL } from '../config';
 
 interface Result {
     username: string;
@@ -20,8 +21,7 @@ function ChatResultList() {
 const [resultData, setResultData] = useState<Result[]>([]);
   useEffect(() => {
     // 컴포넌트가 마운트될 때 데이터를 가져옴
-    axios
-      .get(`http://127.0.0.1:8000/teacher/chatresult_list`, {
+    axios.get(`${API_BASE_URL}:8000/teacher/chatresult_list`, {
         headers: {
           "Content-type": "application/json",
         },

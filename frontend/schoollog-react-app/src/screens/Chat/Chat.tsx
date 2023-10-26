@@ -8,6 +8,7 @@ import "./Chat.css";
 import ChatModal from "./ChatModal";
 import UsageModal from "./UsageModal";
 import NoticeModal from "./NoticeModal";
+import { API_BASE_URL } from '../config';
 import { ReactComponent as ChatDog } from '../../assets/chat-dog.svg';
 import { ReactComponent as ChatBegin } from '../../assets/chat-begin.svg';
 
@@ -62,7 +63,7 @@ function Chat() {
   useEffect(() => { // 이전 채팅 메시지를 서버에서 가져옴
     axios
     .get<ChatHistoryMessage[]>(
-      `http://127.0.0.1:8000/chat/history/${user_id}/${chatroom_id}/`,
+      `${API_BASE_URL}:8000/chat/history/${user_id}/${chatroom_id}/`,
       {
         headers: {
           "Content-type": "application/json",
@@ -90,7 +91,7 @@ function Chat() {
   const createAllDialogue = async () => {
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/chat/end/${user_id}/${chatroom_id}/`,
+        `${API_BASE_URL}:8000/chat/end/${user_id}/${chatroom_id}/`,
         {},
         {
           headers: {
@@ -141,7 +142,7 @@ function Chat() {
     } else {
       try { //메세지 post, 응답 받아오기
         const response = await axios.post(
-          `http://127.0.0.1:8000/chat/${user_id}/${chatroom_id}/`, 
+          `${API_BASE_URL}:8000/chat/${user_id}/${chatroom_id}/`, 
           { 
             message,
             time: currentTime,

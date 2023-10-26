@@ -7,6 +7,7 @@ import "./ConsultationList.css"
 import { ReactComponent as WarningIcon } from '../../assets/warning-icon.svg'
 import BorderLine from "../../component/BorderLine/BorderLine";
 import ListItem from "./ListItem";
+import { API_BASE_URL } from '../config';
 
 interface ConsultRoomItem {
   student_id: number;
@@ -26,7 +27,7 @@ function ConsultationList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/consult/list`, {
+    axios.get(`${API_BASE_URL}:8000/consult/list`, {
         headers: {
           "Content-type": "application/json",
         },

@@ -4,6 +4,7 @@ import './SchoolSearchModal.css'
 import BorderLine from "../../component/BorderLine/BorderLine";
 import { ReactComponent as SearchIcon } from "../../assets/signup-input-search.svg";
 import { ReactComponent as CloseIcon } from "../../assets/back.svg";
+import { API_BASE_URL } from '../config';
 
 interface SchoolSearchModalProps {
   modalWidth: string;

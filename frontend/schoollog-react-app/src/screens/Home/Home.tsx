@@ -6,6 +6,7 @@ import { Link, animateScroll as scroll } from 'react-scroll';
 import './Home.css'
 import '../Chat/Modal.css'
 import ImageCarousel from './ImageCarousel';
+import { API_BASE_URL } from '../config';
 import { ReactComponent as Circle } from '../../assets/main-circle.svg'
 import { ReactComponent as Character } from '../../assets/main-character.svg'
 import { ReactComponent as Logo } from '../../assets/main-logo2.svg'
@@ -43,7 +44,7 @@ function Home() {
   useEffect(() => {
     if (isLoggedIn) {
       axios.get(
-        `http://127.0.0.1:8000/account/decode/`,
+        `${API_BASE_URL}:8000/account/decode/`,
         {
           headers: {
             "Content-type": "application/json",
@@ -65,7 +66,7 @@ function Home() {
     } else if (!isLoggedIn) { // 로그인 안되어 있는 경우
       navigate('/login');
     } else { // user_id가 있으면 ChatRoom 생성 및 이동
-      axios.post('http://127.0.0.1:8000/chat/create/', null, {
+      axios.post(`${API_BASE_URL}:8000/chat/create/`, null, {
         headers: {
           "Content-type": "application/json",
           "X-CSRFToken": csrftoken,

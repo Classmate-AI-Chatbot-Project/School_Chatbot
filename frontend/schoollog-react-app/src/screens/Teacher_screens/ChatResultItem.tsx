@@ -5,6 +5,7 @@ import { ReactComponent as RedFlag } from '../../assets/flag-red-icon.svg'
 import { ReactComponent as YellowFlag } from '../../assets/flag-yellow-icon.svg'
 import { ReactComponent as GreenFlag } from '../../assets/flag-green-icon.svg'
 import { ReactComponent as NewIcon } from '../../assets/alert-new-icon.svg'
+import { API_BASE_URL } from '../config';
 
 interface ListItemProps {
   nickname: string;
@@ -31,7 +32,7 @@ function ChatResultItem({nickname, keywords, profile_photo, is_read, chat_id, da
   <div className="ListItem-fullbox">
     <div className="ListItem-content">
       <div className="ListItem-firstbox">
-        <img src={`http://127.0.0.1:8000${profile_photo}`}/> 
+        <img src={`${API_BASE_URL}:8000${profile_photo}`}/> 
       </div>
       <div className="ListItem-secondbox">
         <div className="ListItem-text-first">

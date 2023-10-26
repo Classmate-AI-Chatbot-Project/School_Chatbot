@@ -5,6 +5,7 @@ import { setTeacher } from '../../actions';
 import './SignupType.css'
 import { ReactComponent as TeacherCharacter } from '../../assets/signup-teacher-character.svg'
 import { ReactComponent as StudentCharacter } from '../../assets/signup-student-chracter.svg'
+import { API_BASE_URL } from '../config';
 
 function SignupType(props: any) {
   const dispatch = useDispatch();

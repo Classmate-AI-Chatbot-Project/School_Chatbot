@@ -9,6 +9,7 @@ import { Cookies, useCookies } from "react-cookie";
 // import { setLoggedIn, setNickname } from '../../actions';
 // import { RootState } from '../../reducers';
 import { School } from './SchoolSearchModal';
+import { API_BASE_URL } from '../config';
 
 interface UserData {
   username: string;
@@ -43,7 +44,7 @@ function SignupInputInformTeacher() {
   useEffect(() => {
     // 초기 로드 시 email과 username을 가져오기
     axios.get(
-      `http://127.0.0.1:8000/account/decode/`,
+      `${API_BASE_URL}:8000/account/decode/`,
       {
         headers: {
           "Content-type": "application/json",
@@ -91,12 +92,13 @@ function SignupInputInformTeacher() {
 
       const data = {
         school: selectedSchool?.SCHUL_NM,
-        job: 0,
-        nickname: nickname
+        school_code: selectedSchool?.SD_SCHUL_CODE,
+        nickname: nickname,
+        job: 0,  
       };
 
       axios.put(
-        `http://127.0.0.1:8000/account/signup/`,
+        `${API_BASE_URL}:8000/account/signup/`,
         data,
       {
         headers: {

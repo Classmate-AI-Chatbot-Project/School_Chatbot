@@ -6,6 +6,7 @@ import BorderLine from "../../component/BorderLine/BorderLine";
 import StudentItem from "./StudentItem";
 import { Student } from "./StudentItem";
 import { ReactComponent as DownIcon } from '../../assets/down-icon.svg'
+import { API_BASE_URL } from '../config';
 
 
 function StudentList() {
@@ -60,23 +61,23 @@ function StudentList() {
   const [sortingOption, setSortingOption] = useState<string>('최신순');
 
 
-  // useEffect(() => {
-  //   axios.get(
-  //     `http://127.0.0.1:8000/teacher/studentlist`,
-  //     {
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //       withCredentials: true,
-  //   }
-  //   ).then((res: any) => {
-  //     console.log(res.data.student_data)
+  useEffect(() => {
+    axios.get(
+      `${API_BASE_URL}:8000/teacher/studentlist`,
+      {
+        headers: {
+          "Content-type": "application/json",
+        },
+        withCredentials: true,
+    }
+    ).then((res: any) => {
+      console.log(res.data.student_data)
       
-  //     const studentData = res.data.student_data;
-  //     setOriginalData(studentData); // 원본 데이터 설정
-  //     setStudentData(studentData);
-  //   })
-  // }, []);
+      const studentData = res.data.student_data;
+      setOriginalData(studentData); // 원본 데이터 설정
+      setStudentData(studentData);
+    })
+  }, []);
 
   const sortStudents = (option: string) => {
     const sortedData = [...studentData];

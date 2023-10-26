@@ -5,6 +5,7 @@ import { ReactComponent as Loading2 } from '../../assets/drawing-load2.svg'
 import { ReactComponent as Complete } from '../../assets/drawing-load3.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 interface ModalProps {
   open: boolean;
@@ -42,13 +43,13 @@ const DrawingModal = (props: ModalProps) => {
 
   const handleComplete = async () => {
     axios.get(
-      `http://34.22.65.41:8000/teacher/test/result`
+      `http://34.64.189.164:8000/teacher/test/result`
     ).then((res: any) => {
       console.log(res);
       const data = res.data;
   
       setData({
-        image: `http://34.22.65.41:8000${res.data.img}`,
+        image: `http://34.64.189.164:8000${res.data.img}`,
         branch : data.result.branch,
         flower : data.result.flower,
         leaf : data.result.leaf,

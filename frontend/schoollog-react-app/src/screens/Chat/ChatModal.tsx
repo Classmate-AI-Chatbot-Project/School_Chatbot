@@ -6,6 +6,7 @@ import { ReactComponent as Complete } from '../../assets/modal-chat3.svg'
 import { Cookies, useCookies } from "react-cookie";
 import { Link, useParams, useNavigate} from 'react-router-dom';
 import axios from "axios";
+import { API_BASE_URL } from '../config';
 import { TailSpin } from 'react-loader-spinner'
 
 interface ModalProps {
@@ -33,7 +34,7 @@ const ChatModal = (props: ModalProps) => {
   const postResult = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/chat/result/${user_id}/${chatroom_id}/`,
+        `${API_BASE_URL}:8000/chat/result/${user_id}/${chatroom_id}/`,
         {
           headers: {
             "Content-type": "application/json",

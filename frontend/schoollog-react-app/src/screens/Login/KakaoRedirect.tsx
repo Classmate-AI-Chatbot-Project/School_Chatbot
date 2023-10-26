@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from '../config';
 
 
 function KakaoRedirect() {
@@ -17,7 +18,7 @@ function KakaoRedirect() {
     };
 
     axios.post(
-        `http://127.0.0.1:8000/account/kakao/callback/`,
+        `${API_BASE_URL}:8000/account/kakao/callback/`,
         data,
       {
           headers: {
@@ -30,7 +31,7 @@ function KakaoRedirect() {
       console.log(token)
       
       axios.post(
-        `http://127.0.0.1:8000/account/login/`,
+        `${API_BASE_URL}:8000/account/login/`,
         {'token' : token},
         { withCredentials: true }
       )

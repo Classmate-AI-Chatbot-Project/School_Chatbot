@@ -10,6 +10,7 @@ import { ReactComponent as CloseIcon } from "../../assets/back.svg";
 import { ReactComponent as CamerIcon } from "../../assets/profile-edit-camera.svg";
 import { ReactComponent as SearchIcon } from '../../assets/signup-input-search.svg'
 import { Cookies, useCookies } from "react-cookie";
+import { API_BASE_URL } from '../config';
 
 export interface ProfileUserData {
   userData: {
@@ -42,7 +43,7 @@ function ProfileEdit() {
   useEffect(() => {
     console.log()
     axios.get(
-      `http://127.0.0.1:8000/account/decode/`,
+      `${API_BASE_URL}:8000/account/decode/`,
       {
         headers: {
             "Content-type": "application/json",
@@ -58,7 +59,7 @@ function ProfileEdit() {
         username: data.username,
         email: data.email,
         school: data.school,
-        profile_photo: `http://127.0.0.1:8000${data.profile_photo}`,
+        profile_photo: `${API_BASE_URL}:8000${data.profile_photo}`,
       // job: data.job === 0 ? 'Teacher' : 'Student',
       }
     });
@@ -95,7 +96,7 @@ function ProfileEdit() {
       const formData = new FormData();
       formData.append("profile_photo", e.target.files[0]);
   
-      axios.post('http://127.0.0.1:8000/account/upload-profile-photo/', formData, {
+      axios.post(`${API_BASE_URL}:8000/account/upload-profile-photo/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "X-CSRFToken": csrftoken,
@@ -137,7 +138,7 @@ function ProfileEdit() {
   
     console.log(updatedUserData)
     
-    axios.put('http://127.0.0.1:8000/account/edit/', updatedUserData, {
+    axios.put(`${API_BASE_URL}:8000/account/edit/`, updatedUserData, {
       headers: {
         "Content-type": "application/json",
         "X-CSRFToken": csrftoken,
@@ -161,7 +162,7 @@ function ProfileEdit() {
   useEffect(() => {
     // 이 부분에서 서버에 닉네임 가용성 확인 요청을 보냅니다
     axios
-      .post('http://127.0.0.1:8000/account/check-nickname-availability/', {
+      .post(`${API_BASE_URL}:8000/account/check-nickname-availability/`, {
         nickname: formData.userData.username,
       })
       .then((response) => {
