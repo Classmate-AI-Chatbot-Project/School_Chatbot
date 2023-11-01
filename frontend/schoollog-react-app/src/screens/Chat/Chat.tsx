@@ -103,6 +103,8 @@ function Chat() {
       );
       if (response.status === 200) { // AllDialogue 모델 생성 성공 처리
         console.log("AllDialogue 모델이 생성되었습니다.");
+        openEndModal();
+        setIsChatEnded(true); //Chat 종료 상태로 변경
       }
     } catch (error) {
       console.error("Error creating AllDialogue:", error);
@@ -134,11 +136,12 @@ function Chat() {
   
     if (message === "종료하기") {
       handleChatAnswer(newChat.id, newChat.answer);
-      openEndModal();
-      setIsChatEnded(true); //Chat 종료 상태로 변경
+      createAllDialogue();
+      
+
 
       //AllDialogue 모델 생성
-      createAllDialogue();
+      
     } else {
       try { //메세지 post, 응답 받아오기
         const response = await axios.post(
@@ -264,8 +267,6 @@ function Chat() {
         {isClicked && (
           <div className={`Chat-Toggle ${isClicked ? "active" : ""}`}>
             <button className="Chat-ToggleButton1" onClick={() => {
-              openEndModal(); 
-              setIsChatEnded(true);
               createAllDialogue();
               }}>종료하기</button>
             <button className="Chat-ToggleButton2" onClick={openUsageModal}>이용방법</button>
