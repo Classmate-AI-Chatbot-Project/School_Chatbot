@@ -44,6 +44,7 @@
 }
 
 .Drawing-canvas {
+   touch-action: none;
    border-radius: 8px;
    border: 1px solid var(--gray-2-ac, #ACACAC);
    background: #FFF;

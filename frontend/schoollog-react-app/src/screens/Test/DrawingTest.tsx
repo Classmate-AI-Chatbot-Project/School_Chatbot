@@ -101,6 +101,7 @@ const DrawingTest: React.FC = () => {
   };
 
   const startDrawing2 = (event: React.TouchEvent<HTMLCanvasElement>) => {
+    
     setIsDrawing(true);
     const currentPoint = getTouchCoordinates(event);
 
