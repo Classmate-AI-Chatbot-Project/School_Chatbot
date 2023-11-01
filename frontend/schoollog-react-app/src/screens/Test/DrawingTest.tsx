@@ -94,7 +94,15 @@ const DrawingTest: React.FC = () => {
 
   const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
     setIsDrawing(true);
-    const currentPoint = getClientCoordinates(event);
+    const currentPoint = getMouseCoordinates(event);
+
+    setLastPoint(currentPoint);
+    setLines((prevLines) => [...prevLines, { startPoint: currentPoint, endPoint: currentPoint, color, width }]);
+  };
+
+  const startDrawing2 = (event: React.TouchEvent<HTMLCanvasElement>) => {
+    setIsDrawing(true);
+    const currentPoint = getTouchCoordinates(event);
 
     setLastPoint(currentPoint);
     setLines((prevLines) => [...prevLines, { startPoint: currentPoint, endPoint: currentPoint, color, width }]);
@@ -103,7 +111,18 @@ const DrawingTest: React.FC = () => {
   const continueDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing) return;
 
-    const currentPoint = getClientCoordinates(event);
+    const currentPoint = getMouseCoordinates(event);
+    const newLine: Line = { startPoint: lastPoint!, endPoint: currentPoint, color, width };
+
+    setLastPoint(currentPoint);
+    setLines((prevLines) => [...prevLines.slice(0, -1), newLine]);
+  };
+
+  
+  const continueDrawing2 = (event: React.TouchEvent<HTMLCanvasElement>) => {
+    if (!isDrawing) return;
+
+    const currentPoint = getTouchCoordinates(event);
     const newLine: Line = { startPoint: lastPoint!, endPoint: currentPoint, color, width };
 
     setLastPoint(currentPoint);
@@ -139,13 +158,24 @@ const DrawingTest: React.FC = () => {
     setWidth(parseInt(event.target.value));
   };
 
-  const getClientCoordinates = (event: React.MouseEvent<HTMLCanvasElement>): Point => {
+  const getMouseCoordinates = (event: React.MouseEvent<HTMLCanvasElement>): Point => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
 
     const rect = canvas.getBoundingClientRect();
     const offsetX = event.clientX - rect.left;
     const offsetY = event.clientY - rect.top;
+    return { x: offsetX, y: offsetY };
+  };
+
+  const getTouchCoordinates = (event: React.TouchEvent<HTMLCanvasElement>): Point => {
+    const canvas = canvasRef.current;
+    if (!canvas) return { x: 0, y: 0 };
+
+    const rect = canvas.getBoundingClientRect();
+    const touch = event.touches[0];
+    const offsetX = touch.clientX - rect.left;
+    const offsetY = touch.clientY - rect.top;
     return { x: offsetX, y: offsetY };
   };
 
@@ -157,12 +187,16 @@ const DrawingTest: React.FC = () => {
         <canvas
           className="Drawing-canvas"
           width={340}
-          height={370}
+          height={340}
           ref={canvasRef}
           onMouseDown={startDrawing}
           onMouseMove={continueDrawing}
           onMouseUp={endDrawing}
           onMouseOut={endDrawing}
+          onTouchStart={startDrawing2}
+          onTouchMove={continueDrawing2}
+          onTouchEnd={endDrawing}
+          onTouchCancel={endDrawing}
         ></canvas>
         <div className="Drawing-control">
           <label className="Drawing-color" htmlFor="color">색깔</label>
