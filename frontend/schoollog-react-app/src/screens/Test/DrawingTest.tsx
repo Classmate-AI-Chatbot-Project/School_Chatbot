@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "./DrawingTest.css"
 import DrawingModal from "./DrawingModal";
 import axios from 'axios'
@@ -23,13 +23,16 @@ const DrawingTest: React.FC = () => {
   const [lines, setLines] = useState<Line[]>([]);
   const [color, setColor] = useState("#000000");
   const [width, setWidth] = useState(1);
+  const [image, setImage] = useState(1);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastPoint, setLastPoint] = useState<Point | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [completed, setCompleted] = useState<boolean>(false);
   const canvas = canvasRef.current;
   const context = canvas?.getContext("2d");
+  const navigate = useNavigate();
 
-  const [Data, setData] = useState({
+  const [DrawingData, setDrawingData] = useState({
     image: '',
     branch : '',
     flower : '',
@@ -39,8 +42,6 @@ const DrawingTest: React.FC = () => {
   });
 
   useEffect(() => {
-    
-
     if (context && canvas) {
       context.lineJoin = "round";
       context.lineCap = "round";
@@ -51,8 +52,13 @@ const DrawingTest: React.FC = () => {
     }
   }, [lines]);
 
+  useEffect(() => {
+    console.log(DrawingData); // 업데이트된 데이터 확인
+  }, [DrawingData]);
+
   const openModal = async () => {
     const imageDataURL = canvas?.toDataURL();
+    setModalOpen(true);
     
     const data = {
       image_data: imageDataURL
@@ -61,31 +67,24 @@ const DrawingTest: React.FC = () => {
     try {
       // Axios를 사용하여 그림 데이터를 서버로 전송
       //await axios.post('http://127.0.0.1:8000/teacher/test', //로컬 연결시
-      await axios.post(`${API_BASE_URL}:8000/teacher/test`,
-      data).then((res) => {
-        axios.get(
-          `${API_BASE_URL}:8000/teacher/test/result`
-        ).then((res: any) => {
-          console.log(res);
-          const data = res.data;
-    
-          setData({
-            image: `${API_BASE_URL}:8000${data.img}`,
-            branch : data.result.branch,
-            flower : data.result.flower,
-            leaf : data.result.leaf,
-            root : data.result.root,
-            fruit : data.result.fruit
-          });
+      await axios.post(`${API_BASE_URL}:8000/teacher/test`,data).then((res) => {
+        console.log('그림 결과 생성 완료');
+        
+        const resultdata = res.data;
+        console.log(resultdata.img)
+        console.log(resultdata.result.branch)
+        setImage(resultdata.img)
+        console.log(image)
+
+
+        navigate(`/testResult`,
+          { state: { data: resultdata }});
         })
-      })
-      console.log('그림 업로드 성공');
+        setModalOpen(false);
       // 여기에서 modal을 닫을 수 있음
-      closeModal();
     } catch (error) {
       console.error('그림 업로드 실패:', error);
     } 
-    setModalOpen(true);
   };
 
   const closeModal = () => {
@@ -207,7 +206,7 @@ const DrawingTest: React.FC = () => {
         </div>
       </div>
       <button className="Drawing-submit" onClick={openModal}>제출하기</button>
-      <DrawingModal open={modalOpen} close={closeModal} />
+      <DrawingModal open={modalOpen} close={closeModal}/>
     </div>
   );
 };

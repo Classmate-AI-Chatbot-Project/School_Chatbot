@@ -8,7 +8,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../config';
 
 interface ModalProps {
-  open: boolean;
+  open: (boolean);
   close: () => void;
 }
 
@@ -27,47 +27,8 @@ const DrawingModal = (props: ModalProps) => {
     fruit : ''
   });
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (progress < 100) {
-        setProgress((prevProgress) => prevProgress + 5);
-      } else {
-        clearInterval(interval);
-        handleComplete();
-      }
-    }, 500);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [progress]);
 
-  const handleComplete = async () => {
-    axios.get(
-      `${API_BASE_URL}:8000/teacher/test/result`
-    ).then((res: any) => {
-      console.log(res);
-      const data = res.data;
-  
-      setData({
-        image: `${API_BASE_URL}:8000${res.data.img}`,
-        branch : data.result.branch,
-        flower : data.result.flower,
-        leaf : data.result.leaf,
-        root : data.result.root,
-        fruit : data.result.fruit
-      });
-      setCompleted(true);
-    })
-  };
 
-  const handleResultButtonClick = () => {
-    // completed 상태가 true일 때만 결과 페이지로 이동하도록 함
-    if (completed) {
-      navigate(`/testResult`,
-        { state: { data: Data } }
-      );
-    }
-  };
 
   return (
     <div className={open ? 'openModal modal' : 'modal'}>
@@ -76,16 +37,16 @@ const DrawingModal = (props: ModalProps) => {
         {completed ? (
             <div className="Modal-main">
               <Complete className="Modal-completeImg" />
-                <button className="Modal-gotoResult" onClick={handleResultButtonClick}>테스트 결과 보러가기</button>
+            
             </div>
           ) : (
             <main className="Modal-main">
-              <Loading1 className="Modal-img1" />
-              <div className="Modal-progressBar">
-                <div className="DrawingModal-progress" style={{ width: `${progress}%`}}></div>
-              </div>
-              <Loading2 className="Modal-img2" />
-            </main>
+            <Loading1 className="Modal-img1" />
+            <div className="Modal-progressBar">
+              <div className="Modal-progress" style={{ animation: 'moveLeftRight 6s linear infinite'}}></div>
+            </div>
+            <Loading2 className="Modal-img2" />
+          </main>
           )}
         </section>
       ) : null}
