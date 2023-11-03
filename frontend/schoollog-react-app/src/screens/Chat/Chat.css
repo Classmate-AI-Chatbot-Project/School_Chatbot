@@ -1,18 +1,21 @@
 .Chat-Fullbox {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
   align-items: flex-start;
-  background-color: lightgray;
   text-align: center;
 }
 
 .Chat-Contentbox {
-  width: 423px;
+  width: 100%;
   background-color: white;
   min-height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: flex-start;
+  text-align: center;
 }
 
 .Chat-Border-line {
@@ -160,15 +163,22 @@
 }
 
 .Chat-Toggle {
-  position: relative;
-  top: 100%; 
-  left: 50%;
+  position: fixed;
+  bottom: 5px;
+  left: 53%;
   transform: translateX(-50%);
   display: flex;
   gap: 17px;
   justify-content: center;
-  margin-bottom: 10px;
+  overflow: hidden;
+  transition: bottom 0.3s ease;
 }
+
+.Chat-Toggle.active {
+  height: 30px; /* Set the height according to your content */
+  padding: 20px 14px 20px 17px; /* Optional: add padding when the content is visible */
+}
+
 .Chat-ToggleButton1 {
   width: 98px;
   height: 36px;
@@ -219,7 +229,7 @@
   background: #FFFFFF;
   border-radius: 25px;
   border: 1px solid #D7D7D7;
-  padding: 1px 15px 1px 15px;
+  padding: 1px 15px 1px 10px;
 }
 
 .Chat-InputMessage {
@@ -294,6 +304,7 @@
   align-items: center;
   padding: 0px 30px;
   height: 62px;
+  border-bottom: 1px solid #E3E3E3;
 }
 
 .Chat-history-topText{
@@ -341,4 +352,13 @@
   position: relative;
   margin-top: 40px;
   animation: scaleUp 0.7s both;
+}
+
+.Chat-consult {
+  margin-left: 155px;
+  color: var(--bl, #000);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 700;
 }

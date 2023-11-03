@@ -49,6 +49,8 @@ function Chat() {
   const {user_id, chatroom_id} = useParams();
   const cookies = new Cookies();
   const csrftoken = cookies.get("csrftoken");
+  const [isToggleOpen, setIsToggleOpen] = useState(false);
+  const [isInputVisible, setIsInputVisible] = useState(true);
 
   const generateId = () => {return Date.now();};
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -247,32 +249,39 @@ function Chat() {
           ))}
         </div>
         <div className="Chat-Input">
-          <button 
-            className={`Chat-Plus ${isClicked ? "clicked" : ""}`}
-            onClick={() => {handlePlusButtonClick();}}
-          ></button>
-          <span className="Chat-InputBox">
-            <input 
-              className="Chat-InputMessage"
-              type="text"
-              placeholder={isChatEnded ? "대화 종료" : "메시지 보내기"}
-              value={message}
-              onChange={handleChange}
-              onKeyPress={handleKeyPress}
-              disabled={isChatEnded}
-            />
-          </span>
-          <button className="Chat-Send-btn" onClick={handleSubmit} disabled={isChatEnded}></button>
-        </div> 
-        {isClicked && (
-          <div className={`Chat-Toggle ${isClicked ? "active" : ""}`}>
-            <button className="Chat-ToggleButton1" onClick={() => {
-              createAllDialogue();
+          {isToggleOpen && (
+            <div className={`Chat-Toggle ${isToggleOpen ? "active" : ""}`}>
+              <button className="Chat-ToggleButton1" onClick={() => {
+                createAllDialogue();
               }}>종료하기</button>
-            <button className="Chat-ToggleButton2" onClick={openUsageModal}>이용방법</button>
-            <button className="Chat-ToggleButton2" onClick={openNoticeModal}>유의사항</button>
-          </div>
-        )}
+              <button className="Chat-ToggleButton2" onClick={openUsageModal}>이용방법</button>
+              <button className="Chat-ToggleButton2" onClick={openNoticeModal}>유의사항</button>
+            </div>
+          )}
+          <button 
+            className={`Chat-Plus ${isToggleOpen ? "clicked" : ""}`}
+            onClick={() => {
+              setIsToggleOpen(!isToggleOpen);
+              setIsInputVisible(true);
+            }}
+          ></button>
+          {!isToggleOpen && isInputVisible && (
+            <span className="Chat-InputBox">
+              <input 
+                className="Chat-InputMessage"
+                type="text"
+                placeholder={isChatEnded ? "대화 종료" : "메시지 보내기"}
+                value={message}
+                onChange={handleChange}
+                onKeyPress={handleKeyPress}
+                disabled={isChatEnded}
+              />
+            </span>
+          )}
+          {!isToggleOpen && isInputVisible && (
+            <button className="Chat-Send-btn" onClick={handleSubmit} disabled={isChatEnded}></button>
+          )}
+        </div>
         <ChatModal open={endModalOpen} close={closeEndModal} />
         <UsageModal open={usageModalOpen} close={closeUsageModal} />
         <NoticeModal open={noticeModalOpen} close={closeNoticeModal} />
