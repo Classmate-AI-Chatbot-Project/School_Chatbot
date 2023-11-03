@@ -13,14 +13,24 @@
    background-color: white;
  }
 
-.TR-dateBar{
+ .TR-dateBar {
+   position: fixed;
+   top: 0;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 423px;
+   height: 53px;
+   background-color: #fff;
+   z-index: 999;
    display: flex;
-   padding: 15px 30px;
+   justify-content: space-between;
+   align-items: center;
+   border-bottom: #EEE solid 1px;
 }
 
 .TR-date {
    position: relative;
-   margin-left: 130px;
+   margin-right: 155px;
    color: var(--bl, #000);
    text-align: center;
    font-family: Pretendard;
@@ -31,6 +41,7 @@
 .TR-title {
    position: relative;
    height: 84px;
+   margin-top: 53px;
 }
 
 .TR-title-profile {

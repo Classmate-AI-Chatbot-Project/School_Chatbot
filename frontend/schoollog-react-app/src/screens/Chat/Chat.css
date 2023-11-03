@@ -1,14 +1,16 @@
 .Chat-Fullbox {
   display: flex;
+  justify-content: center;
   flex-direction: column;
   width: 100%;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  background-color: lightgray;
   text-align: center;
 }
 
 .Chat-Contentbox {
-  width: 100%;
+  width: 423px;
   background-color: white;
   min-height: calc(100vh - 60px);
   display: flex;

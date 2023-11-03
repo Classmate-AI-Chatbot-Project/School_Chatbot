@@ -7,7 +7,6 @@ import { Cookies } from "react-cookie";
 import ApexChart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import { API_BASE_URL } from '../config';
-import BorderLine from '../../component/BorderLine/BorderLine';
 import {ReactComponent as Back} from "../../assets/back.svg"
 import { ReactComponent as ResultHappy } from '../../assets/result-happy.svg'
 import { ReactComponent as ResultNormal } from '../../assets/result-normal.svg'
@@ -165,12 +164,12 @@ function TeacherResult() {
     <div className='TR-fullbox'>
       <div className='TR-contentbox'>
         <div className="TR-dateBar">
-          <Back onClick={handleGoBack} style={{cursor: "pointer"}}/>
+          <Back onClick={handleGoBack} style={{cursor: "pointer", marginLeft: "30px"}}/>
           <div className="TR-date">
             {formattedDate}
           </div>
         </div>
-        <BorderLine width={'423px'} height={'1px'}/>
+        <div style={{height:"53px"}}></div>
         {userData.username && (
         <div className="TR-title">
           <img  className="TR-title-profile" src={`${API_BASE_URL}:8000` + userData.profile_photo} />
