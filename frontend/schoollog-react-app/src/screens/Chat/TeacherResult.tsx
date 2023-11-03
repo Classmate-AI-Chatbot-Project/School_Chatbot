@@ -169,7 +169,6 @@ function TeacherResult() {
             {formattedDate}
           </div>
         </div>
-        <div style={{height:"53px"}}></div>
         {userData.username && (
         <div className="TR-title">
           <img  className="TR-title-profile" src={`${API_BASE_URL}:8000` + userData.profile_photo} />
