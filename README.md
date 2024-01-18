@@ -100,20 +100,30 @@
 <br/>
 
 ## 기술 스택
+
+
+
 #### ✔️Frond-end
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"><img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"><img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"><img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white">
 #### ✔️Back-end
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"><img src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white"><img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
-
+#### ✔️아키텍처
+<img  height="350" src="https://github.com/gamjatan9/git-practice/assets/122338050/d512f34c-a64b-49a9-b7ef-9a5a8f025ad3">
 <br/>
 
 ## 성과
-#### 🎖️이브와 ICT 멘토링 동상 수상
-<img height="400" src="https://github.com/gamjatan9/git-practice/assets/122338050/203e1503-7919-418e-8ba0-12bfe318c3d2">
+#### 🎖️이브와 ICT 멘토링 동상 수상&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎖️저작권 등록&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎖️특허 출원
 
-#### 🎖️저작권 등록
-<img height="400" src="https://github.com/gamjatan9/git-practice/assets/122338050/6da3adfe-6bb5-4ab5-8058-0523ef59552d">
+<P>
+  <img height="300" src="https://github.com/gamjatan9/git-practice/assets/122338050/203e1503-7919-418e-8ba0-12bfe318c3d2">&nbsp;&nbsp;&nbsp;
+  <img height="300" src="https://github.com/gamjatan9/git-practice/assets/122338050/6da3adfe-6bb5-4ab5-8058-0523ef59552d">&nbsp;&nbsp;&nbsp;
+  <img height="300" width="300" src="https://github.com/gamjatan9/git-practice/assets/122338050/91b57cf4-670a-4e43-9670-27b60cd7a6ae">
+</P>
 
-#### 🎖️특허 출원
-<img height="400" src="https://github.com/gamjatan9/git-practice/assets/122338050/91b57cf4-670a-4e43-9670-27b60cd7a6ae">
+
+
+
+
+
+
 
