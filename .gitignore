@@ -1,5 +1,0 @@
-.venv
-/venv
-*.pyc
-cloud-sql-proxy.exe
-.DS_Store
