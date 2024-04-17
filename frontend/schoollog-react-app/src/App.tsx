@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import './App.css'
-import TopBar from './component/topbar/TopBar';
-import SideBar from './component/SideBar.tsx/SideBar';
-import BorderLine from './component/BorderLine/BorderLine';
+import './App.css';
+import TopBar from './components/TopBar/TopBar';
+import SideBar from './components/SideBar/SideBar';
+import BorderLine from './components/BorderLine/BorderLine';
 import { Provider } from 'react-redux';
 import store from './reducers/store';
 
@@ -17,23 +17,18 @@ function App() {
 
   return (
     <Provider store={store}>
-    <div className='App-fullbox'>
-      <div>
-        <div className='App-contentbox'>
-            {isSpecificRoute && 
-            <TopBar
-              isFixed={true}
-              setIsOpen={setIsOpen} 
-              />}
-            {!isSpecificRoute && <TopBar setIsOpen={setIsOpen} /> }
-            <BorderLine height={'1px'} width={'100dvw'}/>
+      <div className="App-fullbox">
+        <div>
+          <div className="App-contentbox">
+            {isSpecificRoute && <TopBar isFixed={true} setIsOpen={setIsOpen} />}
+            {!isSpecificRoute && <TopBar setIsOpen={setIsOpen} />}
+            <BorderLine height={'1px'} width={'100dvw'} />
 
-          <Outlet/>
-
+            <Outlet />
+          </div>
+          <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
-        <SideBar isOpen={isOpen} setIsOpen={setIsOpen}/>
       </div>
-    </div>
     </Provider>
   );
 }
