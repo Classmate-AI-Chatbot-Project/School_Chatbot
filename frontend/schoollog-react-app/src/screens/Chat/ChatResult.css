@@ -2,7 +2,7 @@
   position: relative;
   width: 423px;
   height: 694px;
-  background: var(--g, #35BA95);
+  background: var(--g, #35ba95);
 }
 .Result1-clipboard {
   height: 633px;
@@ -17,7 +17,7 @@
   background: url('../../assets/result-clipboard.svg') no-repeat center center;
 }
 
-.Result1-loading-animation{
+.Result1-loading-animation {
   margin-top: 150px;
   margin-bottom: 150px;
 }
@@ -41,13 +41,13 @@
   left: 8%;
   width: 90%;
   height: 100%;
-  z-index:2;
+  z-index: 2;
 }
 .Result1-chart .R1-BarChart {
-  position: relative; 
-  z-index: 1; 
+  position: relative;
+  z-index: 1;
 }
-.R1-Hp{
+.R1-Hp {
   color: var(--gray-169, #696969);
   font-family: Pretendard;
   font-size: 14px;
@@ -57,8 +57,7 @@
   position: absolute;
   bottom: 15px;
   left: 13%;
-  z-index: 2; 
-
+  z-index: 2;
 }
 .R1-Gp {
   color: var(--gray-169, #696969);
@@ -70,7 +69,7 @@
   position: absolute;
   bottom: 15px;
   left: 85%;
-  z-index: 2; 
+  z-index: 2;
 }
 
 .Result2-detail {
@@ -79,21 +78,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--bb, #1D4C5C);
+  color: var(--bb, #1d4c5c);
   font-family: Pretendard;
   font-size: 17px;
   font-weight: 700;
   margin-top: 55px;
 }
 
-.Result2-box{
+.Result2-box {
   display: flex;
   justify-content: center;
   width: 340px;
   height: 370px;
   border-radius: 8px;
-  border: 2px solid var(--gray-5-ee, #EEE);
-  background: var(--w, #FFF);
+  border: 2px solid var(--gray-5-ee, #eee);
+  background: var(--w, #fff);
   padding: 30px 0px 0px 0px;
   margin-top: 12px;
 }
@@ -104,26 +103,26 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--bb, #1D4C5C);
+  color: var(--bb, #1d4c5c);
   font-family: Pretendard;
   font-size: 17px;
   font-weight: 700;
   margin-top: 55px;
 }
 
-.Result3-box{
+.Result3-box {
   display: flex;
   justify-content: center;
   width: 340px;
   height: 370px;
   border-radius: 8px;
-  border: 2px solid var(--gray-5-ee, #EEE);
-  background: var(--w, #FFF);
+  border: 2px solid var(--gray-5-ee, #eee);
+  background: var(--w, #fff);
   padding: 30px 0px 0px 0px;
   margin-top: 12px;
 }
 
-.Result3-wordcloud{
+.Result3-wordcloud {
   width: 95%;
   padding: 5px;
   border: none;
@@ -135,22 +134,22 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--bb, #1D4C5C);
+  color: var(--bb, #1d4c5c);
   font-family: Pretendard;
   font-size: 17px;
   font-weight: 700;
   margin-top: 55px;
 }
 
-.Result4-box{
+.Result4-box {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 340px;
   min-height: 200px;
   border-radius: 8px;
-  border: 2px solid var(--gray-5-ee, #EEE);
-  background: var(--w, #FFF);
+  border: 2px solid var(--gray-5-ee, #eee);
+  background: var(--w, #fff);
   padding: 30px 0px 0px 0px;
   margin-top: 12px;
   padding: 50px 0px;
@@ -182,15 +181,14 @@
   cursor: pointer;
 }
 
-
 .StudentResult-endBtn {
   width: 340px;
   height: 61px;
   flex-shrink: 0;
   border-radius: 8px;
   border: none;
-  background: var(--g, #35BA95);
-  color: var(--w, #FFF);
+  background: var(--g, #35ba95);
+  color: var(--w, #fff);
   text-align: center;
   font-family: Pretendard;
   font-size: 18px;
@@ -208,31 +206,31 @@
   width: 330px;
   border-radius: 1em;
   border: none;
-  background: var(--bb, #1D4C5C);
+  background: var(--bb, #1d4c5c);
   padding: 5px;
-  color: var(--w, #FFF);
+  color: var(--w, #fff);
   font-family: Pretendard;
   font-size: 13px;
   font-weight: 500;
 }
-.StudentResult-tooltip:after{
+.StudentResult-tooltip:after {
   content: '';
- position: absolute;
- bottom: 0;
- left: 50%;
- width: 0;
- height: 0;
- border: 15px solid transparent;
- border-top-color: #1D4C5C;
- border-bottom: 0;
- margin-left: -15px;
- margin-bottom: -13px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 15px solid transparent;
+  border-top-color: #1d4c5c;
+  border-bottom: 0;
+  margin-left: -15px;
+  margin-bottom: -13px;
 }
 
-.StudentResult-closeBtn{
-  border:none;
+.StudentResult-closeBtn {
+  border: none;
   background: none;
-  color: #FFF;
+  color: #fff;
   cursor: pointer;
   margin-left: 5px;
 }

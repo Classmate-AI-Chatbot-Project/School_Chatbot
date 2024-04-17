@@ -14,7 +14,7 @@
   height: 393px;
   margin: 0 auto;
   border-radius: 16px;
-  background: var(--w, #FFF);
+  background: var(--w, #fff);
   animation: modal-show 0.3s;
   overflow: hidden;
 }
@@ -24,7 +24,7 @@
   height: 333px;
   margin: 0 auto;
   border-radius: 16px;
-  background: var(--w, #FFF);
+  background: var(--w, #fff);
   animation: modal-show 0.3s;
   overflow: hidden;
 }
@@ -32,7 +32,7 @@
 .Modal-main {
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   height: 100%;
 }
@@ -61,35 +61,33 @@
   }
 }
 
-.Modal-img1{
+.Modal-img1 {
   margin-bottom: 15.24px;
 }
 
-.Modal-img2{
+.Modal-img2 {
   margin-top: 25px;
 }
-
-
 
 .Modal-progressBar {
   width: 242px;
   height: 14px;
   border-radius: 30px;
-  background: var(--gray-5-ee, #EEE);
+  background: var(--gray-5-ee, #eee);
 }
 
 .Modal-progress {
   width: 50px;
   height: 100%;
   border-radius: 30px;
-  background: var(--p, #EBA1B8);
+  background: var(--p, #eba1b8);
 }
 
 .DrawingModal-progress {
   width: 0%;
   height: 100%;
   border-radius: 30px;
-  background: var(--p, #1985C0);
+  background: var(--p, #1985c0);
   animation: progressbar linear;
 }
 
@@ -103,7 +101,8 @@
 }
 
 @keyframes moveLeftRight {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   50% {
@@ -111,18 +110,18 @@
   }
 }
 
-.Modal-gotoResult{
+.Modal-gotoResult {
   margin-top: 23px;
   width: 298px;
   height: 52px;
   border-radius: 8px;
-  border:none;
-  background: var(--g, #35BA95);
+  border: none;
+  background: var(--g, #35ba95);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--w, #FFF);
+  color: var(--w, #fff);
   text-align: center;
   font-family: Pretendard;
   font-size: 18px;
@@ -135,7 +134,7 @@
   height: 477px;
   margin: 0 auto;
   border-radius: 16px;
-  background: var(--w, #FFF);
+  background: var(--w, #fff);
   animation: modal-show 0.3s;
   overflow: hidden;
 }
@@ -145,7 +144,7 @@
   justify-content: flex-end;
   align-self: flex-end;
   padding: 13px;
-  border-bottom:  2px solid var(--gray-4-e-3, #E3E3E3);
+  border-bottom: 2px solid var(--gray-4-e-3, #e3e3e3);
 }
 
 .Modal-closeBtn {
@@ -186,11 +185,11 @@
 }
 
 .dots_custom li.slick-active button {
-  background-color: #E37354;
+  background-color: #e37354;
 }
 
 /* UsageModal css */
-.UM-title{
+.UM-title {
   color: var(--bl, #000);
   text-align: center;
   font-family: Pretendard;
@@ -211,7 +210,6 @@
 .UM-Img {
   position: relative;
   top: 50px;
-
 }
 
 .UM-arrow {
@@ -255,19 +253,18 @@
   margin-right: 280px;
 }
 
-
-.Modal-SiginOut-contentBox{
+.Modal-SiginOut-contentBox {
   width: 340px;
   height: 302px;
   margin: 0 auto;
   border-radius: 16px;
-  background: var(--w, #FFF);
+  background: var(--w, #fff);
   animation: modal-show 0.3s;
   overflow: hidden;
 }
 
-.Modal-SiginOut-title{
-  color: var(--BB, #1D4C5C);
+.Modal-SiginOut-title {
+  color: var(--BB, #1d4c5c);
   text-align: center;
   font-family: Pretendard;
   font-size: 20px;
@@ -275,7 +272,7 @@
   margin-bottom: 30px;
 }
 
-.Modal-SiginOut-content{
+.Modal-SiginOut-content {
   color: var(--gray-169, #696969);
   text-align: center;
   line-height: 20px;
@@ -285,19 +282,19 @@
   margin-bottom: 45px;
 }
 
-.Modal-SignOut-button{
+.Modal-SignOut-button {
   display: flex;
 }
 
-.Modal-SiginOut-cancel{
-  color: var(--W, #FFF);
+.Modal-SiginOut-cancel {
+  color: var(--W, #fff);
   text-align: center;
   font-family: Pretendard;
   font-size: 18px;
   font-weight: 700;
-  border:none;
+  border: none;
   border-radius: 8px;
-  background: var(--gray-3-d-7, #D7D7D7);
+  background: var(--gray-3-d-7, #d7d7d7);
   display: flex;
   width: 134px;
   height: 43px;
@@ -307,15 +304,15 @@
   cursor: pointer;
 }
 
-.Modal-SiginOut-leave{
-  color: var(--W, #FFF);
+.Modal-SiginOut-leave {
+  color: var(--W, #fff);
   text-align: center;
   font-family: Pretendard;
   font-size: 18px;
   font-weight: 700;
-  border:none;
+  border: none;
   border-radius: 8px;
-  background: var(--g, #35BA95);
+  background: var(--g, #35ba95);
   display: flex;
   width: 134px;
   height: 43px;

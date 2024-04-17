@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect, useState } from "react";
-import BorderLine from "../../component/BorderLine/BorderLine";
-import ConsultResultItem from "../../component/ConsultResultItem/ConsultResultItem";
+import React, { Fragment, useEffect, useState } from 'react';
+import BorderLine from '../../components/BorderLine/BorderLine';
+import ConsultResultItem from '../../components/ConsultResultItem/ConsultResultItem';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import ApexChart from 'react-apexcharts'
-import { ApexOptions } from 'apexcharts'
-import "./StudentProfile.css";
-import { ReactComponent as NextIcon } from '../../assets/arrow-next.svg'
-import { ReactComponent as BackIcon } from '../../assets/back.svg'
-import axios from "axios";
+import ApexChart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
+import './StudentProfile.css';
+import { ReactComponent as NextIcon } from '../../assets/arrow-next.svg';
+import { ReactComponent as BackIcon } from '../../assets/back.svg';
+import axios from 'axios';
 import { API_BASE_URL } from '../config';
 
 interface ResultItem {
@@ -32,7 +32,7 @@ function StudentProfile() {
     nickname: '',
     studentID: '',
     profilePhoto: '',
-    consultationList: []
+    consultationList: [],
   });
   const [graphData, setGraphData] = useState<{
     series: { name: string; data: number[] }[];
@@ -40,91 +40,87 @@ function StudentProfile() {
   }>({
     series: [{ name: 'Series 1', data: [] }],
     xaxis: { categories: [] },
-  });  
-
+  });
 
   useEffect(() => {
-    console.log(studentID)
-    axios.get(
-      `${API_BASE_URL}:8000/teacher/detail/${studentID}`,
-      {
+    console.log(studentID);
+    axios
+      .get(`${API_BASE_URL}:8000/teacher/detail/${studentID}`, {
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
         withCredentials: true,
-    }
-    ).then((res: any) => {
-      // 학생 별명, 이미지, 상담 기록
-      console.log(typeof(
-        new Date(res.data.consult_result[0].result_time)
-        ))
-      const consultationList = res.data.consult_result.map((item: any) => ({
-        chat_id: item.chat_id.toString(),
-        keywords: item.category,
-        date: new Date(item.result_time),
-        emotionTemp: item.emotion_temp
-    }));
+      })
+      .then((res: any) => {
+        // 학생 별명, 이미지, 상담 기록
+        console.log(typeof new Date(res.data.consult_result[0].result_time));
+        const consultationList = res.data.consult_result.map((item: any) => ({
+          chat_id: item.chat_id.toString(),
+          keywords: item.category,
+          date: new Date(item.result_time),
+          emotionTemp: item.emotion_temp,
+        }));
 
-    const graphSeries = [
-      {
-        name: 'Series 1',
-        data: consultationList.map((item: ResultItem) => item.emotionTemp),
-      },
-    ];
-    const graphXAxis = {
-      categories: consultationList.map((item: ResultItem) => formatGraphDate(item.date)), 
-    };
-    
-    consultationList.sort((a: ResultItem, b: ResultItem) => {
-      const dateA = a.date.getTime();
-      const dateB = b.date.getTime();
-      return dateB - dateA;
-    })
+        const graphSeries = [
+          {
+            name: 'Series 1',
+            data: consultationList.map((item: ResultItem) => item.emotionTemp),
+          },
+        ];
+        const graphXAxis = {
+          categories: consultationList.map((item: ResultItem) => formatGraphDate(item.date)),
+        };
 
-    setStudentData({
-      nickname: res.data.nickname,
-      studentID: res.data.student_id,
-      profilePhoto: `${API_BASE_URL}:8000${res.data.profile}`,
-      consultationList: consultationList,
-    })
+        consultationList.sort((a: ResultItem, b: ResultItem) => {
+          const dateA = a.date.getTime();
+          const dateB = b.date.getTime();
+          return dateB - dateA;
+        });
 
-    setGraphData({
-      series: graphSeries,
-      xaxis: graphXAxis,
-    });
+        setStudentData({
+          nickname: res.data.nickname,
+          studentID: res.data.student_id,
+          profilePhoto: `${API_BASE_URL}:8000${res.data.profile}`,
+          consultationList: consultationList,
+        });
 
-      // console.log(userData)
-      console.log(graphData)      
-      console.log(res.data);
-      console.log(studentData);
-    })
-  } ,[studentID]);
+        setGraphData({
+          series: graphSeries,
+          xaxis: graphXAxis,
+        });
+
+        // console.log(userData)
+        console.log(graphData);
+        console.log(res.data);
+        console.log(studentData);
+      });
+  }, [studentID]);
 
   const handleViewConsultations = () => {
     navigate(`/teacher/detail/consultlist/${studentID}`, {
-      state: { 
+      state: {
         consultationList: studentData.consultationList,
-        pageType: 'teacherPage'
+        pageType: 'teacherPage',
       },
     });
   };
 
-  const goBack = ()=> { 
-    navigate(-1)
-  }
+  const goBack = () => {
+    navigate(-1);
+  };
 
   const goConsultRoom = () => {
-    axios.get(`${API_BASE_URL}:8000/consult/start_consult/${studentID}/`,
-    {
-      headers: {
-        "Content-type": "application/json",
-      },
-      withCredentials: true,
-    }) 
-    .then((response) => {
-      const consult_room_url = response.data.consult_room_url;
-      navigate(`${consult_room_url}`); 
-    })
+    axios
+      .get(`${API_BASE_URL}:8000/consult/start_consult/${studentID}/`, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        const consult_room_url = response.data.consult_room_url;
+        navigate(`${consult_room_url}`);
+      });
   };
 
   function formatDate(date: Date) {
@@ -146,23 +142,23 @@ function StudentProfile() {
     chart: {
       type: 'bar',
       toolbar: {
-        show: false
-      }, 
+        show: false,
+      },
     },
     plotOptions: {
       bar: {
         horizontal: true,
         barHeight: 50,
         dataLabels: {
-          position: 'left'
-        }
+          position: 'left',
+        },
       },
     },
     xaxis: graphData.xaxis,
     yaxis: {
       max: 100,
       min: 0,
-      tickAmount: 2, 
+      tickAmount: 2,
       labels: {
         formatter: (value) => String(Math.floor(value)),
       },
@@ -176,23 +172,20 @@ function StudentProfile() {
       strokeWidth: 2,
     },
     tooltip: {
-      enabled: false // 마우스 호버 효과 비활성화
+      enabled: false, // 마우스 호버 효과 비활성화
     },
   };
 
   const initialConsultations = studentData.consultationList.slice(0, 3);
-  const lastChatId = studentData.consultationList.length > 0
-  ? studentData.consultationList[0].chat_id
-  : 'defaultChatId'; 
+  const lastChatId =
+    studentData.consultationList.length > 0 ? studentData.consultationList[0].chat_id : 'defaultChatId';
 
   function ConsultationResultItemList() {
     return (
       <Fragment>
         {initialConsultations.map((item, index) => (
           <Fragment key={item.chat_id}>
-            <Link 
-              className="StudentProfile-link"
-              to={`/teacher/chat/result/${item.chat_id}`}>
+            <Link className="StudentProfile-link" to={`/teacher/chat/result/${item.chat_id}`}>
               <ConsultResultItem
                 keywords={item.keywords}
                 date={formatDate(item.date)}
@@ -200,26 +193,23 @@ function StudentProfile() {
               />
             </Link>
 
-            {index !== initialConsultations.length - 1 && (
-              <BorderLine width="100%" height="1px" />
-            )}
-
+            {index !== initialConsultations.length - 1 && <BorderLine width="100%" height="1px" />}
           </Fragment>
         ))}
       </Fragment>
-    )
+    );
   }
 
-  return(
+  return (
     <div className="StudentProfile-fullbox">
-        <div className="ConsultationAll-topbar">
-          <BackIcon onClick={goBack}/>
-          <p>학생 프로필</p>
-          <p></p>
-        </div>
-        <BorderLine width={'100%'} height={'2px'}/>      
+      <div className="ConsultationAll-topbar">
+        <BackIcon onClick={goBack} />
+        <p>학생 프로필</p>
+        <p></p>
+      </div>
+      <BorderLine width={'100%'} height={'2px'} />
       <div className="StudentProfile-firstbox">
-        <img src={studentData.profilePhoto}/>
+        <img src={studentData.profilePhoto} />
         <p>{studentData.nickname}</p>
         <div className="StudentProfile-button" onClick={goConsultRoom}>
           상담하기
@@ -228,29 +218,28 @@ function StudentProfile() {
       <div className="Profile-secondbox">
         <div>
           <p>우울도</p>
-          <ApexChart 
-            options={graphOptions} 
-            series={graphData.series} 
-            type="line" 
+          <ApexChart
+            options={graphOptions}
+            series={graphData.series}
+            type="line"
             className="Profile-secondbox-graph"
           />
         </div>
-      </div>   
+      </div>
       <div className="Profile-thirdbox">
         <div className="Profile-thirdbox-title">
           <div>
             <p>상담 기록</p>
-            <p>{studentData.consultationList.length.toString()}</p>            
+            <p>{studentData.consultationList.length.toString()}</p>
           </div>
           <NextIcon onClick={handleViewConsultations} />
         </div>
-        <BorderLine width={'100%'} height={'1px'}/>
+        <BorderLine width={'100%'} height={'1px'} />
 
-        <ConsultationResultItemList/>
-
+        <ConsultationResultItemList />
       </div>
     </div>
-  )
+  );
 }
 
 export default StudentProfile;

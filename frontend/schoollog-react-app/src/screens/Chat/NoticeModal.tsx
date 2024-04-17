@@ -11,14 +11,9 @@ import { ReactComponent as Img3 } from '../../assets/noticeModal-img3.svg';
 import { ReactComponent as Img4 } from '../../assets/noticeModal-img4.svg';
 import { ReactComponent as Arrow1 } from '../../assets/usageModal-arrow1.svg';
 import { ReactComponent as Arrow2 } from '../../assets/usageModal-arrow2.svg';
+import { ModalProps } from '../../models/modal';
 
-
-interface ModalProps {
-  open: boolean;
-  close: () => void;
-}
-
-const NoticeModal: React.FC<ModalProps> = (props) => {
+const NoticeModal = (props: ModalProps) => {
   const { open, close } = props;
 
   const handleCloseButtonClick = () => {
@@ -41,13 +36,13 @@ const NoticeModal: React.FC<ModalProps> = (props) => {
           top: '15px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
         }}
       >
         <ul> {dots} </ul>
       </div>
     ),
-    dotsClass: 'dots_custom'
+    dotsClass: 'dots_custom',
   };
 
   const slickRef = useRef<any>(null);
@@ -57,7 +52,7 @@ const NoticeModal: React.FC<ModalProps> = (props) => {
       slickRef.current.slickPrev();
     }
   }, []);
-  
+
   const next = useCallback(() => {
     if (slickRef.current) {
       slickRef.current.slickNext();
@@ -74,60 +69,59 @@ const NoticeModal: React.FC<ModalProps> = (props) => {
     <div className={open ? 'openModal modal' : 'modal'}>
       <section className="Modal-contentBox2">
         <div className="Modal-close">
-          <span className='UM-title'>
-            유의사항
-          </span>
-          <button className="Modal-closeBtn" onClick={handleCloseButtonClick}><CloseX /></button>
+          <span className="UM-title">유의사항</span>
+          <button className="Modal-closeBtn" onClick={handleCloseButtonClick}>
+            <CloseX />
+          </button>
         </div>
-          <div>
-            <Slider {...settings} ref={slickRef}>
-              <div>
-                <Img1 className='NM-Img'/>
-                <div className="NM-arrows" style={{marginTop: "100px"}}>
-                  <div className="NM-arrow" onClick={previous}>
-                    <Arrow1  />
-                  </div>
-                  <div className="UM-arrow" onClick={next}>
-                    <Arrow2 />
-                  </div>
+        <div>
+          <Slider {...settings} ref={slickRef}>
+            <div>
+              <Img1 className="NM-Img" />
+              <div className="NM-arrows" style={{ marginTop: '100px' }}>
+                <div className="NM-arrow" onClick={previous}>
+                  <Arrow1 />
+                </div>
+                <div className="UM-arrow" onClick={next}>
+                  <Arrow2 />
                 </div>
               </div>
-              <div>
-                <Img2 className='NM-Img'/>
-                <div className="NM-arrows" style={{marginTop: "60px"}}>
-                  <div className="NM-arrow" onClick={previous}>
-                    <Arrow2 style={{ transform: 'rotate(180deg)' }}  />
-                  </div>
-                  <div className="UM-arrow" onClick={next}>
-                    <Arrow2 />
-                  </div>
+            </div>
+            <div>
+              <Img2 className="NM-Img" />
+              <div className="NM-arrows" style={{ marginTop: '60px' }}>
+                <div className="NM-arrow" onClick={previous}>
+                  <Arrow2 style={{ transform: 'rotate(180deg)' }} />
+                </div>
+                <div className="UM-arrow" onClick={next}>
+                  <Arrow2 />
                 </div>
               </div>
-              <div>
-                <Img3 className='NM-Img'/>
-                <div className="NM-arrows" style={{marginTop: "29px"}}>
-                  <div className="NM-arrow" onClick={previous}>
-                    <Arrow2 style={{ transform: 'rotate(180deg)' }}  />
-                  </div>
-                  <div className="UM-arrow" onClick={next}>
-                    <Arrow2 />
-                  </div>
+            </div>
+            <div>
+              <Img3 className="NM-Img" />
+              <div className="NM-arrows" style={{ marginTop: '29px' }}>
+                <div className="NM-arrow" onClick={previous}>
+                  <Arrow2 style={{ transform: 'rotate(180deg)' }} />
+                </div>
+                <div className="UM-arrow" onClick={next}>
+                  <Arrow2 />
                 </div>
               </div>
-              <div>
-                <Img4 className='NM-Img' />
-                <div className="NM-arrows" style={{marginTop: "89px"}}>
-                  <div className="NM-arrow" onClick={previous}>
-                    <Arrow2 style={{ transform: 'rotate(180deg)' }}  />
-                  </div>
-                  <div className="UM-arrow" onClick={next}>
-                    <Arrow1 style={{ transform: 'rotate(180deg)'}} />
-                  </div>
+            </div>
+            <div>
+              <Img4 className="NM-Img" />
+              <div className="NM-arrows" style={{ marginTop: '89px' }}>
+                <div className="NM-arrow" onClick={previous}>
+                  <Arrow2 style={{ transform: 'rotate(180deg)' }} />
+                </div>
+                <div className="UM-arrow" onClick={next}>
+                  <Arrow1 style={{ transform: 'rotate(180deg)' }} />
                 </div>
               </div>
-            </Slider>
-
-          </div>
+            </div>
+          </Slider>
+        </div>
       </section>
     </div>
   );

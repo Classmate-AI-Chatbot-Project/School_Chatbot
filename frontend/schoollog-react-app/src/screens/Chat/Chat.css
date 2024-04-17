@@ -22,7 +22,7 @@
 
 .Chat-Border-line {
   width: 100%;
-  border-bottom: 1px solid #E3E3E3;
+  border-bottom: 1px solid #e3e3e3;
 }
 
 /*채팅 창*/
@@ -30,15 +30,15 @@
   width: 423px;
   min-height: calc(100vh - 136px);
   max-height: calc(100vh - 136px);
-  overflow-y: auto; 
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 20px; 
+  padding: 20px;
   box-sizing: border-box;
   position: relative;
 }
- /*스크롤 스타일*/
+/*스크롤 스타일*/
 .Chat-Output::-webkit-scrollbar {
   width: 5px;
 }
@@ -82,15 +82,15 @@
   padding: 0px 9px 0px 9px;
   font-family: 'Pretendard';
   font-size: 10px;
-  color:#696969;
+  color: #696969;
 }
 
 .Chat-message {
   display: inline-block;
   max-width: 222px;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 16px 0px 16px 16px;
-  border: 1px solid #D7D7D7;
+  border: 1px solid #d7d7d7;
   padding: 15px;
   align-self: flex-end;
   color: var(--bl, #000);
@@ -130,20 +130,20 @@
 }
 
 .ChatDog-icon {
-  position: absolute; 
+  position: absolute;
   top: -47px;
   left: 18px;
 }
 
 .Chat-answer {
-  display: inline-block; 
+  display: inline-block;
   max-width: 222px;
   min-width: 80px;
-  background-color: #35BA95;
+  background-color: #35ba95;
   border-radius: 0px 16px 16px 16px;
   padding: 15px;
   font-family: 'Pretendard';
-  color: var(--w, #FFF);
+  color: var(--w, #fff);
   font-size: 13px;
   text-align: left;
   word-wrap: break-word;
@@ -177,8 +177,8 @@
 }
 
 .Chat-Toggle.active {
-  height: 30px; /* Set the height according to your content */
-  padding: 20px 14px 20px 17px; /* Optional: add padding when the content is visible */
+  height: 30px;
+  padding: 20px 14px 20px 17px;
 }
 
 .Chat-ToggleButton1 {
@@ -186,8 +186,8 @@
   height: 36px;
   border: transparent;
   border-radius: 25px;
-  background: var(--r, #E37354);
-  color: #FFF;
+  background: var(--r, #e37354);
+  color: #fff;
   font-size: 14px;
   cursor: pointer;
 }
@@ -199,8 +199,8 @@
   height: 36px;
   border: transparent;
   border-radius: 25px;
-  background: var(--b, #1985C0);
-  color: #FFF;
+  background: var(--b, #1985c0);
+  color: #fff;
   cursor: pointer;
 }
 .Chat-ToggleButton2:hover {
@@ -214,7 +214,7 @@
   border: 2px solid transparent;
   background: url('../../assets/chat-plus.svg') no-repeat center center;
   background-size: 100% 100%;
-  width: 20px; 
+  width: 20px;
   height: 20px;
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -228,9 +228,9 @@
   align-items: center;
   width: 260px;
   height: 42px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 25px;
-  border: 1px solid #D7D7D7;
+  border: 1px solid #d7d7d7;
   padding: 1px 15px 1px 10px;
 }
 
@@ -249,7 +249,7 @@
   border: 2px solid transparent;
   background: url('../../assets/chat-send.svg') no-repeat center center;
   background-size: 100% 100%;
-  width: 42px; 
+  width: 42px;
   height: 42px;
   cursor: pointer;
 }
@@ -264,52 +264,54 @@
   width: 5px;
   height: 5px;
   background-color: gray;
-  border-radius: 50%;    /* span을 동그랗게 */
+  border-radius: 50%; /* span을 동그랗게 */
   animation: loading 1s 0s linear infinite;
   /* 이벤트명  반복시간  딜레이시간  이벤트처리부드럽게  이벤트무한반복*/
 }
 
-.Chat-loading span:nth-child(1) {  /*loading의 자식 중 첫번째 span*/
+.Chat-loading span:nth-child(1) {
+  /*loading의 자식 중 첫번째 span*/
   /*nth-child : 형제 사이에서의 순서*/
   animation-delay: 0s;
-  background-color: #35BA95;
+  background-color: #35ba95;
   margin-left: 15px;
 }
 
 .Chat-loading span:nth-child(2) {
   animation-delay: 0.2s;
-  background-color: #35BA95;
+  background-color: #35ba95;
   margin-left: 5px;
 }
 
 .Chat-loading span:nth-child(3) {
   animation-delay: 0.4s;
-  background-color: #35BA95;
+  background-color: #35ba95;
   margin-left: 5px;
   margin-right: 15px;
 }
 
-@keyframes loading {        /*loading이라는 keyframe 애니메이션*/
+@keyframes loading {
+  /*loading이라는 keyframe 애니메이션*/
   0%,                      /* 0, 50, 100은 구간*/
   100% {
-    opacity: 0;            /* 안보였다가 */
-    transform: scale(0.5); /*transform의 scale로 요소를 확대 또는 축소할 수 있음*/   
+    opacity: 0; /* 안보였다가 */
+    transform: scale(0.5); /*transform의 scale로 요소를 확대 또는 축소할 수 있음*/
   }
   50% {
-    opacity: 1;             /* 보였다가 */
+    opacity: 1; /* 보였다가 */
     transform: scale(1.2); /* 1.2배 */
   }
 }
 
-.Chat-history-topBar{
+.Chat-history-topBar {
   display: flex;
   align-items: center;
   padding: 0px 30px;
   height: 62px;
-  border-bottom: 1px solid #E3E3E3;
+  border-bottom: 1px solid #e3e3e3;
 }
 
-.Chat-history-topText{
+.Chat-history-topText {
   margin-left: 121px;
   color: var(--bl, #000);
   text-align: center;
@@ -323,9 +325,9 @@
   align-items: center;
   width: 260px;
   height: 42px;
-  background: #EEE;
+  background: #eee;
   border-radius: 25px;
-  border: 1px solid #D7D7D7;
+  border: 1px solid #d7d7d7;
   text-align: center;
   padding: 1px 15px 1px 15px;
 }

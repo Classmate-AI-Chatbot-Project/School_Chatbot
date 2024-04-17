@@ -1,110 +1,109 @@
 .TR-fullbox {
-   display: flex;
-   justify-content: center;
-   align-items: flex-start;
-   background-color: lightgray;
-   text-align: center;
- }
- .TR-contentbox {
-   min-height: 100vh;
-   width: 423px;
-   display: flex;
-   flex-direction: column;
-   background-color: white;
- }
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: lightgray;
+  text-align: center;
+}
+.TR-contentbox {
+  min-height: 100vh;
+  width: 423px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
 
- .TR-dateBar {
-   position: fixed;
-   top: 0;
-   left: 50%;
-   transform: translateX(-50%);
-   width: 423px;
-   height: 53px;
-   background-color: #fff;
-   z-index: 999;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   border-bottom: #EEE solid 1px;
+.TR-dateBar {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 423px;
+  height: 53px;
+  background-color: #fff;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: #eee solid 1px;
 }
 
 .TR-date {
-   position: relative;
-   margin-right: 155px;
-   color: var(--bl, #000);
-   text-align: center;
-   font-family: Pretendard;
-   font-size: 18px;
-   font-weight: 700;
+  position: relative;
+  margin-right: 155px;
+  color: var(--bl, #000);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .TR-title {
-   position: relative;
-   height: 84px;
-   margin-top: 53px;
+  position: relative;
+  height: 84px;
+  margin-top: 53px;
 }
 
 .TR-title-profile {
-   position: absolute;
-   top: 18px;
-   left: 25px;
-   width: 46px;
-   height: 46px;
-   border-radius: 50%;
+  position: absolute;
+  top: 18px;
+  left: 25px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
 }
 
 .TR-title-nickname {
-   position: absolute;
-   top: 21px;
-   left: 89px;
-   color: var(--bl, #000);
-   font-family: Pretendard;
-   font-size: 16px;
-   font-weight: 800;
+  position: absolute;
+  top: 21px;
+  left: 89px;
+  color: var(--bl, #000);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 800;
 }
 
 .TR-title-circle {
-   position: absolute;
-   top: 54px;
-   left: 90px;
-   border: none;
-   border-radius: 100px;
-   width: 10px;
-   height: 10px;
+  position: absolute;
+  top: 54px;
+  left: 90px;
+  border: none;
+  border-radius: 100px;
+  width: 10px;
+  height: 10px;
 }
 .TR-title-circle.happy {
-   background-color: #35BA95; 
+  background-color: #35ba95;
 }
 .TR-title-circle.sad {
-   background-color: #E37354;
+  background-color: #e37354;
 }
 
 .TR-title-circle.normal {
-   background-color: #FFCD7D;
+  background-color: #ffcd7d;
 }
-
 
 .TR-title-keywords {
-   position: absolute;
-   top: 48px;
-   left: 107px;
-   color: var(--bl, #000);
-   font-family: Pretendard;
-   font-size: 14px;
-   font-weight: 800;
+  position: absolute;
+  top: 48px;
+  left: 107px;
+  color: var(--bl, #000);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 800;
 }
 
-.TeacherResult-viewChat{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   color: var(--gray-2-ac, #969696);
-   text-align: center;
-   font-family: Pretendard;
-   font-size: 14px;
-   font-weight: 500;
-   margin-top: 56px;
-   margin-bottom: 30px;
-   cursor: pointer;
+.TeacherResult-viewChat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--gray-2-ac, #969696);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 56px;
+  margin-bottom: 30px;
+  cursor: pointer;
 }

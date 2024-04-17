@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import "./Modal.css";
-import { ReactComponent as Loading1 } from '../../assets/modal-chat1.svg'
-import { ReactComponent as Loading2 } from '../../assets/modal-chat2.svg'
-import { ReactComponent as Complete } from '../../assets/modal-chat3.svg'
-import { Cookies, useCookies } from "react-cookie";
-import { Link, useParams, useNavigate} from 'react-router-dom';
-import axios from "axios";
+import './Modal.css';
+import { ReactComponent as Loading1 } from '../../assets/modal-chat1.svg';
+import { ReactComponent as Loading2 } from '../../assets/modal-chat2.svg';
+import { ReactComponent as Complete } from '../../assets/modal-chat3.svg';
+import { Cookies, useCookies } from 'react-cookie';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { API_BASE_URL } from '../config';
-import { TailSpin } from 'react-loader-spinner'
-
-interface ModalProps {
-  open: boolean;
-  close: () => void;
-}
+import { TailSpin } from 'react-loader-spinner';
+import { ModalProps } from '../../models/modal';
 
 const ChatModal = (props: ModalProps) => {
   const { open, close } = props;
   const cookies = new Cookies();
-  const csrftoken = cookies.get("csrftoken");
-  const { user_id, chatroom_id } = useParams();  
+  const csrftoken = cookies.get('csrftoken');
+  const { user_id, chatroom_id } = useParams();
   const [progress, setProgress] = useState<number>(0);
   const [completed, setCompleted] = useState<boolean>(false);
   const [responseData, setResponseData] = useState(null);
@@ -33,30 +29,25 @@ const ChatModal = (props: ModalProps) => {
 
   const postResult = async () => {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}:8000/chat/result/${user_id}/${chatroom_id}/`,
-        {
-          headers: {
-            "Content-type": "application/json",
-            "X-CSRFToken": csrftoken,
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${API_BASE_URL}:8000/chat/result/${user_id}/${chatroom_id}/`, {
+        headers: {
+          'Content-type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+        withCredentials: true,
+      });
       console.log(response);
       setResponseData(response.data);
       setCompleted(true);
     } catch (error) {
-      console.error("Error posting result:", error);
+      console.error('Error posting result:', error);
     }
   };
 
   const handleResultButtonClick = () => {
     // completed 상태가 true일 때만 결과 페이지로 이동하도록 함
     if (completed) {
-      navigate(`/chat/result/${user_id}/${chatroom_id}/`,
-        { state: { data: responseData } }
-      );
+      navigate(`/chat/result/${user_id}/${chatroom_id}/`, { state: { data: responseData } });
     }
   };
 
@@ -67,10 +58,7 @@ const ChatModal = (props: ModalProps) => {
           {completed ? (
             <div className="Modal-main">
               <Complete className="Modal-completeImg" />
-              <button
-                className="Modal-gotoResult"
-                onClick={handleResultButtonClick}
-              >
+              <button className="Modal-gotoResult" onClick={handleResultButtonClick}>
                 상담결과 보러가기
               </button>
             </div>
@@ -78,7 +66,10 @@ const ChatModal = (props: ModalProps) => {
             <main className="Modal-main">
               <Loading1 className="Modal-img1" />
               <div className="Modal-progressBar">
-                <div className="Modal-progress" style={{ animation: 'moveLeftRight 6s linear infinite'}}></div>
+                <div
+                  className="Modal-progress"
+                  style={{ animation: 'moveLeftRight 6s linear infinite' }}
+                ></div>
               </div>
               <Loading2 className="Modal-img2" />
             </main>
