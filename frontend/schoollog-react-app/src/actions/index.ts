@@ -1,4 +1,4 @@
-import { Action } from "redux";
+import { Action } from 'redux';
 
 export const setLoggedIn = (isLoggedIn: boolean) => {
   return {
@@ -25,5 +25,5 @@ export const setTeacher = (isTeacher: boolean) => {
   return {
     type: 'SET_TEACHER',
     payload: isTeacher,
-  }
-}
+  };
+};
